@@ -48,6 +48,8 @@ export function RoomFrame(
           {stampOn && answer === 'false' ? <Stamp side="false" animate={!done && !room.reduced} /> : <span className="label">{COPY.sayFalse}</span>}
         </span>
       </div>
+      {/* The header is decorative and hidden; the stamp's verdict is said here instead. */}
+      {stampOn && <span className="sr-only">The claim is {answer}.</span>}
       {onTap ? (
         <button type="button" className="room-tap" onClick={onTap} aria-label={tapHint ?? 'Skip the animation'}>
           <Room {...room} />

@@ -9,7 +9,7 @@ import { formatLong, isValidDateKey, puzzleNumber } from '../lib/day'
 import { useDotSize, useTitle, useToday } from '../lib/hooks'
 import { scoreClaim } from '../lib/scoring'
 import { currentStreak, getDay as getRecord } from '../lib/storage'
-import { shareResults, type ShareOutcome } from '../lib/share'
+import { shareOutcomeText, shareResults, type ShareOutcome } from '../lib/share'
 import { track } from '../lib/track'
 import { COPY } from '../tokens/copy'
 import type { Claim } from '../lib/types'
@@ -32,7 +32,7 @@ export function Results() {
   const record = getRecord(date)
   const no = puzzleNumber(date)
   const [outcome, setOutcome] = useState<ShareOutcome | null>(null)
-  const [sent, setSent] = useState(false)
+  const [sent, setSent] = useState<'shared' | 'copied' | null>(null)
   const miniDot = useDotSize() === 18 ? 5 : 4
   useTitle(`Results No. ${no} — Read the Room`)
 
@@ -72,7 +72,7 @@ export function Results() {
     try {
       if (typeof navigator.share === 'function') {
         await navigator.share({ url, title: 'Read the Room' })
-        setSent(true)
+        setSent('shared')
         return
       }
     } catch (e) {
@@ -80,7 +80,7 @@ export function Results() {
     }
     try {
       await navigator.clipboard.writeText(url)
-      setSent(true)
+      setSent('copied')
     } catch {
       window.prompt('Copy this link', url)
     }
@@ -120,9 +120,9 @@ export function Results() {
         {archive && <p className="label">{COPY.archiveNote}</p>}
         <button type="button" className="btn" onClick={onShare}>{COPY.share}</button>
         <p className="small muted share-outcome" role="status">
-          {outcome === 'copied' || outcome === 'downloaded' ? COPY.copied : outcome === 'shared' ? COPY.shared : outcome === 'failed' ? COPY.shareFailed : ''}
+          {shareOutcomeText(outcome)}
         </p>
-        <button type="button" className="btn secondary" onClick={onSend}>{sent ? COPY.copied : COPY.sendOne}</button>
+        <button type="button" className="btn secondary" onClick={onSend}>{sent === 'shared' ? COPY.shared : sent === 'copied' ? COPY.copied : COPY.sendOne}</button>
       </section>
 
       <nav className="section footer-nav" aria-label="More">

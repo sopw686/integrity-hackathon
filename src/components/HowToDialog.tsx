@@ -1,15 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { COPY } from '../tokens/copy'
 import { Room } from './Room'
 import { Stamp } from './Stamp'
 
 const DEMO = { pctTrue: 29, pctFalse: 55, pctUnsure: 16 }
+// HUMAN: the demo claim is illustrative. It must be false (panel 3 stamps FALSE) and must
+// never be the text of a pool claim, or the dialog hands out that claim's answer.
+const DEMO_CLAIM = 'Goldfish have a three-second memory.'
 
 /** Three panels, skippable. Each panel is a miniature of the real screen it explains. */
 export function HowToDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
   const [step, setStep] = useState(0)
   const last = step === COPY.howTo.length - 1
+  const returnTo = useRef<HTMLElement | null>(null)
+  const lineRef = useRef<HTMLParagraphElement>(null)
+  // Each Next reads the new line; on the last step focus lands there, not on the dialog box.
+  useEffect(() => {
+    if (open && step > 0) lineRef.current?.focus()
+  }, [open, step])
   const close = () => {
     onOpenChange(false)
     setStep(0)
@@ -18,7 +27,19 @@ export function HowToDialog({ open, onOpenChange }: { open: boolean; onOpenChang
     <Dialog.Root open={open} onOpenChange={(o) => (o ? onOpenChange(true) : close())}>
       <Dialog.Portal>
         <Dialog.Overlay className="dialog-overlay" />
-        <Dialog.Content className="dialog" aria-describedby={undefined}>
+        <Dialog.Content
+          className="dialog"
+          aria-describedby={undefined}
+          onOpenAutoFocus={() => {
+            // There is no Dialog.Trigger, so remember who opened it and hand focus back on close.
+            const el = document.activeElement
+            returnTo.current = el instanceof HTMLElement && el !== document.body ? el : null
+          }}
+          onCloseAutoFocus={(e) => {
+            e.preventDefault()
+            returnTo.current?.focus()
+          }}
+        >
           <div className="dialog-top">
             <Dialog.Title className="label dialog-title">{COPY.howToPlay}</Dialog.Title>
             <span className="label num">{step + 1} of {COPY.howTo.length}</span>
@@ -27,7 +48,7 @@ export function HowToDialog({ open, onOpenChange }: { open: boolean; onOpenChang
             <div className="howto-figure" aria-hidden="true">
               {step === 0 && (
                 <div className="howto-card">
-                  <p className="claim-text howto-claim">The Sun goes around the Earth.</p>
+                  <p className="claim-text howto-claim">{DEMO_CLAIM}</p>
                   <div className="row">
                     <span className="btn secondary howto-btn">{COPY.true}</span>
                     <span className="btn howto-btn">{COPY.false}</span>
@@ -54,7 +75,7 @@ export function HowToDialog({ open, onOpenChange }: { open: boolean; onOpenChang
                 </div>
               )}
             </div>
-            <p className="howto-line serif">{COPY.howTo[step].line}</p>
+            <p ref={lineRef} tabIndex={-1} className="howto-line serif">{COPY.howTo[step].line}</p>
           </div>
           <div className="row dialog-actions">
             <Dialog.Close asChild>

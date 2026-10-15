@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 import { Header } from '../components/Header'
 import { Dial } from '../components/Dial'
 import { HowToDialog } from '../components/HowToDialog'
 import { getDay, dayClaims } from '../lib/content'
-import { MiniRoom } from '../components/Room'
+import { MiniRoom, Room } from '../components/Room'
 import { addDays } from '../lib/day'
 import { formatLong, puzzleNumber } from '../lib/day'
 import { useDotSize, useTitle, useToday } from '../lib/hooks'
 import { currentStreak, getDay as getRecord, hasSeenHowTo, markHowToSeen, storageAvailable } from '../lib/storage'
-import { shareResults, type ShareOutcome } from '../lib/share'
+import { shareOutcomeText, shareResults, type ShareOutcome } from '../lib/share'
 import { COPY } from '../tokens/copy'
 import { track } from '../lib/track'
 
 export function Home() {
   useTitle('Read the Room')
   const today = useToday()
-  const navigate = useNavigate()
   const day = getDay(today)
   const no = puzzleNumber(today)
   const record = getRecord(today)
@@ -27,6 +26,8 @@ export function Home() {
   const yesterdayKey = addDays(today, -1)
   const yesterday = getDay(yesterdayKey)
   const yesterdayRecord = getRecord(yesterdayKey)
+  const yesterdayDone = Boolean(yesterdayRecord?.completedAt)
+  const yesterdayTo = yesterdayDone ? `/results?day=${yesterdayKey}` : `/play?day=${yesterdayKey}`
 
   // First visit: open How to play once. Never when storage is off (it would open every time).
   useEffect(() => {
@@ -71,9 +72,9 @@ export function Home() {
         )}
         {day && !done && (
           <>
-            <button type="button" className="btn" onClick={() => { track('play_start', { date: today }); navigate('/play') }}>
+            <Link to="/play" className="btn" onClick={() => track('play_start', { date: today })}>
               {COPY.play}
-            </button>
+            </Link>
             <div className="home-meta">
               <span className="chip">{COPY.streak}: {COPY.streakDays(streak)}</span>
               <button type="button" className="link-like" onClick={() => setHowTo(true)}>
@@ -92,7 +93,7 @@ export function Home() {
               {COPY.share}
             </button>
             <p className="small muted share-outcome" role="status">
-              {outcome === 'copied' || outcome === 'downloaded' ? COPY.copied : outcome === 'shared' ? COPY.shared : outcome === 'failed' ? COPY.shareFailed : ''}
+              {shareOutcomeText(outcome)}
             </p>
             <div className="home-meta">
               <span className="chip">{COPY.streak}: {COPY.streakDays(streak)}</span>
@@ -105,14 +106,23 @@ export function Home() {
         <section className="section yesterday">
           <div className="yesterday-head">
             <span className="label">{COPY.yesterday} · No. {puzzleNumber(yesterdayKey)}</span>
-            <Link to={yesterdayRecord?.completedAt ? `/results?day=${yesterdayKey}` : `/play?day=${yesterdayKey}`} className="link-like">
-              {yesterdayRecord?.completedAt ? COPY.seeResults : COPY.playIt}
+            <Link to={yesterdayTo} className="link-like">
+              {yesterdayDone ? COPY.seeResults : COPY.playIt}
             </Link>
           </div>
-          <Link to={`/play?day=${yesterdayKey}`} className="yesterday-rooms" aria-label={`Yesterday’s five rooms, No. ${puzzleNumber(yesterdayKey)}. Play it from the archive.`}>
+          <Link
+            to={yesterdayTo}
+            className="yesterday-rooms"
+            aria-label={`Yesterday’s five rooms, No. ${puzzleNumber(yesterdayKey)}. ${yesterdayDone ? 'See your results.' : 'Play it from the archive.'}`}
+          >
             {dayClaims(yesterday).map((c, i) => (
               <span className="yesterday-room" key={c.id} aria-hidden="true">
-                <MiniRoom split={c.room} label={c.room.label} guess={yesterdayRecord?.guesses[i]} verdict={yesterdayRecord?.answers[i]} dot={miniDot} gap={2} />
+                {/* Only claims already locked are revealed; the rest stay an empty room, so the split never reaches the page. */}
+                {yesterdayRecord?.answers[i] !== undefined ? (
+                  <MiniRoom split={c.room} label={c.room.label} guess={yesterdayRecord.guesses[i]} verdict={yesterdayRecord.answers[i]} dot={miniDot} gap={2} />
+                ) : (
+                  <Room split={c.room} label={c.room.label} mode="slider" dot={miniDot} gap={2} />
+                )}
               </span>
             ))}
           </Link>

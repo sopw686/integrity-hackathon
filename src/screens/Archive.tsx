@@ -23,27 +23,29 @@ export function Archive() {
           <Link to="/" className="btn">{COPY.playToday}</Link>
         </section>
       ) : (
-        <section className="section archive-list">
+        <ul className="section archive-list">
           {past.map((d) => {
             const rec = getRecord(d)
             const done = Boolean(rec?.completedAt)
+            const which = `No. ${puzzleNumber(d)}, ${formatLong(d)}`
             return (
-              <div className="archive-row" key={d}>
+              <li className="archive-row" key={d}>
                 <span className="archive-no label num">No. {puzzleNumber(d)}</span>
                 <span className="archive-date serif">{formatLong(d)}</span>
                 {done && rec ? (
                   <Link to={`/results?day=${d}`} className="archive-action label num">
-                    🎯 {rec.scores.accuracy}/5 · 📡 {rec.scores.read}
+                    <span className="sr-only">Results for {which}: {COPY.accuracy} {rec.scores.accuracy}/5, {COPY.read}</span>
+                    <span aria-hidden="true">🎯 {rec.scores.accuracy}/5 · 📡</span> {rec.scores.read}
                   </Link>
                 ) : (
                   <Link to={`/play?day=${d}`} className="archive-action label">
-                    {COPY.play}
+                    {COPY.play}<span className="sr-only"> {which}</span>
                   </Link>
                 )}
-              </div>
+              </li>
             )
           })}
-        </section>
+        </ul>
       )}
       <nav className="section footer-nav" aria-label="More">
         <Link to="/">{COPY.wordmark}</Link>

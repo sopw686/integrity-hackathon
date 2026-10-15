@@ -1,13 +1,15 @@
 /* HUMAN: the whole palette. Paper tone, the exact vermilion, and whether the
    "unsure" dots read better as a 45° hatch or a dotted stroke are taste calls.
    Note: the brief's muted #7A746A measures 4.2:1 on paper, under the 4.5:1 text
-   floor, so it is darkened here to #6B655B (5.2:1). */
+   floor, so it is darkened here to #6B655B (5.2:1). Likewise the brief's hatch
+   #C9C2B2 is 1.6:1 on paper (dark #4E4941: 2.1:1), under the 3:1 non-text floor,
+   and it alone draws the unsure dots, so it is #8F887A (3.2:1) / dark #736D63 (3.6:1). */
 :root {
   --paper: #F6F3EC;
   --ink: #141414;
   --rule: #D9D3C5;
   --muted: #6B655B;
-  --hatch: #C9C2B2;
+  --hatch: #8F887A;
   --you: #D64A2B;            /* vermilion: player dot, guess line, lock button active state. Nothing else. */
   --dot-true: var(--ink);
   --dot-false-fill: var(--paper);
@@ -22,7 +24,7 @@
     --ink: #F6F3EC;
     --rule: #3A362F;
     --muted: #A09A90;
-    --hatch: #4E4941;
+    --hatch: #736D63;
     color-scheme: dark;
   }
 }
@@ -32,6 +34,6 @@
   --ink: #F6F3EC;
   --rule: #3A362F;
   --muted: #A09A90;
-  --hatch: #4E4941;
+  --hatch: #736D63;
   color-scheme: dark;
 }

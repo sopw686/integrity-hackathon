@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { Header } from '../components/Header'
+import { getDay as getPuzzle } from '../lib/content'
 import { addDays, formatDay } from '../lib/day'
 import { useTitle, useToday } from '../lib/hooks'
 import { currentStreak, lifetime, storageAvailable } from '../lib/storage'
@@ -13,7 +14,8 @@ function monthGrid(year: number, month: number, played: Set<string>, today: stri
   for (let i = 0; i < startDow; i++) cells.push(null)
   for (let d = 1; d <= daysInMonth; d++) {
     const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`
-    cells.push({ key, day: d, state: played.has(key) ? 'played' : key > today ? 'future' : 'missed' })
+    // Only a past day that had a puzzle can be missed; today, later and puzzle-less days stay neutral.
+    cells.push({ key, day: d, state: played.has(key) ? 'played' : key >= today || !getPuzzle(key) ? 'future' : 'missed' })
   }
   const label = first.toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })
   return { label, cells }
@@ -45,11 +47,11 @@ export function Stats() {
           <section className="section">
             <dl className="statlist">
               <div><dt className="label">Days played</dt><dd className="num">{life.daysPlayed}</dd></div>
-              <div><dt className="label">🎯 {COPY.accuracy}</dt><dd className="num">{life.accuracyPct}%</dd></div>
-              <div><dt className="label">📡 Mean read</dt><dd className="num">{life.meanRead}</dd></div>
+              <div><dt className="label"><span aria-hidden="true">🎯</span> {COPY.accuracy}</dt><dd className="num">{life.accuracyPct}%</dd></div>
+              <div><dt className="label"><span aria-hidden="true">📡</span> Mean read</dt><dd className="num">{life.meanRead}</dd></div>
               <div><dt className="label">{COPY.streak}</dt><dd className="num">{streak}</dd></div>
-              <div><dt className="label">🦊 Fox</dt><dd className="num">{life.foxes}</dd></div>
-              <div><dt className="label">🐑 Sheep</dt><dd className="num">{life.sheep}</dd></div>
+              <div><dt className="label"><span aria-hidden="true">🦊</span> Fox</dt><dd className="num">{life.foxes}</dd></div>
+              <div><dt className="label"><span aria-hidden="true">🐑</span> Sheep</dt><dd className="num">{life.sheep}</dd></div>
               <div><dt className="label">Best read</dt><dd className="num">{life.bestRead ? `${life.bestRead.read} · ${formatDay(life.bestRead.date)}` : '—'}</dd></div>
             </dl>
           </section>

@@ -19,7 +19,7 @@ export function Dial({ icon, label, value, max, display }: { icon: string; label
   // The gauge spans at most 180°, so the large-arc flag is always 0.
   const d = `M ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y}`
   return (
-    <div className="dial" role="group" aria-label={`${label}: ${display}`}>
+    <div className="dial" role="img" aria-label={`${label}: ${display}`}>
       <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true" style={{ display: 'block', overflow: 'visible' }}>
         <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`} fill="none" stroke="var(--rule)" strokeWidth={1} />
         {frac > 0 && <path d={d} fill="none" stroke="var(--ink)" strokeWidth={3} strokeLinecap="butt" />}
