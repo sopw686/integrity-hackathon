@@ -89,3 +89,6 @@ errors on purpose. Verifying the NSF and Yale items (one table and one report) u
   no "misinformation", "media literacy" or "bias" in the UI.
 - First load 130 KB gzipped (JS + CSS, fonts excluded), under the 150 KB budget.
 - Unit tests: geometry, scoring, validator (33 tests).
+- `npm run check:flows`: keyboard-only loop to results, storage-disabled play-through, reduced-motion
+  reveal done in ≈0.85s, full reveal done in ≈2.4s, zero axe-core violations on verdict, read,
+  reveal and results.
