@@ -1,0 +1,27 @@
+{
+  "id": "wifi-encrypted-by-default",
+  "text": "All Wi-Fi traffic is encrypted by default on all wireless routers.",
+  "shortTitle": "Wi-Fi encryption",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adult internet users",
+    "pctTrue": 11,
+    "pctFalse": 45,
+    "pctUnsure": 44,
+    "source": "Pew Research Center",
+    "sourceUrl": "https://www.pewresearch.org/internet/2017/03/22/what-the-public-knows-about-cybersecurity/",
+    "fieldDates": "Jun 17–27, 2016",
+    "n": 1055,
+    "questionWording": "True / False / Not sure item in Pew's cybersecurity knowledge quiz (American Trends Panel).",
+    "note": "2016 survey; older data. Topline: 11% true, 45% false (correct), 44% not sure."
+  },
+  "truthSource": {
+    "label": "Federal Trade Commission, Are Public Wi-Fi Networks Safe?",
+    "url": "https://consumer.ftc.gov/articles/are-public-wi-fi-networks-safe-what-you-need-know",
+    "oneLine": "Whether a Wi-Fi network encrypts traffic depends on how it is set up; what protects you on public Wi-Fi today is mostly the websites' and apps' own encryption."
+  },
+  "category": "media",
+  "difficulty": 2,
+  "status": "verified"
+}

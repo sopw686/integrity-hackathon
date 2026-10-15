@@ -1,0 +1,27 @@
+{
+  "id": "private-browsing-hides-little",
+  "text": "Private browsing (incognito) mode hides your activity only from other people using the same computer.",
+  "shortTitle": "Incognito mode",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 24,
+    "pctFalse": 25,
+    "pctUnsure": 51,
+    "source": "Pew Research Center",
+    "sourceUrl": "https://www.pewresearch.org/internet/2019/10/09/americans-and-digital-knowledge/",
+    "fieldDates": "Jun 3–17, 2019",
+    "n": 4272,
+    "questionWording": "If you use private browsing on a work computer, who would NOT be able to see your activity? (the group that runs the company network / your internet provider / a coworker who uses the same computer / the websites you visit / not sure)",
+    "note": "VERIFY: 24% correct and 49% not sure are confirmed by several sources. The wrong-option shares (4% network, 3% ISP, 18% websites → 25) and ~1% no answer come from one search summary; check item KNOW8 in the topline PDF. Multiple choice; 2019 survey, older data."
+  },
+  "truthSource": {
+    "label": "Federal Trade Commission, consumer advice on online tracking",
+    "url": "https://consumer.ftc.gov/articles/how-protect-your-privacy-online",
+    "oneLine": "Private or incognito mode only stops your browser from saving history on your device; your network, internet provider and the sites you visit can still see your activity."
+  },
+  "category": "media",
+  "difficulty": 2,
+  "status": "draft"
+}

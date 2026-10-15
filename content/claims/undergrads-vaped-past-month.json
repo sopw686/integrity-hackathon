@@ -1,0 +1,26 @@
+{
+  "id": "undergrads-vaped-past-month",
+  "text": "Most U.S. undergraduates vaped in the past 30 days.",
+  "shortTitle": "Vaping on campus",
+  "answer": "false",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey. Context for the reveal: in the same national survey, 85% of students thought the typical student had vaped in the past 30 days; 14% actually had."
+  },
+  "truthSource": {
+    "label": "ACHA-NCHA II, Spring 2019 Undergraduate Reference Group",
+    "url": "https://www.acha.org/wp-content/uploads/2024/07/NCHA-II_SPRING_2019_UNDERGRADUATE_REFERENCE-_GROUP_EXECUTIVE_SUMMARY.pdf",
+    "oneLine": "VERIFY in PDF: 14.3% of undergraduates used e-cigarettes in the last 30 days (n=54,497)."
+  },
+  "category": "campus",
+  "difficulty": 2,
+  "status": "draft"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "alcohol-raises-cancer-risk",
+  "text": "Regularly drinking alcohol increases your chances of later developing cancer.",
+  "shortTitle": "Alcohol and cancer",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 40,
+    "pctFalse": 20,
+    "pctUnsure": 40,
+    "source": "Annenberg Public Policy Center (SSRS)",
+    "sourceUrl": "https://www.annenbergpublicpolicycenter.org/most-dont-know-that-alcohol-raises-cancer-risk/",
+    "fieldDates": "Sep 13–30, 2024",
+    "n": 1744,
+    "note": "20% said it has no effect or lowers risk; 40% were not sure. Fielded Sep 13–22 and 26–30, 2024, on SSRS's probability panel. After the Surgeon General's January 2025 advisory, awareness rose to 56% (Feb 2025) and was 53% in Feb 2026."
+  },
+  "truthSource": {
+    "label": "U.S. Surgeon General, Alcohol and Cancer Risk advisory (2025)",
+    "url": "https://www.hhs.gov/sites/default/files/oash-alcohol-cancer-risk.pdf",
+    "oneLine": "Alcohol is the third-leading preventable cause of cancer in the U.S., linked to at least seven cancers including breast, mouth, throat and colorectal."
+  },
+  "category": "health",
+  "difficulty": 2,
+  "status": "verified"
+}

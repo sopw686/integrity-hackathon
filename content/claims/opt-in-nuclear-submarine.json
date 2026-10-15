@@ -1,0 +1,26 @@
+{
+  "id": "opt-in-nuclear-submarine",
+  "text": "In a 2022 online poll, 12% of adults under 30 said they were licensed to operate a nuclear submarine.",
+  "shortTitle": "Submarine licenses",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey. Reveal note: the U.S. Navy has four such submarines; Pew used the item to catch bogus respondents in opt-in panels, who inflate shocking youth numbers."
+  },
+  "truthSource": {
+    "label": "Pew Research Center, Online opt-in polls can produce misleading results (2024)",
+    "url": "https://www.pewresearch.org/short-reads/2024/03/05/online-opt-in-polls-can-produce-misleading-results-especially-for-young-people-and-hispanic-adults/",
+    "oneLine": "In a February 2022 Pew test, 12% of opt-in respondents under 30 claimed a license to operate a class SSGN nuclear submarine; the real share rounds to 0%."
+  },
+  "category": "media",
+  "difficulty": 3,
+  "status": "draft"
+}

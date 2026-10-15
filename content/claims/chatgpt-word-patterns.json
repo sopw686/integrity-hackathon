@@ -1,0 +1,27 @@
+{
+  "id": "chatgpt-word-patterns",
+  "text": "AI chatbots like ChatGPT write answers from word patterns learned from internet text, not by searching the internet for the answer.",
+  "shortTitle": "How ChatGPT works",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 32,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "Pew Research Center",
+    "sourceUrl": "https://www.pewresearch.org/internet/2023/08/17/what-americans-know-about-ai-cybersecurity-and-big-tech/",
+    "fieldDates": "May 15–21, 2023",
+    "n": 5101,
+    "questionWording": "Multiple choice: builds sentences by reusing keywords from your question / searches the internet and summarizes the top results / draws on word patterns learned from internet text (correct) / not sure",
+    "note": "VERIFY: 32% correct is confirmed; the wrong-option and not-sure shares must be read from the topline."
+  },
+  "truthSource": {
+    "label": "NIST, Artificial Intelligence Risk Management Framework: Generative AI Profile",
+    "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+    "oneLine": "Large language models generate text from statistical patterns learned in training; they do not look answers up unless a separate search tool is attached."
+  },
+  "category": "media",
+  "difficulty": 2,
+  "status": "draft"
+}

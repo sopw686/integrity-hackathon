@@ -1,0 +1,27 @@
+{
+  "id": "holocaust-six-million",
+  "text": "About 6 million Jews were killed in the Holocaust.",
+  "shortTitle": "Holocaust death toll",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 45,
+    "pctFalse": 25,
+    "pctUnsure": 29,
+    "source": "Pew Research Center",
+    "sourceUrl": "https://www.pewresearch.org/religion/2020/01/22/what-americans-know-about-the-holocaust/",
+    "fieldDates": "Feb 2019",
+    "n": 10971,
+    "questionWording": "Approximately how many Jews were killed in the Holocaust? (multiple choice: 1 million / 3 million / 6 million / 20 million / not sure)",
+    "note": "Multiple choice. 45% chose about 6 million; 10% guessed higher and 15% guessed 3 million or fewer; 29% were not sure or did not answer. 2019 survey; older data."
+  },
+  "truthSource": {
+    "label": "United States Holocaust Memorial Museum",
+    "url": "https://www.ushmm.org/learn/holocaust",
+    "oneLine": "The Holocaust was the systematic, state-sponsored persecution and murder of six million European Jews by the Nazi regime and its collaborators."
+  },
+  "category": "society",
+  "difficulty": 2,
+  "status": "verified"
+}

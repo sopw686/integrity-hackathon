@@ -8,7 +8,7 @@ Campus claims need a room of 5C students. We measure it ourselves with one Googl
 - **When:** open it two weeks before launch. Keep it open about one week, which leaves a week to fill in the claim files and verify answers.
 - **Where:** send it to the 5C student listservs (one message per college list, plus any club lists that will forward it). One reminder halfway through.
 - **Target:** n ≥ 100 complete responses. Below 100, do not publish the campus claims; the room is too small to read.
-- **Questions:** the 20 candidate claims below, each as a multiple-choice question with exactly three options, in this order: **True**, **False**, **Not sure**. Make every question required so each response has all 20 answers. Shuffle question order (Settings → Presentation → Shuffle question order).
+- **Questions:** the candidate claims below (items 21–28 are the student-life round; prefer them if the Form must stay short), each as a multiple-choice question with exactly three options, in this order: **True**, **False**, **Not sure**. Make every question required so each response answers every item. Shuffle question order (Settings → Presentation → Shuffle question order).
 - **Wording:** each Form question is the claim text exactly as it will appear in the game. If you change the text after the survey, the room numbers no longer apply.
 - **No other questions.** No class year, no college, no demographics. We do not need them and they make responses easier to identify.
 
@@ -22,7 +22,7 @@ In Form settings, turn **off** "Collect email addresses" and "Limit to 1 respons
 
 ## Candidate claims
 
-Twenty items. The first ten already exist as drafts in `content/claims/`. The second ten are suggestions; anyone who adds one needs to confirm its answer against an authority first and create the draft file.
+Twenty-eight items. Items 1–10 and 21–28 already exist as drafts in `content/claims/`. The second ten are suggestions; anyone who adds one needs to confirm its answer against an authority first and create the draft file.
 
 | # | id | Claim text | Expected answer | Status |
 |---|----|-----------|-----------------|--------|
@@ -46,6 +46,14 @@ Twenty items. The first ten already exist as drafts in `content/claims/`. The se
 | 18 | `pomona-older-than-mudd` | Pomona College was founded before Harvey Mudd College. | true (college history pages) | suggestion |
 | 19 | `pitzer-founded-1960s` | Pitzer College was founded in the 1960s. | true (Pitzer history page) | suggestion |
 | 20 | `scripps-womens-college` | Scripps is a women's college. | true (Scripps admission page) | suggestion |
+| 21 | `undergrads-vaped-past-month` | Most U.S. undergraduates vaped in the past 30 days. | false (ACHA-NCHA) | draft file |
+| 22 | `college-no-partners-past-year` | About a third of U.S. college students had no sexual partners in the past 12 months. | true (ACHA-NCHA) | draft file |
+| 23 | `college-binge-drinking-month` | Most full-time U.S. college students binge drank in the past month. | false (NIAAA/NSDUH) | draft file |
+| 24 | `college-therapy-past-year` | Most U.S. college students received therapy or counseling in the past year. | false (Healthy Minds) | draft file |
+| 25 | `college-depression-falling` | Rates of depression among U.S. college students have fallen since 2022. | true (Healthy Minds) | draft file |
+| 26 | `a-most-common-college-grade` | A is the most common grade given in U.S. four-year college courses. | true (Rojstaczer & Healy) | draft file |
+| 27 | `half-undergrads-no-ba-parent` | More than half of U.S. undergraduates have no parent with a bachelor's degree. | true (NCES NPSAS:20) | draft file |
+| 28 | `opt-in-nuclear-submarine` | In a 2022 online poll, 12% of adults under 30 said they were licensed to operate a nuclear submarine. | true (Pew) | draft file |
 
 Use `"category": "election"` for the California voting items and `"campus"` for the rest. Before sending the Form, check every item against the ineligible list in `AUTHORING.md`.
 

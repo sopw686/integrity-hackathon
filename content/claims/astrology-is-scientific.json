@@ -1,0 +1,27 @@
+{
+  "id": "astrology-is-scientific",
+  "text": "Astrology is scientific.",
+  "shortTitle": "Astrology",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "Americans 18–24",
+    "pctTrue": 44,
+    "pctFalse": 54,
+    "pctUnsure": 2,
+    "source": "General Social Survey (NSF Science & Engineering Indicators)",
+    "sourceUrl": "https://ncses.nsf.gov/pubs/nsb20207/assets/supplemental-tables/tables/nsb20207-tabs07-032.pdf",
+    "fieldDates": "2016",
+    "n": 0,
+    "questionWording": "Would you say that astrology is very scientific, sort of scientific, or not at all scientific?",
+    "note": "VERIFY: 18–24 split for 2016 (11 very + 33 sort of / 54 not at all / 2 don't know) was read from NSF appendix table 7-12 by a search tool, not directly. Check table S7-32 for a 2018 age row, and fill n for the age group. All adults in 2018: 39 / 58 / 4."
+  },
+  "truthSource": {
+    "label": "NSF Science & Engineering Indicators",
+    "url": "https://ncses.nsf.gov/pubs/nsb20207/",
+    "oneLine": "NSF classifies astrology as a pseudoscience; controlled tests have found no predictive power."
+  },
+  "category": "science",
+  "difficulty": 2,
+  "status": "draft"
+}

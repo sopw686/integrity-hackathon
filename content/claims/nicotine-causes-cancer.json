@@ -1,0 +1,26 @@
+{
+  "id": "nicotine-causes-cancer",
+  "text": "The nicotine in cigarettes is the substance that causes most of the cancer.",
+  "shortTitle": "Nicotine and cancer",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 49,
+    "pctFalse": 27,
+    "pctUnsure": 24,
+    "source": "NCI HINTS-FDA",
+    "sourceUrl": "https://hints.cancer.gov/docs/Briefs/HINTS_Brief_37.pdf",
+    "fieldDates": "May 29–Sep 8, 2015",
+    "n": 3738,
+    "note": "VERIFY: 49% agree and 27% disagree come from HINTS Brief 37; the 24% don't-know share is inferred, not seen. Confirm all response options and the exact wording. 2015 survey; older data."
+  },
+  "truthSource": {
+    "label": "FDA, Nicotine Is Why Tobacco Products Are Addictive",
+    "url": "https://www.fda.gov/tobacco-products/health-effects-tobacco-use/nicotine-why-tobacco-products-are-addictive",
+    "oneLine": "Nicotine is what makes tobacco addictive, but most of the cancer comes from the thousands of other chemicals in tobacco smoke."
+  },
+  "category": "health",
+  "difficulty": 3,
+  "status": "draft"
+}

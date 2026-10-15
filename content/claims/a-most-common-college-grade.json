@@ -1,0 +1,26 @@
+{
+  "id": "a-most-common-college-grade",
+  "text": "A is the most common grade given in U.S. four-year college courses.",
+  "shortTitle": "Grade inflation",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey. Data runs to about 2009; keep a note on the reveal."
+  },
+  "truthSource": {
+    "label": "Rojstaczer & Healy, Teachers College Record (2012)",
+    "url": "https://www.npr.org/sections/thetwo-way/2011/07/15/138167102/study-the-most-common-grade-given-by-colleges-is-an-a",
+    "oneLine": "About 43% of grades at four-year colleges were A's, up 28 points since 1960."
+  },
+  "category": "campus",
+  "difficulty": 2,
+  "status": "draft"
+}
