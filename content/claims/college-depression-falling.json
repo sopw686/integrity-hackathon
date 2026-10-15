@@ -1,0 +1,26 @@
+{
+  "id": "college-depression-falling",
+  "text": "Rates of depression among U.S. college students have fallen since 2022.",
+  "shortTitle": "Depression trend",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey. "
+  },
+  "truthSource": {
+    "label": "Healthy Minds Study, 2024–2025 Data Report",
+    "url": "https://healthpolicy.ucla.edu/our-work/publications/healthy-minds-study-2024-2025-data-report",
+    "oneLine": "Moderate-to-severe depression fell from 44% in 2022 to 37% in 2025, the third straight yearly decline (n=84,735)."
+  },
+  "category": "campus",
+  "difficulty": 3,
+  "status": "draft"
+}

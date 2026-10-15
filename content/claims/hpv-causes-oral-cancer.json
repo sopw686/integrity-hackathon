@@ -1,0 +1,27 @@
+{
+  "id": "hpv-causes-oral-cancer",
+  "text": "HPV can cause oral cancer.",
+  "shortTitle": "HPV and mouth cancer",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults who have heard of HPV",
+    "pctTrue": 30,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "NCI HINTS 5, Cycle 4",
+    "sourceUrl": "https://hints.cancer.gov/",
+    "fieldDates": "2020",
+    "n": 0,
+    "questionWording": "Do you think HPV can cause oral cancer? (yes / no / not sure)",
+    "note": "VERIFY: published analyses give 29.5% yes; the no / not-sure split, field dates and the subgroup n are missing. Asked only of people who had heard of HPV."
+  },
+  "truthSource": {
+    "label": "CDC, Cancers caused by HPV",
+    "url": "https://www.cdc.gov/hpv/about/cancers-caused-by-hpv.html",
+    "oneLine": "HPV causes about 70% of oropharyngeal (throat and mouth) cancers in the U.S."
+  },
+  "category": "health",
+  "difficulty": 3,
+  "status": "draft"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "half-undergrads-no-ba-parent",
+  "text": "More than half of U.S. undergraduates have no parent with a bachelor's degree.",
+  "shortTitle": "Parents' degrees",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey. "
+  },
+  "truthSource": {
+    "label": "NCES NPSAS:20, via NASPA Center for First-generation Student Success",
+    "url": "https://firstgen.naspa.org/journal-and-research/national-data-fact-sheets-on-first-generation-college-student-in-2020",
+    "oneLine": "54% of U.S. undergraduates in 2020 had no parent with a bachelor's degree."
+  },
+  "category": "campus",
+  "difficulty": 2,
+  "status": "draft"
+}

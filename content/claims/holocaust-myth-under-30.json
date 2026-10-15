@@ -1,0 +1,26 @@
+{
+  "id": "holocaust-myth-under-30",
+  "text": "The Holocaust is a myth.",
+  "shortTitle": "Holocaust denial, under 30",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "Americans under 30",
+    "pctTrue": 3,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "Pew Research Center",
+    "sourceUrl": "https://www.pewresearch.org/short-reads/2024/03/05/online-opt-in-polls-can-produce-misleading-results-especially-for-young-people-and-hispanic-adults/",
+    "fieldDates": "Jan 16–21, 2024",
+    "n": 5140,
+    "note": "VERIFY: 3% agree is confirmed; fill disagree / neither shares and the under-30 n from Pew's chart. Reveal note to keep: a Dec 2023 opt-in online poll reported 20% of under-30s agreeing; Pew re-asked it on its probability panel and found 3%, and traced the gap to bogus respondents (in a 2022 test, 12% of opt-in under-30s claimed to be licensed to operate a nuclear submarine)."
+  },
+  "truthSource": {
+    "label": "United States Holocaust Memorial Museum",
+    "url": "https://www.ushmm.org/learn/holocaust",
+    "oneLine": "The Holocaust is among the most thoroughly documented events in history."
+  },
+  "category": "society",
+  "difficulty": 2,
+  "status": "draft"
+}

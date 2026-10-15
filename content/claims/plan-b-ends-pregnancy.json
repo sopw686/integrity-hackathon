@@ -1,0 +1,26 @@
+{
+  "id": "plan-b-ends-pregnancy",
+  "text": "Emergency contraceptive pills (like Plan B) can end a pregnancy in its early stages.",
+  "shortTitle": "Plan B",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults who have heard of the pills",
+    "pctTrue": 73,
+    "pctFalse": 27,
+    "pctUnsure": 0,
+    "source": "KFF Health Tracking Poll",
+    "sourceUrl": "https://www.kff.org/womens-health-policy/poll-finding/kff-health-tracking-poll-early-2023/",
+    "fieldDates": "Jan 17–24, 2023",
+    "n": 1234,
+    "note": "VERIFY before shipping: KFF reports 73% incorrect and 27% correct among adults who have heard of EC pills (66% of women 18–49). Confirm in the topline whether 'not sure' was a separate option or folded into the 73%, and set n to the heard-of subgroup."
+  },
+  "truthSource": {
+    "label": "FDA, Plan B One-Step information",
+    "url": "https://www.fda.gov/drugs/postmarket-drug-safety-information-patients-and-providers/plan-b-one-step-15-mg-levonorgestrel-information",
+    "oneLine": "Plan B works by preventing or delaying ovulation; it does not end an existing pregnancy."
+  },
+  "category": "health",
+  "difficulty": 2,
+  "status": "draft"
+}

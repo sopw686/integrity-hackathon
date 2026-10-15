@@ -1,0 +1,27 @@
+{
+  "id": "tax-bracket-all-income",
+  "text": "If you are in the 22% federal tax bracket, all of your income is taxed at 22%.",
+  "shortTitle": "Tax brackets",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. taxpayers",
+    "pctTrue": 34,
+    "pctFalse": 48,
+    "pctUnsure": 18,
+    "source": "Tax Foundation / Public Policy Polling",
+    "sourceUrl": "https://taxfoundation.org/research/all/federal/us-tax-literacy-poll-knowledge-perceptions/",
+    "fieldDates": "",
+    "n": 2064,
+    "questionWording": "If you are in the 22% tax bracket, how much of your income is taxed at 22%: just some of it, or all of it?",
+    "note": "VERIFY: split 34 all / 48 just some / 18 don't know is from two secondary sources. Field dates (early 2024) and n (2,064 completed vs 2,700+ reported) must be read from the report PDF (taxfoundation.org FF855). Confirm whether PPP's sample was opt-in."
+  },
+  "truthSource": {
+    "label": "IRS, Federal income tax rates and brackets",
+    "url": "https://www.irs.gov/filing/federal-income-tax-rates-and-brackets",
+    "oneLine": "Each rate applies only to the slice of income inside its bracket, so moving into a higher bracket never raises the tax on the income below it."
+  },
+  "category": "society",
+  "difficulty": 2,
+  "status": "draft"
+}

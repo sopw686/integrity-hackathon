@@ -1,0 +1,26 @@
+{
+  "id": "college-no-partners-past-year",
+  "text": "About a third of U.S. college students had no sexual partners in the past 12 months.",
+  "shortTitle": "No partners this year",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey. A University of Missouri brief found 76% of students had 0–1 partners but only 16% thought their peers did."
+  },
+  "truthSource": {
+    "label": "ACHA-NCHA II, Spring 2019 Reference Group",
+    "url": "https://www.acha.org/wp-content/uploads/2024/07/NCHA-II_SPRING_2019_US_REFERENCE_GROUP_EXECUTIVE_SUMMARY.pdf",
+    "oneLine": "VERIFY in PDF: 33.1% of students reported no sexual partners in the last 12 months (n=67,972)."
+  },
+  "category": "campus",
+  "difficulty": 2,
+  "status": "draft"
+}

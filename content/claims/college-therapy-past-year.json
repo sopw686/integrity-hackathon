@@ -1,0 +1,26 @@
+{
+  "id": "college-therapy-past-year",
+  "text": "Most U.S. college students received therapy or counseling in the past year.",
+  "shortTitle": "Therapy",
+  "answer": "false",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey. "
+  },
+  "truthSource": {
+    "label": "Healthy Minds Study, 2024–2025 Data Report",
+    "url": "https://healthpolicy.ucla.edu/our-work/publications/healthy-minds-study-2024-2025-data-report",
+    "oneLine": "37% of students received therapy or counseling in the past year (n=84,735 at 135 schools)."
+  },
+  "category": "campus",
+  "difficulty": 2,
+  "status": "draft"
+}

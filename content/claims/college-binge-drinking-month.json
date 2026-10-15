@@ -1,0 +1,26 @@
+{
+  "id": "college-binge-drinking-month",
+  "text": "Most full-time U.S. college students binge drank in the past month.",
+  "shortTitle": "Binge drinking",
+  "answer": "false",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey. Check for a newer NSDUH figure (reported near 25% for 2024)."
+  },
+  "truthSource": {
+    "label": "NIAAA College Drinking fact sheet (NSDUH 2019)",
+    "url": "https://www.collegedrinkingprevention.gov/media/collegedrinkingFactSheet2023.pdf",
+    "oneLine": "33% of full-time college students aged 18–22 binge drank in the past month."
+  },
+  "category": "campus",
+  "difficulty": 2,
+  "status": "draft"
+}
