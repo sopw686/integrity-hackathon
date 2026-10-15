@@ -1,0 +1,27 @@
+{
+  "id": "humans-evolved",
+  "text": "Human beings developed from earlier species of animals.",
+  "shortTitle": "Human evolution",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "NSF Science & Engineering Indicators 2014 (GSS 2012)",
+    "sourceUrl": "https://www.npr.org/sections/thetwo-way/2014/02/14/277058739/1-in-4-americans-think-the-sun-goes-around-the-earth-survey-says",
+    "fieldDates": "2012",
+    "n": 2200,
+    "pctTrue": 48,
+    "pctFalse": 52,
+    "pctUnsure": 0,
+    "questionWording": "Human beings, as we know them today, developed from earlier species of animals.",
+    "note": "2012 survey; older data. NSF reports the share answering correctly; “false” here includes don’t-know."
+  },
+  "truthSource": {
+    "label": "National Academies of Sciences, Evolution resources",
+    "url": "https://www.nationalacademies.org/evolution",
+    "oneLine": "Fossil, genetic and anatomical evidence establishes that humans evolved from earlier species."
+  },
+  "category": "science",
+  "difficulty": 2,
+  "status": "verified"
+}

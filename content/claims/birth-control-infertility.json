@@ -1,0 +1,27 @@
+{
+  "id": "birth-control-infertility",
+  "text": "Using birth control such as the pill or an IUD makes it harder for most women to get pregnant once they stop.",
+  "shortTitle": "Birth control and fertility",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "KFF Health Misinformation Tracking Poll Pilot",
+    "sourceUrl": "https://www.kff.org/health-information-trust/poll-finding/kff-health-misinformation-tracking-poll-pilot/",
+    "fieldDates": "May 23–Jun 12, 2023",
+    "n": 2007,
+    "pctTrue": 34,
+    "pctFalse": 64,
+    "pctUnsure": 2,
+    "questionWording": "Using birth control such as the pill or IUDs makes it harder for most women to get pregnant once they stop using them",
+    "note": "5% definitely true, 29% probably true, 46% probably false, 18% definitely false."
+  },
+  "truthSource": {
+    "label": "ACOG, Combined hormonal birth control",
+    "url": "https://www.acog.org/womens-health/faqs/combined-hormonal-birth-control-pill-patch-ring",
+    "oneLine": "Fertility returns promptly after stopping the pill or removing an IUD; there is no lasting reduction in the ability to conceive."
+  },
+  "category": "health",
+  "difficulty": 2,
+  "status": "verified"
+}

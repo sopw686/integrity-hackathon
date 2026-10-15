@@ -1,0 +1,27 @@
+{
+  "id": "gun-at-home-safer",
+  "text": "People who have firearms at home are less likely to be killed by a gun than people who do not.",
+  "shortTitle": "Guns at home",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "KFF Health Misinformation Tracking Poll Pilot",
+    "sourceUrl": "https://www.kff.org/health-information-trust/poll-finding/kff-health-misinformation-tracking-poll-pilot/",
+    "fieldDates": "May 23–Jun 12, 2023",
+    "n": 2007,
+    "pctTrue": 42,
+    "pctFalse": 57,
+    "pctUnsure": 1,
+    "questionWording": "People who have firearms at home are less likely to be killed by a gun than people who do not have a firearm",
+    "note": "13% definitely true, 29% probably true, 22% definitely false. KFF offered definitely/probably true and probably/definitely false; the small remainder gave no answer."
+  },
+  "truthSource": {
+    "label": "Annals of Internal Medicine (2014 meta-analysis)",
+    "url": "https://www.acpjournals.org/doi/10.7326/M13-1301",
+    "oneLine": "Access to a firearm at home roughly doubles the odds of being a homicide victim and triples the odds of suicide."
+  },
+  "category": "society",
+  "difficulty": 2,
+  "status": "verified"
+}

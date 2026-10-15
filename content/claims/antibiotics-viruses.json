@@ -1,0 +1,26 @@
+{
+  "id": "antibiotics-viruses",
+  "text": "Antibiotics kill viruses as well as bacteria.",
+  "shortTitle": "Antibiotics and viruses",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "NSF Science & Engineering Indicators 2014 (GSS 2012)",
+    "sourceUrl": "https://www.npr.org/sections/thetwo-way/2014/02/14/277058739/1-in-4-americans-think-the-sun-goes-around-the-earth-survey-says",
+    "fieldDates": "2012",
+    "n": 2200,
+    "pctTrue": 49,
+    "pctFalse": 51,
+    "pctUnsure": 0,
+    "note": "VERIFY before shipping: figure recalled from NSF SEI 2014 Table 7-8 (GSS 2012), not re-read from the source in this environment. 2012 survey; older data"
+  },
+  "truthSource": {
+    "label": "CDC, Antibiotic use: viruses or bacteria",
+    "url": "https://www.cdc.gov/antibiotic-use/",
+    "oneLine": "Antibiotics act on bacteria and do nothing against viruses such as colds and flu."
+  },
+  "category": "science",
+  "difficulty": 1,
+  "status": "draft"
+}

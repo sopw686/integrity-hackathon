@@ -1,0 +1,24 @@
+{
+  "id": "",
+  "text": "",
+  "answer": "",
+  "room": {
+    "kind": "",
+    "label": "",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0
+  },
+  "truthSource": {
+    "label": "",
+    "url": "",
+    "oneLine": ""
+  },
+  "category": "",
+  "difficulty": 0,
+  "status": "draft"
+}

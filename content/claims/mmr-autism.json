@@ -1,0 +1,27 @@
+{
+  "id": "mmr-autism",
+  "text": "The MMR vaccine has been proven to cause autism in children.",
+  "shortTitle": "MMR and autism",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "KFF Health Misinformation Tracking Poll Pilot",
+    "sourceUrl": "https://www.kff.org/health-information-trust/poll-finding/kff-health-misinformation-tracking-poll-pilot/",
+    "fieldDates": "May 23–Jun 12, 2023",
+    "n": 2007,
+    "pctTrue": 24,
+    "pctFalse": 75,
+    "pctUnsure": 1,
+    "questionWording": "The MMR vaccines have been proven to cause autism in children",
+    "note": "4% definitely true, 20% probably true, 43% probably false, 32% definitely false. Annenberg’s April 2024 survey found the same 24%."
+  },
+  "truthSource": {
+    "label": "CDC, Autism and Vaccines",
+    "url": "https://www.cdc.gov/vaccine-safety/about/autism.html",
+    "oneLine": "Studies of millions of children find no link between the MMR vaccine and autism; the 1998 paper that claimed one was retracted."
+  },
+  "category": "health",
+  "difficulty": 1,
+  "status": "verified"
+}

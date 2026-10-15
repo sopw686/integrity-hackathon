@@ -1,0 +1,26 @@
+{
+  "id": "moon-landing-staged",
+  "text": "The 1969 moon landing was staged.",
+  "shortTitle": "Moon landing staged",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adult citizens",
+    "source": "YouGov",
+    "sourceUrl": "https://today.yougov.com/politics/articles/48113-which-conspiracy-theories-do-americans-believe",
+    "fieldDates": "Nov 9–13, 2023",
+    "n": 1000,
+    "pctTrue": 18,
+    "pctFalse": 65,
+    "pctUnsure": 17,
+    "questionWording": "The 1969 landing on the moon didn't occur and was actually staged somewhere in Arizona."
+  },
+  "truthSource": {
+    "label": "NASA, Apollo 11",
+    "url": "https://www.nasa.gov/mission/apollo-11/",
+    "oneLine": "Apollo 11 landed on July 20, 1969; NASA’s mission record and Lunar Reconnaissance Orbiter photographs of the landing sites document it."
+  },
+  "category": "society",
+  "difficulty": 1,
+  "status": "verified"
+}

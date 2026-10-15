@@ -1,0 +1,25 @@
+{
+  "id": "la-any-vote-center",
+  "text": "Any registered LA County voter can vote at any vote center in the county.",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+  },
+  "truthSource": {
+    "label": "Los Angeles County Registrar-Recorder/County Clerk",
+    "url": "https://www.lavote.gov/",
+    "oneLine": "Under the Voter's Choice Act, LA County voters are not tied to one polling place and can vote at any vote center in the county."
+  },
+  "category": "election",
+  "difficulty": 1,
+  "status": "draft"
+}

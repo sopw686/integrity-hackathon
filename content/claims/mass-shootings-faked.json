@@ -1,0 +1,25 @@
+{
+  "id": "mass-shootings-faked",
+  "text": "Mass shootings have been faked by groups trying to promote stricter gun control laws.",
+  "shortTitle": "Mass shootings faked",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adult citizens",
+    "source": "YouGov",
+    "sourceUrl": "https://today.yougov.com/politics/articles/48113-which-conspiracy-theories-do-americans-believe",
+    "fieldDates": "Nov 9–13, 2023",
+    "n": 1000,
+    "pctTrue": 22,
+    "pctFalse": 65,
+    "pctUnsure": 13
+  },
+  "truthSource": {
+    "label": "Connecticut State’s Attorney, Sandy Hook report (2013)",
+    "url": "https://portal.ct.gov/-/media/DCJ/SandyHookFinalReportpdf.pdf",
+    "oneLine": "The official investigation documented the Sandy Hook shooting and its 26 victims; courts in Connecticut and Texas later found a broadcaster liable for calling it fake."
+  },
+  "category": "society",
+  "difficulty": 2,
+  "status": "verified"
+}

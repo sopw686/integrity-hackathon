@@ -1,0 +1,26 @@
+{
+  "id": "ivermectin-covid",
+  "text": "Ivermectin is an effective treatment for COVID-19.",
+  "shortTitle": "Ivermectin for COVID",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "KFF Health Misinformation Tracking Poll Pilot",
+    "sourceUrl": "https://www.kff.org/health-information-trust/poll-finding/kff-health-misinformation-tracking-poll-pilot/",
+    "fieldDates": "May 23–Jun 12, 2023",
+    "n": 2007,
+    "pctTrue": 31,
+    "pctFalse": 66,
+    "pctUnsure": 3,
+    "note": "44% probably false, 22% definitely false. KFF offered definitely/probably true and probably/definitely false; the small remainder gave no answer."
+  },
+  "truthSource": {
+    "label": "FDA, Why you should not use ivermectin for COVID-19",
+    "url": "https://www.fda.gov/consumers/consumer-updates/why-you-should-not-use-ivermectin-treat-or-prevent-covid-19",
+    "oneLine": "Large randomized trials found ivermectin does not improve COVID-19 outcomes, and the FDA has not authorized it for COVID-19."
+  },
+  "category": "health",
+  "difficulty": 2,
+  "status": "verified"
+}

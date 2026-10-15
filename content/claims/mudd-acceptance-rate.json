@@ -1,0 +1,25 @@
+{
+  "id": "mudd-acceptance-rate",
+  "text": "Harvey Mudd's acceptance rate is below 10%.",
+  "answer": "false",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+  },
+  "truthSource": {
+    "label": "Harvey Mudd College, Common Data Set",
+    "url": "https://www.hmc.edu/",
+    "oneLine": "Check the latest Common Data Set (section C1) before launch: recent published admit rates have been above 10%."
+  },
+  "category": "campus",
+  "difficulty": 2,
+  "status": "draft"
+}

@@ -1,0 +1,27 @@
+{
+  "id": "sun-around-earth",
+  "text": "The Sun goes around the Earth.",
+  "shortTitle": "Sun around the Earth",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "NSF Science & Engineering Indicators 2014 (GSS 2012)",
+    "sourceUrl": "https://www.npr.org/sections/thetwo-way/2014/02/14/277058739/1-in-4-americans-think-the-sun-goes-around-the-earth-survey-says",
+    "fieldDates": "2012",
+    "n": 2200,
+    "pctTrue": 26,
+    "pctFalse": 74,
+    "pctUnsure": 0,
+    "questionWording": "Does the Earth go around the Sun, or does the Sun go around the Earth?",
+    "note": "2012 survey; older data. Forced choice, so no unsure. n is the approximate GSS 2012 sample."
+  },
+  "truthSource": {
+    "label": "NASA Science, Solar System",
+    "url": "https://science.nasa.gov/solar-system/",
+    "oneLine": "The Earth orbits the Sun once a year."
+  },
+  "category": "science",
+  "difficulty": 1,
+  "status": "verified"
+}

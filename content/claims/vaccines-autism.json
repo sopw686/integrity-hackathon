@@ -1,0 +1,26 @@
+{
+  "id": "vaccines-autism",
+  "text": "Vaccines have been shown to cause autism.",
+  "shortTitle": "Vaccines and autism",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adult citizens",
+    "source": "YouGov",
+    "sourceUrl": "https://today.yougov.com/politics/articles/48113-which-conspiracy-theories-do-americans-believe",
+    "fieldDates": "Nov 9–13, 2023",
+    "n": 1000,
+    "pctTrue": 25,
+    "pctFalse": 53,
+    "pctUnsure": 23,
+    "note": "Row sums to 101 in the source because of rounding."
+  },
+  "truthSource": {
+    "label": "Institute of Medicine, Adverse Effects of Vaccines (2012)",
+    "url": "https://nap.nationalacademies.org/catalog/13164/adverse-effects-of-vaccines-evidence-and-causality",
+    "oneLine": "The National Academies’ evidence review and cohort studies of hundreds of thousands of children found no causal link between vaccines and autism."
+  },
+  "category": "health",
+  "difficulty": 1,
+  "status": "verified"
+}

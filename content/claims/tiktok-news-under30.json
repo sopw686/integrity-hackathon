@@ -1,0 +1,26 @@
+{
+  "id": "tiktok-news-under30",
+  "text": "More than 4 in 10 U.S. adults under 30 regularly get news on TikTok.",
+  "shortTitle": "TikTok news, under 30",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "note": "HUMAN: campus set — no national belief poll exists; the room is the 5C survey. Fill from the survey; confirm the Pew figure."
+  },
+  "truthSource": {
+    "label": "Pew Research Center, Social Media and News Fact Sheet (2025)",
+    "url": "https://www.pewresearch.org/journalism/fact-sheet/social-media-and-news-fact-sheet/",
+    "oneLine": "Pew (Aug 18–24, 2025, n=5,153) found 43% of U.S. adults under 30 regularly get news on TikTok."
+  },
+  "category": "media",
+  "difficulty": 2,
+  "status": "draft"
+}

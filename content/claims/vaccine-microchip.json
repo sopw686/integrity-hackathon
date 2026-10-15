@@ -1,0 +1,26 @@
+{
+  "id": "vaccine-microchip",
+  "text": "The government is using COVID-19 vaccines to microchip Americans.",
+  "shortTitle": "Vaccine microchips",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adult citizens",
+    "source": "YouGov",
+    "sourceUrl": "https://today.yougov.com/politics/articles/48113-which-conspiracy-theories-do-americans-believe",
+    "fieldDates": "Nov 9–13, 2023",
+    "n": 1000,
+    "pctTrue": 20,
+    "pctFalse": 67,
+    "pctUnsure": 13,
+    "questionWording": "The U.S. government is using the COVID-19 vaccine to microchip the population."
+  },
+  "truthSource": {
+    "label": "FDA, COVID-19 vaccine fact sheets",
+    "url": "https://www.fda.gov/emergency-preparedness-and-response/coronavirus-disease-2019-covid-19/covid-19-vaccines",
+    "oneLine": "Every authorized vaccine’s published ingredient list contains mRNA or protein, lipids, salts, sugars and buffers; none contains a microchip."
+  },
+  "category": "health",
+  "difficulty": 1,
+  "status": "verified"
+}

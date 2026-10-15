@@ -1,0 +1,26 @@
+{
+  "id": "fathers-gene-sex",
+  "text": "It is the father’s gene that decides whether the baby is a boy or a girl.",
+  "shortTitle": "Father’s gene and sex",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "NSF Science & Engineering Indicators 2014 (GSS 2012)",
+    "sourceUrl": "https://www.npr.org/sections/thetwo-way/2014/02/14/277058739/1-in-4-americans-think-the-sun-goes-around-the-earth-survey-says",
+    "fieldDates": "2012",
+    "n": 2200,
+    "pctTrue": 63,
+    "pctFalse": 37,
+    "pctUnsure": 0,
+    "note": "VERIFY before shipping: figure recalled from NSF SEI 2014 Table 7-8 (GSS 2012), not re-read from the source in this environment. 2012 survey; older data"
+  },
+  "truthSource": {
+    "label": "MedlinePlus Genetics, Sex chromosomes",
+    "url": "https://medlineplus.gov/genetics/understanding/basics/howmanychromosomes/",
+    "oneLine": "The father’s sperm carries either an X or a Y chromosome, which determines the baby’s sex."
+  },
+  "category": "science",
+  "difficulty": 2,
+  "status": "draft"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "earth-is-flat",
+  "text": "The Earth is flat.",
+  "shortTitle": "Flat Earth",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "YouGov",
+    "sourceUrl": "https://today.yougov.com/topics/philosophy/articles-reports/2018/04/02/most-flat-earthers-consider-themselves-religious",
+    "fieldDates": "Feb 8–9, 2018",
+    "n": 8215,
+    "pctTrue": 2,
+    "pctFalse": 84,
+    "pctUnsure": 14,
+    "note": "VERIFY before shipping: 84% “always believed the world is round”; the 2% who answered flat include “always believed” and “recently converted”. Dates, n and breakdown recalled, not re-read."
+  },
+  "truthSource": {
+    "label": "NASA, Earth images",
+    "url": "https://www.nasa.gov/earth/",
+    "oneLine": "Spacecraft photography, circumnavigation and the physics of gravity all show the Earth is an oblate sphere."
+  },
+  "category": "science",
+  "difficulty": 1,
+  "status": "draft"
+}

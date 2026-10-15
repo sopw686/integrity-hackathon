@@ -1,0 +1,26 @@
+{
+  "id": "armed-school-guards",
+  "text": "Armed school police guards have been proven to prevent school shootings.",
+  "shortTitle": "Armed school guards",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "KFF Health Misinformation Tracking Poll Pilot",
+    "sourceUrl": "https://www.kff.org/health-information-trust/poll-finding/kff-health-misinformation-tracking-poll-pilot/",
+    "fieldDates": "May 23–Jun 12, 2023",
+    "n": 2007,
+    "pctTrue": 60,
+    "pctFalse": 39,
+    "pctUnsure": 1,
+    "note": "18% definitely true, 42% probably true; the false share is the published remainder. KFF offered definitely/probably true and probably/definitely false; the small remainder gave no answer."
+  },
+  "truthSource": {
+    "label": "JAMA Network Open (2021)",
+    "url": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2776515",
+    "oneLine": "A study of 133 school shootings from 1980 to 2019 found armed officers on site were not associated with fewer deaths; nothing has proven they prevent shootings."
+  },
+  "category": "society",
+  "difficulty": 3,
+  "status": "verified"
+}

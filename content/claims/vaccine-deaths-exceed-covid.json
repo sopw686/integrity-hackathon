@@ -1,0 +1,27 @@
+{
+  "id": "vaccine-deaths-exceed-covid",
+  "text": "More people have died from COVID-19 vaccines than from the COVID-19 virus.",
+  "shortTitle": "Vaccine deaths vs. virus",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "KFF Health Misinformation Tracking Poll Pilot",
+    "sourceUrl": "https://www.kff.org/health-information-trust/poll-finding/kff-health-misinformation-tracking-poll-pilot/",
+    "fieldDates": "May 23–Jun 12, 2023",
+    "n": 2007,
+    "pctTrue": 20,
+    "pctFalse": 79,
+    "pctUnsure": 1,
+    "questionWording": "More people have died from the COVID-19 vaccines than have died from the COVID-19 virus",
+    "note": "47% definitely false. KFF also reports 14% who had both heard the claim and believe it; this grid uses the share of all adults who call it definitely or probably true."
+  },
+  "truthSource": {
+    "label": "CDC COVID Data Tracker",
+    "url": "https://covid.cdc.gov/covid-data-tracker/",
+    "oneLine": "CDC counts more than 1.1 million U.S. COVID-19 deaths, while deaths causally linked to the vaccines number in the single digits to low dozens."
+  },
+  "category": "health",
+  "difficulty": 1,
+  "status": "verified"
+}

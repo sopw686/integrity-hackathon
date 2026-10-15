@@ -1,0 +1,27 @@
+{
+  "id": "sex-ed-teens",
+  "text": "Sex education that includes information about contraception makes teens more likely to be sexually active.",
+  "shortTitle": "Sex ed and teen sex",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "KFF Health Misinformation Tracking Poll Pilot",
+    "sourceUrl": "https://www.kff.org/health-information-trust/poll-finding/kff-health-misinformation-tracking-poll-pilot/",
+    "fieldDates": "May 23–Jun 12, 2023",
+    "n": 2007,
+    "pctTrue": 32,
+    "pctFalse": 67,
+    "pctUnsure": 1,
+    "questionWording": "Sex education that includes information about contraception and birth control increases the likelihood that teens will be sexually active",
+    "note": "25% probably true, 37% probably false, 30% definitely false; the definitely-true share (7%) is the published remainder."
+  },
+  "truthSource": {
+    "label": "CDC, What Works: Sexual Health Education",
+    "url": "https://www.cdc.gov/healthyyouth/whatworks/what-works-sexual-health-education.htm",
+    "oneLine": "Reviews of school-based sexual health education find it does not hasten sexual initiation and is associated with delaying it."
+  },
+  "category": "society",
+  "difficulty": 3,
+  "status": "verified"
+}

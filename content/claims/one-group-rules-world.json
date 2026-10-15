@@ -1,0 +1,27 @@
+{
+  "id": "one-group-rules-world",
+  "text": "A single group of people secretly controls events and rules the world together.",
+  "shortTitle": "A single secret group",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adult citizens",
+    "source": "YouGov",
+    "sourceUrl": "https://today.yougov.com/politics/articles/48113-which-conspiracy-theories-do-americans-believe",
+    "fieldDates": "Nov 9–13, 2023",
+    "n": 1000,
+    "pctTrue": 41,
+    "pctFalse": 44,
+    "pctUnsure": 15,
+    "questionWording": "Regardless of who is officially in charge of the government and other organizations, there is a single group of people who secretly control events and rule the world together.",
+    "note": "HUMAN: eligibility. Numbers (12/29/18/26/15) are quoted from the YouGov toplines, but no authority settles the claim."
+  },
+  "truthSource": {
+    "label": "",
+    "url": "",
+    "oneLine": "HUMAN: both researchers flagged this item as unfalsifiable rather than settled by a documented authority. Decide whether it is eligible; it stays draft until then."
+  },
+  "category": "society",
+  "difficulty": 3,
+  "status": "draft"
+}

@@ -1,0 +1,56 @@
+/* HUMAN: the font pairing. Two faces, swappable on the two lines below.
+   Headline/claim serif: Newsreader (optical-size axis loaded; the claim uses the
+   display optical size). Alternative if Newsreader reads too soft at claim size:
+   'Source Serif 4'. Labels/numerals: Archivo, with Archivo Narrow for condensed
+   labels. Remember to change the Google Fonts <link> in index.html too. */
+:root {
+  --font-serif: 'Newsreader', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-cond: 'Archivo Narrow', 'Arial Narrow', 'Archivo', 'Helvetica Neue', sans-serif;
+
+  /* HUMAN: sizes. Claim 28–34px mobile / 40px desktop, line-height 1.15. */
+  --fs-claim: clamp(28px, 2.2rem + 0.6vw, 34px);
+  --lh-claim: 1.15;
+  --fs-claim-sm: 20px;        /* the pinned, smaller claim on the slider screen */
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-label: 12px;           /* 11–12px uppercase condensed labels */
+  --ls-label: 0.08em;
+  --fs-dial: 44px;
+  --fs-wordmark: 22px;
+
+  --measure-claim: 18em;      /* ≈ 18 words max per line at claim size */
+}
+
+@media (min-width: 720px) {
+  :root { --fs-claim: 40px; }
+}
+
+.serif { font-family: var(--font-serif); }
+.sans { font-family: var(--font-sans); }
+.cond { font-family: var(--font-cond); }
+
+.label {
+  font-family: var(--font-cond);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.num { font-variant-numeric: tabular-nums; }
+
+.claim-text {
+  font-family: var(--font-serif);
+  font-size: var(--fs-claim);
+  line-height: var(--lh-claim);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  /* HUMAN: display optical size for the claim. Lower toward 34 if it feels too tight. */
+  font-variation-settings: 'opsz' 72;
+  max-width: var(--measure-claim);
+  text-wrap: balance;
+  color: var(--ink);
+}

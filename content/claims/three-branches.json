@@ -1,0 +1,26 @@
+{
+  "id": "three-branches",
+  "text": "Most Americans can name all three branches of government.",
+  "shortTitle": "Three branches",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "note": "HUMAN: campus set — the room is the 5C survey (“Can you name all three branches?”). Fill from the survey; confirm the Annenberg figure."
+  },
+  "truthSource": {
+    "label": "Annenberg Public Policy Center, Constitution Day Civics Survey (2025)",
+    "url": "https://www.annenbergpublicpolicycenter.org/",
+    "oneLine": "In August 2025 (n=1,684), 70% of U.S. adults could name all three branches."
+  },
+  "category": "society",
+  "difficulty": 2,
+  "status": "draft"
+}

@@ -1,0 +1,27 @@
+{
+  "id": "covid-vaccine-infertility",
+  "text": "COVID-19 vaccines have been proven to cause infertility.",
+  "shortTitle": "Vaccines and infertility",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "KFF Health Misinformation Tracking Poll Pilot",
+    "sourceUrl": "https://www.kff.org/health-information-trust/poll-finding/kff-health-misinformation-tracking-poll-pilot/",
+    "fieldDates": "May 23–Jun 12, 2023",
+    "n": 2007,
+    "pctTrue": 27,
+    "pctFalse": 72,
+    "pctUnsure": 1,
+    "questionWording": "The COVID-19 vaccines have been proven to cause infertility",
+    "note": "3% definitely true, 24% probably true; the false share is the published remainder. KFF offered definitely/probably true and probably/definitely false; the small remainder gave no answer."
+  },
+  "truthSource": {
+    "label": "CDC, COVID-19 vaccines and fertility",
+    "url": "https://www.cdc.gov/coronavirus/2019-ncov/vaccines/planning-for-pregnancy.html",
+    "oneLine": "CDC and prospective cohort studies find no association between COVID-19 vaccination and reduced fertility in either partner."
+  },
+  "category": "health",
+  "difficulty": 2,
+  "status": "verified"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "ca-mail-ballot-7-days",
+  "text": "A mail ballot postmarked on Election Day counts in California if it arrives within 7 days.",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+  },
+  "truthSource": {
+    "label": "California Elections Code §3020",
+    "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=ELEC&sectionNum=3020",
+    "oneLine": "A vote-by-mail ballot postmarked on or before Election Day counts if the elections official receives it no later than seven days after the election."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "draft"
+}

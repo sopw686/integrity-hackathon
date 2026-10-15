@@ -1,0 +1,25 @@
+{
+  "id": "mudd-writing-course",
+  "text": "Harvey Mudd requires every student to take a half-course in writing.",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+  },
+  "truthSource": {
+    "label": "Harvey Mudd College Catalog: Core Curriculum (Writing 1)",
+    "url": "https://catalog.hmc.edu/",
+    "oneLine": "Writing 1 is part of the Core every HMC student completes; confirm the credit value in the current catalog."
+  },
+  "category": "campus",
+  "difficulty": 2,
+  "status": "draft"
+}

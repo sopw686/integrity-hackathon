@@ -1,0 +1,27 @@
+{
+  "id": "covid-vaccine-sudden-deaths",
+  "text": "COVID-19 vaccines have caused thousands of sudden deaths in otherwise healthy people.",
+  "shortTitle": "Vaccine sudden deaths",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "KFF Health Misinformation Tracking Poll Pilot",
+    "sourceUrl": "https://www.kff.org/health-information-trust/poll-finding/kff-health-misinformation-tracking-poll-pilot/",
+    "fieldDates": "May 23–Jun 12, 2023",
+    "n": 2007,
+    "pctTrue": 34,
+    "pctFalse": 65,
+    "pctUnsure": 1,
+    "questionWording": "The COVID-19 vaccines have caused thousands of sudden deaths in otherwise healthy people",
+    "note": "10% definitely true, 23% probably true, 34% probably false, 31% definitely false."
+  },
+  "truthSource": {
+    "label": "CDC, Selected adverse events after COVID-19 vaccination",
+    "url": "https://www.cdc.gov/coronavirus/2019-ncov/vaccines/safety/adverse-events.html",
+    "oneLine": "Safety monitoring has not found that the vaccines caused thousands of deaths; unverified reports do not establish causation and confirmed vaccine-caused deaths are rare."
+  },
+  "category": "health",
+  "difficulty": 2,
+  "status": "verified"
+}

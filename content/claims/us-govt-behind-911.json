@@ -1,0 +1,27 @@
+{
+  "id": "us-govt-behind-911",
+  "text": "The U.S. government was behind the 9/11 attacks.",
+  "shortTitle": "Government behind 9/11",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adult citizens",
+    "source": "YouGov",
+    "sourceUrl": "https://today.yougov.com/politics/articles/48113-which-conspiracy-theories-do-americans-believe",
+    "fieldDates": "Nov 9–13, 2023",
+    "n": 1000,
+    "pctTrue": 20,
+    "pctFalse": 65,
+    "pctUnsure": 14,
+    "questionWording": "The U.S. government was behind the 9/11 attacks on New York City.",
+    "note": "Row sums to 99 in the source because of rounding."
+  },
+  "truthSource": {
+    "label": "The 9/11 Commission Report",
+    "url": "https://www.9-11commission.gov/report/",
+    "oneLine": "The bipartisan 9/11 Commission found the attacks were planned and carried out by al-Qaeda."
+  },
+  "category": "society",
+  "difficulty": 1,
+  "status": "verified"
+}

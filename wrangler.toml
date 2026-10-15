@@ -1,0 +1,5 @@
+# Cloudflare Pages: build command `npm run build`, output directory `dist`.
+# public/_redirects provides the SPA fallback so /play, /results, /c/:id resolve.
+name = "read-the-room"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-01-01"

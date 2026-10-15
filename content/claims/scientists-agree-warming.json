@@ -1,0 +1,27 @@
+{
+  "id": "scientists-agree-warming",
+  "text": "Most climate scientists think global warming is happening.",
+  "shortTitle": "Scientists on warming",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "Yale/GMU Climate Change in the American Mind",
+    "sourceUrl": "https://climatecommunication.yale.edu/publications/climate-change-in-the-american-mind-beliefs-attitudes-spring-2026/toc/3/",
+    "fieldDates": "",
+    "n": 0,
+    "pctTrue": 54,
+    "pctFalse": 27,
+    "pctUnsure": 19,
+    "questionWording": "Which comes closest to your own view? Most scientists think global warming is happening / there is a lot of disagreement among scientists / most scientists think global warming is not happening / don’t know enough to say",
+    "note": "VERIFY before shipping: fill fieldDates and n from the Spring 2026 report; figures are from the brief and were not re-read from the report in this environment."
+  },
+  "truthSource": {
+    "label": "NASA, Scientific consensus on climate change",
+    "url": "https://science.nasa.gov/climate-change/scientific-consensus/",
+    "oneLine": "Multiple independent studies find that 97% or more of publishing climate scientists agree the climate is warming."
+  },
+  "category": "science",
+  "difficulty": 2,
+  "status": "draft"
+}

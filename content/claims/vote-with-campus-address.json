@@ -1,0 +1,25 @@
+{
+  "id": "vote-with-campus-address",
+  "text": "Students can vote in Claremont using their campus address.",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: voter registration",
+    "url": "https://www.sos.ca.gov/elections/voter-registration",
+    "oneLine": "Students may register at the address where they live while at school, including a campus residence hall; confirm on the SOS student voting guidance."
+  },
+  "category": "election",
+  "difficulty": 1,
+  "status": "draft"
+}

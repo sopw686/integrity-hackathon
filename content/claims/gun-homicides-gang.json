@@ -1,0 +1,27 @@
+{
+  "id": "gun-homicides-gang",
+  "text": "Most gun homicides in the United States are gang related.",
+  "shortTitle": "Gang-related homicides",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "KFF Health Misinformation Tracking Poll Pilot",
+    "sourceUrl": "https://www.kff.org/health-information-trust/poll-finding/kff-health-misinformation-tracking-poll-pilot/",
+    "fieldDates": "May 23–Jun 12, 2023",
+    "n": 2007,
+    "pctTrue": 43,
+    "pctFalse": 57,
+    "pctUnsure": 1,
+    "questionWording": "Most gun homicides in the U.S. are gang related",
+    "note": "9% definitely true, 33% probably true, 37% probably false, 19% definitely false; sums to 101 because of rounding."
+  },
+  "truthSource": {
+    "label": "National Gang Center (U.S. Dept. of Justice)",
+    "url": "https://nationalgangcenter.ojp.gov/survey-analysis/measuring-the-extent-of-gang-problems",
+    "oneLine": "Federal data put gang-related killings at roughly one in eight U.S. homicides, far from a majority."
+  },
+  "category": "society",
+  "difficulty": 3,
+  "status": "verified"
+}

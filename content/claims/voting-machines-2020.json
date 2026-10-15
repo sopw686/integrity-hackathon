@@ -1,0 +1,25 @@
+{
+  "id": "voting-machines-2020",
+  "text": "Voting machines were programmed to change votes in the 2020 election.",
+  "shortTitle": "Voting machines, 2020",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adult citizens",
+    "source": "YouGov",
+    "sourceUrl": "https://today.yougov.com/politics/articles/48113-which-conspiracy-theories-do-americans-believe",
+    "fieldDates": "Nov 9–13, 2023",
+    "n": 1000,
+    "pctTrue": 29,
+    "pctFalse": 51,
+    "pctUnsure": 20
+  },
+  "truthSource": {
+    "label": "CISA joint statement, Nov 12, 2020",
+    "url": "https://www.cisa.gov/news-events/news/joint-statement-elections-infrastructure-government-coordinating-council-election",
+    "oneLine": "Federal election-security officials found no evidence that any voting system changed votes; audits, recounts and more than 60 court rulings reached the same result."
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "verified"
+}

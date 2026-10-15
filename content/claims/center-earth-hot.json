@@ -1,0 +1,26 @@
+{
+  "id": "center-earth-hot",
+  "text": "The center of the Earth is very hot.",
+  "shortTitle": "Earth’s hot core",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "NSF Science & Engineering Indicators 2014 (GSS 2012)",
+    "sourceUrl": "https://www.npr.org/sections/thetwo-way/2014/02/14/277058739/1-in-4-americans-think-the-sun-goes-around-the-earth-survey-says",
+    "fieldDates": "2012",
+    "n": 2200,
+    "pctTrue": 84,
+    "pctFalse": 16,
+    "pctUnsure": 0,
+    "note": "VERIFY before shipping: figure recalled from NSF SEI 2014 Table 7-8 (GSS 2012), not re-read from the source in this environment. 2012 survey; older data"
+  },
+  "truthSource": {
+    "label": "USGS, Inside the Earth",
+    "url": "https://pubs.usgs.gov/gip/dynamic/inside.html",
+    "oneLine": "The inner core is estimated at over 5,000 °C."
+  },
+  "category": "science",
+  "difficulty": 1,
+  "status": "draft"
+}

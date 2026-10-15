@@ -1,0 +1,25 @@
+{
+  "id": "shuttle-weekends",
+  "text": "The 5C shuttle runs on weekends.",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+  },
+  "truthSource": {
+    "label": "The Claremont Colleges, published shuttle schedule",
+    "url": "https://www.claremont.edu/",
+    "oneLine": "Confirm against the current published shuttle schedule for this semester before launch."
+  },
+  "category": "campus",
+  "difficulty": 1,
+  "status": "draft"
+}

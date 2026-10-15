@@ -1,0 +1,25 @@
+{
+  "id": "obama-birthplace",
+  "text": "Barack Obama was not born in the United States.",
+  "shortTitle": "Obama’s birthplace",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adult citizens",
+    "source": "YouGov",
+    "sourceUrl": "https://today.yougov.com/politics/articles/48113-which-conspiracy-theories-do-americans-believe",
+    "fieldDates": "Nov 9–13, 2023",
+    "n": 1000,
+    "pctTrue": 31,
+    "pctFalse": 50,
+    "pctUnsure": 19
+  },
+  "truthSource": {
+    "label": "Hawaii Department of Health, Vital Records",
+    "url": "https://health.hawaii.gov/vitalrecords/obama/",
+    "oneLine": "Hawaii’s health department holds the original 1961 Honolulu birth record; the certified long-form certificate was released in April 2011."
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "verified"
+}

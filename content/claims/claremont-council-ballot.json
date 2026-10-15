@@ -1,0 +1,25 @@
+{
+  "id": "claremont-council-ballot",
+  "text": "Claremont city council elections are on the same ballot as the November midterm.",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+  },
+  "truthSource": {
+    "label": "City of Claremont, City Clerk",
+    "url": "https://www.claremontca.gov/",
+    "oneLine": "Confirm with the city clerk: council seats are elected at the November general election in even years."
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "draft"
+}

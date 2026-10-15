@@ -1,0 +1,26 @@
+{
+  "id": "humans-dinosaurs-coexisted",
+  "text": "Humans and dinosaurs lived on the planet at the same time.",
+  "shortTitle": "Humans and dinosaurs",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "YouGov",
+    "sourceUrl": "https://today.yougov.com/",
+    "fieldDates": "Jun 2015",
+    "n": 1000,
+    "pctTrue": 41,
+    "pctFalse": 43,
+    "pctUnsure": 16,
+    "note": "VERIFY before shipping: exact article URL, field dates, n and breakdown recalled, not re-read."
+  },
+  "truthSource": {
+    "label": "Smithsonian National Museum of Natural History",
+    "url": "https://naturalhistory.si.edu/education/teaching-resources/paleontology/dinosaurs",
+    "oneLine": "Non-avian dinosaurs died out about 66 million years ago; the earliest humans appeared about 300,000 years ago."
+  },
+  "category": "science",
+  "difficulty": 2,
+  "status": "draft"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "pomona-endowment-harvard",
+  "text": "Pomona's endowment is larger than Harvard's.",
+  "answer": "false",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+  },
+  "truthSource": {
+    "label": "Harvard University: endowment",
+    "url": "https://www.harvard.edu/about/endowment/",
+    "oneLine": "Harvard's endowment is over $50 billion; Pomona's is about $3 billion (confirm both: Harvard Financial Report and Pomona's audited financial statements at pomona.edu)."
+  },
+  "category": "campus",
+  "difficulty": 1,
+  "status": "draft"
+}

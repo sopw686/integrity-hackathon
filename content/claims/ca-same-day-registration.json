@@ -1,0 +1,25 @@
+{
+  "id": "ca-same-day-registration",
+  "text": "In California, you can register and vote on the same day, including Election Day.",
+  "answer": "true",
+  "room": {
+    "kind": "campus",
+    "label": "5C students",
+    "pctTrue": 0,
+    "pctFalse": 0,
+    "pctUnsure": 0,
+    "source": "5C student survey (team)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Same Day Voter Registration",
+    "url": "https://www.sos.ca.gov/elections/voter-registration/same-day-reg",
+    "oneLine": "California offers conditional voter registration: you can register and cast a provisional ballot through Election Day at a county elections office or vote center."
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "draft"
+}
