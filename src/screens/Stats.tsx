@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 import { Header } from '../components/Header'
-import { addDays, formatShort } from '../lib/day'
+import { addDays, formatDay } from '../lib/day'
 import { useTitle, useToday } from '../lib/hooks'
 import { currentStreak, lifetime, storageAvailable } from '../lib/storage'
 import { COPY } from '../tokens/copy'
@@ -50,7 +50,7 @@ export function Stats() {
               <div><dt className="label">{COPY.streak}</dt><dd className="num">{streak}</dd></div>
               <div><dt className="label">🦊 Fox</dt><dd className="num">{life.foxes}</dd></div>
               <div><dt className="label">🐑 Sheep</dt><dd className="num">{life.sheep}</dd></div>
-              <div><dt className="label">Best read</dt><dd className="num">{life.bestRead ? `${life.bestRead.read} · ${formatShort(life.bestRead.date)}` : '—'}</dd></div>
+              <div><dt className="label">Best read</dt><dd className="num">{life.bestRead ? `${life.bestRead.read} · ${formatDay(life.bestRead.date)}` : '—'}</dd></div>
             </dl>
           </section>
           <section className="section">

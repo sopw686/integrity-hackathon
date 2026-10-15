@@ -60,3 +60,10 @@ export function formatShort(key: string): string {
   const date = new Date(Date.UTC(y, m - 1, d, 12))
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
 }
+
+/** "Oct 15" */
+export function formatDay(key: string): string {
+  const [y, m, d] = key.split('-').map(Number)
+  const date = new Date(Date.UTC(y, m - 1, d, 12))
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
+}

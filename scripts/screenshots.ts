@@ -38,9 +38,13 @@ async function newContext(browser: Browser, size: SizeKey, theme: Theme, init?: 
     ({ today, freezeT, storage, key }) => {
       ;(window as unknown as { __RTR_TODAY?: string }).__RTR_TODAY = today
       if (typeof freezeT === 'number') (window as unknown as { __RTR_FREEZE_T?: number }).__RTR_FREEZE_T = freezeT
+      // Seed or clear storage once per browser context, not on every navigation.
       try {
-        if (storage) window.localStorage.setItem(key, JSON.stringify(storage))
-        else window.localStorage.removeItem(key)
+        if (!window.sessionStorage.getItem('__rtr_seeded')) {
+          if (storage) window.localStorage.setItem(key, JSON.stringify(storage))
+          else window.localStorage.removeItem(key)
+          window.sessionStorage.setItem('__rtr_seeded', '1')
+        }
       } catch {
         /* ignore */
       }
