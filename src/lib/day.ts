@@ -67,3 +67,15 @@ export function formatDay(key: string): string {
   const date = new Date(Date.UTC(y, m - 1, d, 12))
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
 }
+
+/** Milliseconds until the next puzzle opens (midnight, America/Los_Angeles). */
+export function msUntilNextPuzzle(now: Date = new Date()): number {
+  try {
+    const parts = new Intl.DateTimeFormat('en-US', { timeZone: TIME_ZONE, hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23' }).formatToParts(now)
+    const get = (t: string) => Number(parts.find((p) => p.type === t)?.value ?? 0)
+    const elapsed = get('hour') * 3600 + get('minute') * 60 + get('second')
+    return Math.max(0, (86_400 - elapsed) * 1000 - now.getMilliseconds())
+  } catch {
+    return 0
+  }
+}

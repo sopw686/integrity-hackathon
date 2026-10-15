@@ -65,8 +65,9 @@ Today: 34 verified, 15 draft; day files cover 2026-10-04 through 2026-10-29 with
 ## Design
 
 Hand-written CSS on a small token system (`src/tokens/`). Newsreader for claims, Archivo and
-Archivo Narrow for labels and numerals. Paper, ink, hairline rules, one accent (vermilion)
-reserved for *you*. No gradients, no shadows beyond the stamp's ink bleed, no partisan colors.
+Archivo Narrow for labels and numerals. Paper, ink, hairline rules, vermilion reserved for *you*,
+plus a small game-show layer (push-buttons, confetti made of dots, synthesized sound and haptics,
+yellow/green for combos and correct calls; see `design/REVIEW.md`). No partisan colors.
 Dark mode follows `prefers-color-scheme`; reduced motion collapses the reveal to one crossfade.
 
 `src/lib/geometry.ts` is the single source of truth for the room: the SVG `<Room />`, the

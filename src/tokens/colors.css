@@ -13,6 +13,14 @@
   --dot-false-fill: var(--paper);
   --dot-false-ring: var(--ink);
   --focus: var(--ink);
+  /* HUMAN: the game-show layer. Added for celebration moments only: correct calls, combos,
+     bullseyes, confetti. Green is "you got it right", never a side of an argument. */
+  --pop: #F5C542;
+  --pop-soft: #FBE7A6;
+  --win: #2F8F5B;
+  --win-soft: #CFE8D8;
+  --btn-edge: #000000;
+  --btn-edge-soft: #B9B2A2;
   color-scheme: light;
 }
 
@@ -23,6 +31,12 @@
     --rule: #3A362F;
     --muted: #A09A90;
     --hatch: #4E4941;
+    --pop: #F2C14E;
+    --pop-soft: #4A3D17;
+    --win: #5CC08A;
+    --win-soft: #1E3A2A;
+    --btn-edge: #8F897E;
+    --btn-edge-soft: #000000;
     color-scheme: dark;
   }
 }
@@ -33,5 +47,11 @@
   --rule: #3A362F;
   --muted: #A09A90;
   --hatch: #4E4941;
+  --pop: #F2C14E;
+  --pop-soft: #4A3D17;
+  --win: #5CC08A;
+  --win-soft: #1E3A2A;
+  --btn-edge: #8F897E;
+  --btn-edge-soft: #000000;
   color-scheme: dark;
 }

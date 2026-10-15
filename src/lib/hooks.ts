@@ -98,3 +98,53 @@ export function useTitle(title: string) {
     }
   }, [title])
 }
+
+/** True when nothing should move: reduced motion, or the test hook froze the clock. */
+export function useCalm(): boolean {
+  const reduced = useReduced()
+  return reduced || typeof window.__RTR_FREEZE_T === 'number'
+}
+
+/**
+ * Fire each cue once as the reveal clock passes its time. Cues are skipped, not replayed,
+ * when the clock jumps straight to the end (skip, frozen clock, revisit).
+ */
+export function useCues(t: number, cues: Array<[number, () => void]>, resetKey: unknown) {
+  const fired = useRef(new Set<number>())
+  const ref = useRef(cues)
+  ref.current = cues
+  useEffect(() => {
+    fired.current = new Set()
+  }, [resetKey])
+  useEffect(() => {
+    if (!Number.isFinite(t) || t <= 0) return
+    ref.current.forEach(([at, fn], i) => {
+      if (t >= at && !fired.current.has(i)) {
+        fired.current.add(i)
+        fn()
+      }
+    })
+  }, [t])
+}
+
+/** Count from 0 up to `to` over `ms`, eased; jumps straight there when `run` is false. */
+export function useCountUp(to: number, ms = 900, run = true, delay = 0): number {
+  const [v, setV] = useState(run ? 0 : to)
+  useEffect(() => {
+    if (!run) {
+      setV(to)
+      return
+    }
+    let raf = 0
+    let start = 0
+    const tick = (now: number) => {
+      if (!start) start = now
+      const p = Math.min(1, Math.max(0, (now - start - delay) / ms))
+      setV(Math.round(to * (1 - Math.pow(1 - p, 3))))
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [to, ms, run, delay])
+  return v
+}

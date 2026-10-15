@@ -10,11 +10,14 @@ export function RangeSlider({
   onChange,
   label,
   disabled = false,
+  onEnter,
 }: {
   value: number
   onChange: (v: number) => void
   label: string
   disabled?: boolean
+  /** Enter on the slider locks the guess */
+  onEnter?: () => void
 }) {
   const id = useId()
   return (
@@ -32,10 +35,17 @@ export function RangeSlider({
         aria-valuetext={`${value} of 100 say true`}
         onChange={(e) => onChange(Number(e.currentTarget.value))}
         onInput={(e) => onChange(Number((e.currentTarget as HTMLInputElement).value))}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && onEnter) {
+            e.preventDefault()
+            onEnter()
+          }
+        }}
         style={{ ['--p' as string]: `${value}%` }}
       />
       <output htmlFor={id} className="range-value num" aria-hidden="true">
-        {value}%
+        {value}
+        <span className="range-pct">%</span>
       </output>
     </div>
   )

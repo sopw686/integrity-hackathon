@@ -12,14 +12,14 @@ export function Stamp({ side, animate = true }: { side: 'true' | 'false'; animat
       className="stamp"
       aria-label={`Stamped ${side}`}
       role="img"
-      initial={animate ? { scale: STAMP_FROM_SCALE, opacity: 0, boxShadow: '0 0 0 1px var(--ink)' } : false}
-      animate={{ scale: 1, opacity: 1, boxShadow: '0 0 0 0px rgba(0,0,0,0)' }}
+      initial={animate ? { scale: STAMP_FROM_SCALE, opacity: 0, rotate: STAMP_ROTATION - 14, boxShadow: '0 0 0 6px var(--ink)' } : false}
+      animate={{ scale: 1, opacity: 1, rotate: STAMP_ROTATION, boxShadow: '0 0 0 0px rgba(0,0,0,0)' }}
       transition={{
         scale: { duration: STAMP_DURATION, ease: STAMP_EASE },
-        opacity: { duration: STAMP_DURATION * 0.6 },
+        opacity: { duration: STAMP_DURATION * 0.4 },
+        rotate: { duration: STAMP_DURATION, ease: STAMP_EASE },
         boxShadow: { duration: STAMP_BLEED_FADE, delay: STAMP_DURATION },
       }}
-      style={{ rotate: STAMP_ROTATION }}
     >
       {side === 'true' ? COPY.stampTrue : COPY.stampFalse}
     </m.span>

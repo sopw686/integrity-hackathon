@@ -63,6 +63,30 @@ export const COPY = {
   source: (label: string, dates: string, n: number) => `${label}, ${dates}, n=${n.toLocaleString('en-US')}`,
   readOnly: 'Already revealed',
   notFound: 'That claim isn’t here.',
+  // HUMAN: the game-show layer. Short, loud, and still true to what happened.
+  getReady: 'Read the room',
+  go: 'Go',
+  countdownSkip: 'Skip the countdown',
+  correct: ['Nailed it', 'Correct', 'Called it', 'Right on'],
+  wrong: ['Nope', 'Not quite', 'Swing and a miss', 'The room disagrees'],
+  bullseye: 'Bullseye read',
+  closeRead: 'Close read',
+  readPts: (n: number) => `+${n}`,
+  combo: (n: number) => `${n} in a row`,
+  soundOn: 'Sound on',
+  soundOff: 'Sound off',
+  nextIn: 'Next room opens in',
+  lockKey: 'Enter',
+  // Results headline, picked from the day's two scores (first match wins).
+  ranks: [
+    { min: { accuracy: 5, read: 80 }, title: 'Mind reader', line: 'Every call right, and you knew the room cold.' },
+    { min: { accuracy: 5, read: 0 }, title: 'Flawless', line: 'Five for five on the facts.' },
+    { min: { accuracy: 0, read: 70 }, title: 'Room whisperer', line: 'You know what people think. Uncanny.' },
+    { min: { accuracy: 4, read: 0 }, title: 'Sharp eye', line: 'Four out of five. The room should ask you.' },
+    { min: { accuracy: 3, read: 40 }, title: 'Good read', line: 'Solid on the facts, decent on the crowd.' },
+    { min: { accuracy: 3, read: 0 }, title: 'Holding steady', line: 'More right than wrong. Tomorrow, the room.' },
+    { min: { accuracy: 0, read: 0 }, title: 'Wallflower', line: 'Tough room today. There is always tomorrow.' },
+  ],
   // HUMAN: the share text.
   shareText: (no: number, acc: number, read: number, badges: string) =>
     `Read the Room #${no}  🎯 ${acc}/5  📡 ${read}\n${badges}`,

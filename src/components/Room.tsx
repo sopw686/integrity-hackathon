@@ -112,8 +112,11 @@ export const Room = memo(function Room({
     } else if (p <= 0) {
       dots.push(<Dot key={i} i={i} kind={b} L={L} hatchId={hatchId} />)
     } else {
+      // Each dot swells as it flips, so the rows "pop" over like a stadium wave.
+      const { x, y } = center(i, L)
+      const s = reduced ? 1 : 1 + 0.45 * Math.sin(Math.PI * p)
       dots.push(
-        <g key={i}>
+        <g key={i} transform={s === 1 ? undefined : `translate(${x} ${y}) scale(${s}) translate(${-x} ${-y})`}>
           <Dot i={i} kind={a} L={L} hatchId={hatchId} />
           <g opacity={1 - p}>
             <Dot i={i} kind={b} L={L} hatchId={hatchId} />
@@ -139,7 +142,7 @@ export const Room = memo(function Room({
 
   return (
     <svg
-      className={className}
+      className={[className, mode === 'slider' ? 'room-live' : ''].filter(Boolean).join(' ') || undefined}
       width={L.size}
       height={L.size}
       viewBox={`0 0 ${L.size} ${L.size}`}

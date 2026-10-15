@@ -80,10 +80,18 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   text-transform: uppercase;
   text-decoration: none;
   font-variant-numeric: tabular-nums;
-  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+  /* Push-buttons: a hard 4px ink edge underneath, so every press physically sinks. */
+  box-shadow: 0 4px 0 var(--btn-edge);
+  transform: translateY(0);
+  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease, transform 90ms ease, box-shadow 90ms ease;
+  -webkit-tap-highlight-color: transparent;
 }
+.btn:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 5px 0 var(--btn-edge); }
+.btn:not(:disabled):active { transform: translateY(4px); box-shadow: 0 0 0 var(--btn-edge); }
 .btn:disabled { opacity: 0.38; cursor: default; }
-.btn.secondary { background: var(--paper); color: var(--ink); }
+.btn.secondary { background: var(--paper); color: var(--ink); box-shadow: 0 4px 0 var(--ink); }
+.btn.secondary:not(:disabled):hover { box-shadow: 0 5px 0 var(--ink); }
+.btn.secondary:not(:disabled):active { box-shadow: 0 0 0 var(--ink); }
 .btn.secondary:not(:disabled):hover { background: var(--rule); }
 .btn:not(.secondary):not(:disabled):hover { opacity: 0.92; }
 .btn.armed { position: relative; }
@@ -99,6 +107,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   border-radius: 2px 0 0 2px;
 }
 .btn.quiet {
+  box-shadow: none !important;
+  transform: none !important;
   min-height: 40px;
   background: none;
   border-color: transparent;
@@ -143,7 +153,13 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   white-space: nowrap; border: 0;
 }
 
+/* Every screen arrives: a short rise and fade. */
+.page { animation: page-in 320ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+@keyframes page-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
 /* Reduced motion: nothing moves except the single crossfade handled in components. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; }
 }
+/* Test hook: a frozen clock means a still page for screenshots. */
+.frozen *, .frozen *::before, .frozen *::after { animation: none !important; transition: none !important; }
