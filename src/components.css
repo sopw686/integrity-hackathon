@@ -10,6 +10,11 @@ h1.claim-pinned, h1.claim-text { font-weight: 400; margin: 0; }
 .home-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .link-like { font-family: var(--font-sans); font-size: var(--fs-small); text-decoration: underline; text-underline-offset: 0.15em; color: var(--muted); padding: 8px 0; }
 .link-like:hover { color: var(--ink); }
+.yesterday { padding-top: 18px; }
+.yesterday-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.yesterday-head .label { margin: 0; }
+.yesterday-rooms { display: flex; justify-content: space-between; gap: 6px; text-decoration: none; max-width: 100%; overflow: hidden; }
+.yesterday-room { display: block; line-height: 0; }
 .footer-nav { display: flex; gap: 20px; font-size: var(--fs-small); color: var(--muted); margin-top: auto; }
 .footer-nav a, .footer-nav button { color: var(--muted); }
 .footer-nav a:hover, .footer-nav button:hover { color: var(--ink); }

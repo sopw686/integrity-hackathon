@@ -43,6 +43,7 @@ async function newContext(browser: Browser, size: SizeKey, theme: Theme, init?: 
         if (!window.sessionStorage.getItem('__rtr_seeded')) {
           if (storage) window.localStorage.setItem(key, JSON.stringify(storage))
           else window.localStorage.removeItem(key)
+          window.localStorage.setItem('read-the-room:howto-seen', '1') // the first-visit dialog is shot separately
           window.sessionStorage.setItem('__rtr_seeded', '1')
         }
       } catch {
@@ -88,6 +89,14 @@ async function flows(browser: Browser, size: SizeKey, theme: Theme) {
     await page.goto(`${BASE}/`)
     await settle(page)
     await shot(page, '01-home', size, theme)
+    // First visit: the dialog opens by itself once. Clear the flag and reload to capture it.
+    await page.evaluate(() => window.localStorage.removeItem('read-the-room:howto-seen'))
+    await page.reload()
+    await settle(page)
+    await page.waitForTimeout(300)
+    await shot(page, '00-first-visit', size, theme, false)
+    await page.getByRole('button', { name: 'Skip' }).click()
+    await page.waitForTimeout(200)
     // How to play
     await page.getByRole('button', { name: 'How to play' }).first().click()
     await page.waitForTimeout(300)

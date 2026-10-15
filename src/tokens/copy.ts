@@ -50,6 +50,8 @@ export const COPY = {
   sendOne: 'Send a friend the one that got you',
   doneToday: 'Today is done. Come back tomorrow.',
   archiveNote: 'archive — doesn’t count',
+  yesterday: 'Yesterday',
+  playIt: 'Play it',
   playToday: 'Play today’s puzzle',
   copied: 'Copied',
   shared: 'Shared',

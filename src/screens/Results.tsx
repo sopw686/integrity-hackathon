@@ -6,7 +6,7 @@ import { Badge } from '../components/Badge'
 import { MiniRoom } from '../components/Room'
 import { dayClaims, getDay } from '../lib/content'
 import { formatLong, isValidDateKey, puzzleNumber } from '../lib/day'
-import { useTitle, useToday } from '../lib/hooks'
+import { useDotSize, useTitle, useToday } from '../lib/hooks'
 import { scoreClaim } from '../lib/scoring'
 import { currentStreak, getDay as getRecord } from '../lib/storage'
 import { shareResults, type ShareOutcome } from '../lib/share'
@@ -32,6 +32,7 @@ export function Results() {
   const no = puzzleNumber(date)
   const [outcome, setOutcome] = useState<ShareOutcome | null>(null)
   const [sent, setSent] = useState(false)
+  const miniDot = useDotSize() === 18 ? 5 : 4
   useTitle(`Results No. ${no} — Read the Room`)
 
   const complete = Boolean(day && record?.completedAt)
@@ -97,7 +98,7 @@ export function Results() {
           return (
             <Link to={`/c/${c.id}`} className="results-row" key={c.id}>
               <span className="results-grid" aria-hidden="true">
-                <MiniRoom split={c.room} label={c.room.label} guess={r.guess} verdict={r.verdict} dot={4} gap={2} />
+                <MiniRoom split={c.room} label={c.room.label} guess={r.guess} verdict={r.verdict} dot={miniDot} gap={2} />
               </span>
               <span className="results-body">
                 <span className="results-title serif">{shortTitle(c)}</span>

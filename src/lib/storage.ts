@@ -2,6 +2,7 @@ import type { BadgeId, DayRecord, PersistedState, Verdict } from './types'
 import { addDays } from './day'
 
 export const STORAGE_KEY = 'read-the-room:v1'
+const HOWTO_KEY = 'read-the-room:howto-seen'
 
 const empty = (): PersistedState => ({ version: 1, days: {}, streak: 0, lastPlayed: null })
 
@@ -20,6 +21,22 @@ export function storageAvailable(): boolean {
     storageWorks = false
   }
   return storageWorks
+}
+
+export function hasSeenHowTo(): boolean {
+  try {
+    return window.localStorage.getItem(HOWTO_KEY) === '1'
+  } catch {
+    return true
+  }
+}
+
+export function markHowToSeen(): void {
+  try {
+    window.localStorage.setItem(HOWTO_KEY, '1')
+  } catch {
+    /* ignore */
+  }
 }
 
 export function load(): PersistedState {

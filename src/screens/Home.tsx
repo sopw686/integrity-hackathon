@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { Header } from '../components/Header'
 import { Dial } from '../components/Dial'
 import { HowToDialog } from '../components/HowToDialog'
 import { getDay, dayClaims } from '../lib/content'
+import { MiniRoom } from '../components/Room'
+import { addDays } from '../lib/day'
 import { formatLong, puzzleNumber } from '../lib/day'
-import { useTitle, useToday } from '../lib/hooks'
-import { currentStreak, getDay as getRecord, storageAvailable } from '../lib/storage'
+import { useDotSize, useTitle, useToday } from '../lib/hooks'
+import { currentStreak, getDay as getRecord, hasSeenHowTo, markHowToSeen, storageAvailable } from '../lib/storage'
 import { shareResults, type ShareOutcome } from '../lib/share'
 import { COPY } from '../tokens/copy'
 import { track } from '../lib/track'
@@ -21,6 +23,19 @@ export function Home() {
   const done = Boolean(record?.completedAt && !record.archive)
   const streak = currentStreak(today)
   const [howTo, setHowTo] = useState(false)
+  const miniDot = useDotSize() === 18 ? 5 : 4
+  const yesterdayKey = addDays(today, -1)
+  const yesterday = getDay(yesterdayKey)
+  const yesterdayRecord = getRecord(yesterdayKey)
+
+  // First visit: open How to play once. Never when storage is off (it would open every time).
+  useEffect(() => {
+    if (storageAvailable() && !hasSeenHowTo()) setHowTo(true)
+  }, [])
+  const closeHowTo = (open: boolean) => {
+    setHowTo(open)
+    if (!open) markHowToSeen()
+  }
   const [outcome, setOutcome] = useState<ShareOutcome | null>(null)
 
   const onShare = async () => {
@@ -86,12 +101,29 @@ export function Home() {
           </>
         )}
       </section>
+      {yesterday && (
+        <section className="section yesterday">
+          <div className="yesterday-head">
+            <span className="label">{COPY.yesterday} · No. {puzzleNumber(yesterdayKey)}</span>
+            <Link to={yesterdayRecord?.completedAt ? `/results?day=${yesterdayKey}` : `/play?day=${yesterdayKey}`} className="link-like">
+              {yesterdayRecord?.completedAt ? COPY.seeResults : COPY.playIt}
+            </Link>
+          </div>
+          <Link to={`/play?day=${yesterdayKey}`} className="yesterday-rooms" aria-label={`Yesterday’s five rooms, No. ${puzzleNumber(yesterdayKey)}. Play it from the archive.`}>
+            {dayClaims(yesterday).map((c, i) => (
+              <span className="yesterday-room" key={c.id} aria-hidden="true">
+                <MiniRoom split={c.room} label={c.room.label} guess={yesterdayRecord?.guesses[i]} verdict={yesterdayRecord?.answers[i]} dot={miniDot} gap={2} />
+              </span>
+            ))}
+          </Link>
+        </section>
+      )}
       <nav className="section footer-nav" aria-label="More">
         <Link to="/stats">{COPY.stats}</Link>
         <Link to="/archive">{COPY.archive}</Link>
       </nav>
       {!storageAvailable() && <p className="small muted">{COPY.storageOff}</p>}
-      <HowToDialog open={howTo} onOpenChange={setHowTo} />
+      <HowToDialog open={howTo} onOpenChange={closeHowTo} />
     </main>
   )
 }

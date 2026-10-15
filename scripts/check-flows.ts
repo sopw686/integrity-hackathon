@@ -14,7 +14,7 @@ async function main() {
   // 1. Keyboard-only full loop
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } })
-    await ctx.addInitScript(() => { (window as any).__RTR_TODAY = '2026-10-15'; (window as any).__RTR_FREEZE_T = 999; try { localStorage.clear() } catch {} })
+    await ctx.addInitScript(() => { (window as any).__RTR_TODAY = '2026-10-15'; (window as any).__RTR_FREEZE_T = 999; try { localStorage.clear(); localStorage.setItem('read-the-room:howto-seen', '1') } catch {} })
     const page = await ctx.newPage()
     await page.goto(BASE + '/')
     await page.waitForLoadState('networkidle')
@@ -74,7 +74,7 @@ async function main() {
   // 3. Reduced motion + axe on play screens
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
-    await ctx.addInitScript(() => { (window as any).__RTR_TODAY = '2026-10-15'; try { localStorage.clear() } catch {} })
+    await ctx.addInitScript(() => { (window as any).__RTR_TODAY = '2026-10-15'; try { localStorage.clear(); localStorage.setItem('read-the-room:howto-seen', '1') } catch {} })
     const page = await ctx.newPage()
     await page.goto(BASE + '/play')
     await page.waitForLoadState('networkidle')
@@ -95,7 +95,7 @@ async function main() {
   // 4. Normal-motion timing: Next should appear ≈ 2.3 s after Lock
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } })
-    await ctx.addInitScript(() => { (window as any).__RTR_TODAY = '2026-10-15'; try { localStorage.clear() } catch {} })
+    await ctx.addInitScript(() => { (window as any).__RTR_TODAY = '2026-10-15'; try { localStorage.clear(); localStorage.setItem('read-the-room:howto-seen', '1') } catch {} })
     const page = await ctx.newPage()
     await page.goto(BASE + '/play')
     await page.waitForLoadState('networkidle')
