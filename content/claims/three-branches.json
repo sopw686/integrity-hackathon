@@ -13,7 +13,7 @@
     "pctTrue": 0,
     "pctFalse": 0,
     "pctUnsure": 0,
-    "note": "HUMAN: campus set — the room is the 5C survey (“Can you name all three branches?”). Fill from the survey; confirm the Annenberg figure."
+    "note": "HUMAN: campus set — the room is the 5C survey; the Form asks the claim text verbatim (True / False / Not sure). Fill from the survey. VERIFY before setting verified: confirm the latest Annenberg Constitution Day figure (news reports of the 2026 survey give 65%, Aug 6–9, n=1,034) and replace the home-page URL with the specific release."
   },
   "truthSource": {
     "label": "Annenberg Public Policy Center, Constitution Day Civics Survey (2025)",

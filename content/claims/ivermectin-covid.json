@@ -16,9 +16,9 @@
     "note": "44% probably false, 22% definitely false. KFF offered definitely/probably true and probably/definitely false; the small remainder gave no answer."
   },
   "truthSource": {
-    "label": "FDA, Why you should not use ivermectin for COVID-19",
-    "url": "https://www.fda.gov/consumers/consumer-updates/why-you-should-not-use-ivermectin-treat-or-prevent-covid-19",
-    "oneLine": "Large randomized trials found ivermectin does not improve COVID-19 outcomes, and the FDA has not authorized it for COVID-19."
+    "label": "IDSA, COVID-19 treatment guidelines",
+    "url": "https://www.idsociety.org/practice-guideline/covid-19-guideline-treatment-and-management/",
+    "oneLine": "IDSA’s COVID-19 treatment guideline recommends against using ivermectin to treat COVID-19."
   },
   "category": "health",
   "difficulty": 2,
