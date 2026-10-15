@@ -5,7 +5,7 @@ and the generated default is a defensible starting point, not a decision.
 
 ## Where taste is required (the ten from the brief)
 
-1. **Font pairing and sizes** — `src/tokens/typography.css:1`, `:11`, `:51`; `index.html:14`.
+1. **Font pairing and sizes** — `src/tokens/typography.css:1`, `:11`, `:51`; `index.html:21`.
    Newsreader (display optical size 72 on the claim) + Archivo / Archivo Narrow. Try Source
    Serif 4 at claim size and pick by eye. The claim is 28–34px on phones, 40px on desktop.
 2. **The palette** — `src/tokens/colors.css:1`. Paper `#F6F3EC`, ink `#141414`, rule `#D9D3C5`,
@@ -13,7 +13,7 @@ and the generated default is a defensible starting point, not a decision.
    floor, so it is `#6B655B` (5.2:1). The "unsure" dots are a 45° hatch in `#C9C2B2`; a dotted
    stroke is the alternative to try. Dark-mode rule/muted/hatch values were chosen by me.
 3. **Every piece of copy** — `src/tokens/copy.ts` (whole file; badge names `:7`, tagline `:17`,
-   onboarding `:37`, results phrases `:48`, share text `:64`). Target is dry; delete anything cute.
+   onboarding `:37`, results phrases `:48`, share text `:66`). Target is dry; delete anything cute.
 4. **Motion timings and easing** — `src/tokens/motion.ts:1`. Row cadence 70ms / 160ms, stamp
    1.18 → 1.0 in 220ms with a fading 1px ink bleed, guess line 240ms, two 300ms pulses, badge
    spring (500/30). Measured on a phone-width headless run: Next appears ≈2.3s after Lock,
@@ -88,12 +88,12 @@ the obvious sources). Two newer NSF figures exist (2018: Earth's core 86%, conti
 
 ## Checks that pass
 
-- Lighthouse accessibility 100 and best practices 100 on `/play` (Chromium 141, headless).
+- Lighthouse accessibility 100 and best practices 100 on `/` and `/play` (Chromium 141, headless).
 - Hard-rule grep clean: no gradients, no backdrop blur, no shadows except the stamp bleed,
   no Inter/Roboto/Poppins/Montserrat/Space Grotesk, no purple/indigo/teal, no 🚀, no confetti,
   no "misinformation", "media literacy" or "bias" in the UI.
-- First load 130 KB gzipped (JS + CSS, fonts excluded), under the 150 KB budget.
-- Unit tests: geometry, scoring, validator (33 tests).
+- First load 134 KB gzipped (JS + CSS, fonts excluded), under the 150 KB budget.
+- Unit tests: geometry, scoring, storage/streaks, validator (38 tests).
 - `npm run check:flows`: keyboard-only loop to results, storage-disabled play-through, reduced-motion
   reveal done in ≈0.85s, full reveal done in ≈2.4s, zero axe-core violations on verdict, read,
   reveal and results.
