@@ -1,35 +1,61 @@
 /**
  * Compose day files from the verified claim pool under the day rules, for a date range.
  *
- *   npx tsx scripts/compose-days.ts --from 2026-10-04 --to 2026-10-29 [--window 7] [--seed 12] [--restarts 400] [--force]
+ *   npx tsx scripts/compose-days.ts --from 2026-10-30 --to 2026-11-12 [--window 5] [--seed 12] [--restarts 400] [--force [--allow-past]]
  *
  * Rules enforced (same as validate-content.ts): five distinct claims; at most one election claim
  * naming a party or candidate; at least one true answer; at least one claim where the room majority
- * was wrong; categories not all the same; no claim repeated within `window` days. Existing day files
- * are kept unless --force. The composer searches randomly with a seed and prints what it could not
- * satisfy instead of writing a bad day. HUMAN: day composition and order are a taste call; this
- * script only finds a valid arrangement.
+ * was wrong; categories not all the same; no claim on two days less than `window` days apart, in
+ * either direction, counting every day file that is kept and every day composed in this run. The
+ * window defaults to the validator's error window. Existing day files are kept unless --force; with
+ * --force, days in [from, to] are rewritten, but not a day whose date has arrived (Pacific) unless
+ * --allow-past is given too, because saved progress is stored by date and claim position. The
+ * composer searches randomly with a seed and prints what it could not satisfy instead of writing a
+ * bad day; it then writes nothing and exits 1. Reads content/ from the current directory.
+ * HUMAN: day composition and order are a taste call; this script only finds a valid arrangement.
  */
-import { readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { NO_REPEAT_ERROR_DAYS, PARTY_RE, dateKeyLA, isValidDateKey } from './validate-content'
 
 type Claim = { id: string; answer: 'true' | 'false'; category: string; status: string; text: string; room: { pctTrue: number; pctFalse: number } }
 type Day = { date: string; claims: string[] }
 
+const USAGE = 'usage: compose-days --from YYYY-MM-DD --to YYYY-MM-DD [--window N] [--seed N] [--restarts N] [--force [--allow-past]]'
+const VALUED = ['from', 'to', 'window', 'seed', 'restarts']
+const SWITCHES = ['force', 'allow-past']
 const args = process.argv.slice(2)
 const opt = (name: string, dflt: string) => {
   const i = args.indexOf(`--${name}`)
-  if (i >= 0 && args[i + 1]) return args[i + 1]
+  if (i >= 0) return args[i + 1] && !args[i + 1].startsWith('--') ? args[i + 1] : ''
   const eq = args.find((a) => a.startsWith(`--${name}=`))
-  return eq ? eq.split('=')[1] : dflt
+  return eq ? eq.slice(name.length + 3) : dflt
 }
 const FROM = opt('from', '')
 const TO = opt('to', '')
-const WINDOW = Number(opt('window', '7'))
-const FORCE = args.includes('--force')
+const WINDOW = Number(opt('window', String(NO_REPEAT_ERROR_DAYS)))
+const RESTARTS = Number(opt('restarts', '400'))
 let seed = Number(opt('seed', '12'))
-if (!FROM || !TO) {
-  console.error('usage: compose-days --from YYYY-MM-DD --to YYYY-MM-DD [--window N] [--seed N] [--force]')
+const FORCE = args.includes('--force')
+const ALLOW_PAST = args.includes('--allow-past')
+
+const problems: string[] = []
+for (let i = 0; i < args.length; i++) {
+  const name = args[i].startsWith('--') ? args[i].slice(2).split('=')[0] : ''
+  if (VALUED.includes(name)) {
+    if (!args[i].includes('=') && args[i + 1] !== undefined && !args[i + 1].startsWith('--')) i++
+  } else if (!SWITCHES.includes(name)) problems.push(`unknown argument ${JSON.stringify(args[i])}`)
+}
+if (!isValidDateKey(FROM)) problems.push(`--from needs a real YYYY-MM-DD date, got ${JSON.stringify(FROM)}`)
+if (!isValidDateKey(TO)) problems.push(`--to needs a real YYYY-MM-DD date, got ${JSON.stringify(TO)}`)
+if (isValidDateKey(FROM) && isValidDateKey(TO) && FROM > TO) problems.push(`--from ${FROM} is after --to ${TO}`)
+if (!Number.isInteger(WINDOW) || WINDOW < 1) problems.push('--window needs a positive integer')
+if (!Number.isInteger(RESTARTS) || RESTARTS < 1) problems.push('--restarts needs a positive integer')
+if (!Number.isInteger(seed)) problems.push('--seed needs an integer')
+if (ALLOW_PAST && !FORCE) problems.push('--allow-past only applies with --force')
+if (problems.length > 0) {
+  for (const p of problems) console.error(`✗ ${p}`)
+  console.error(USAGE)
   process.exit(2)
 }
 
@@ -58,22 +84,43 @@ const claims: Claim[] = readdirSync(claimsDir)
   .map((f) => JSON.parse(readFileSync(join(claimsDir, f), 'utf8')) as Claim)
   .filter((c) => c.status === 'verified')
 
-const PARTY = /\b(Democrats?|Democratic|Republicans?|GOP|Trump|Biden|Harris|Obama|Clinton|Bush|Pence|Vance|Walz|DeSantis|Newsom|party|parties)\b/i
-const partyElection = (c: Claim) => c.category === 'election' && PARTY.test(c.text)
+const partyElection = (c: Claim) => c.category === 'election' && PARTY_RE.test(c.text)
 const majorityWrong = (c: Claim) => (c.answer === 'true' ? c.room.pctTrue : c.room.pctFalse) <= 50
 
 const toDays = (k: string) => Math.floor(Date.UTC(+k.slice(0, 4), +k.slice(5, 7) - 1, +k.slice(8, 10)) / 86400000)
 const fromDays = (d: number) => new Date(d * 86400000).toISOString().slice(0, 10)
 
+// Templates ("_" files) are skipped, as the validator and the app skip them.
 const existing = new Map<string, Day>()
-for (const f of readdirSync(daysDir).filter((f) => f.endsWith('.json'))) {
+for (const f of readdirSync(daysDir).filter((f) => f.endsWith('.json') && !f.startsWith('_'))) {
   const d = JSON.parse(readFileSync(join(daysDir, f), 'utf8')) as Day
-  existing.set(d.date ?? f.replace('.json', ''), d)
+  const date = d.date ?? f.replace(/\.json$/, '')
+  if (!isValidDateKey(date) || !Array.isArray(d.claims)) {
+    console.error(`✗ content/days/${f} is not a day file the composer can read; fix it first (npm run validate)`)
+    process.exit(2)
+  }
+  existing.set(date, d)
 }
 
-const lastUsed = new Map<string, number>() // claim id → day number
-// seed lastUsed from existing days before FROM (and any kept days)
-for (const [date, d] of existing) for (const id of d.claims) lastUsed.set(id, Math.max(lastUsed.get(id) ?? -1e9, toDays(date)))
+const rewrites = (date: string) => FORCE && date >= FROM && date <= TO
+const today = dateKeyLA()
+const arrived = [...existing.keys()].filter((date) => rewrites(date) && date <= today).sort()
+if (arrived.length > 0 && !ALLOW_PAST) {
+  console.error(
+    `✗ --force would rewrite ${arrived.length} day file(s) dated on or before today (${today}, Pacific): ${arrived.join(', ')}.\n` +
+      '  Saved progress is stored by date and claim position, so anyone who played them would see their answers on other claims.\n' +
+      '  Start --from after today, or add --allow-past if nobody can have played them.',
+  )
+  process.exit(2)
+}
+
+// Every day number each claim appears on in the day files this run keeps (in-range files are
+// dropped under --force because they are being rewritten). Checked in both directions.
+const kept = new Map<string, number[]>()
+for (const [date, d] of existing) {
+  if (rewrites(date)) continue
+  for (const id of d.claims) kept.set(id, [...(kept.get(id) ?? []), toDays(date)])
+}
 
 function validDay(set: Claim[]): string | null {
   if (set.length !== 5) return 'needs 5'
@@ -84,24 +131,21 @@ function validDay(set: Claim[]): string | null {
   return null
 }
 
-const RESTARTS = Number(opt('restarts', '400'))
-const baseLastUsed = new Map(lastUsed)
-
 type Plan = { report: string[]; days: Day[]; failures: number }
 
 function attempt(): Plan {
-  const used = new Map(baseLastUsed)
+  const picked = new Map<string, number[]>() // claim id → day numbers chosen in this attempt
   const report: string[] = []
   const days: Day[] = []
   let failures = 0
   for (let d = toDays(FROM); d <= toDays(TO); d++) {
     const date = fromDays(d)
     if (existing.has(date) && !FORCE) {
-      for (const id of existing.get(date)!.claims) used.set(id, d)
       report.push(`${date}: kept existing`)
       continue
     }
-    const pool = claims.filter((c) => d - (used.get(c.id) ?? -1e9) >= WINDOW)
+    const clear = (id: string) => [...(kept.get(id) ?? []), ...(picked.get(id) ?? [])].every((x) => Math.abs(d - x) >= WINDOW)
+    const pool = claims.filter((c) => clear(c.id))
     let best: Claim[] | null = null
     let why = 'pool too small'
     for (let a = 0; a < 300 && !best; a++) {
@@ -128,7 +172,7 @@ function attempt(): Plan {
       report.push(`${date}: COULD NOT COMPOSE (${why}; ${pool.length} eligible claims after the ${WINDOW}-day window)`)
       continue
     }
-    for (const c of best) used.set(c.id, d)
+    for (const c of best) picked.set(c.id, [...(picked.get(c.id) ?? []), d])
     days.push({ date, claims: best.map((c) => c.id) })
     report.push(`${date}: ${best.map((c) => c.id).join(', ')}`)
   }
@@ -154,3 +198,4 @@ if (plan.failures === 0) {
 }
 console.log(report.join('\n'))
 console.log(`\n${claims.length} verified claims in pool (${claims.filter((c) => c.answer === 'true').length} true); ${written} day files written.`)
+if (plan.failures > 0) process.exit(1)

@@ -8,8 +8,8 @@ Campus claims need a room of 5C students. We measure it ourselves with one Googl
 - **When:** open it two weeks before launch. Keep it open about one week, which leaves a week to fill in the claim files and verify answers.
 - **Where:** send it to the 5C student listservs (one message per college list, plus any club lists that will forward it). One reminder halfway through.
 - **Target:** n ≥ 100 complete responses. Below 100, do not publish the campus claims; the room is too small to read.
-- **Questions:** the 20 candidate claims below, each as a multiple-choice question with exactly three options, in this order: **True**, **False**, **Not sure**. Make every question required so each response has all 20 answers. Shuffle question order (Settings → Presentation → Shuffle question order).
-- **Wording:** each Form question is the claim text exactly as it will appear in the game. If you change the text after the survey, the room numbers no longer apply.
+- **Questions:** the 22 candidate claims below, each as a multiple-choice question with exactly three options, in this order: **True**, **False**, **Not sure**. Make every question required so each response has all 22 answers. Shuffle question order (Settings → Presentation → Shuffle question order).
+- **Wording:** each Form question is the claim text exactly as it will appear in the game. If you change the text after the survey, the room numbers no longer apply. Never ask a different question that seems close: for `three-branches` the Form asks whether *most Americans* can name the three branches (the claim), not whether the student can.
 - **No other questions.** No class year, no college, no demographics. We do not need them and they make responses easier to identify.
 
 ## Consent and anonymity line
@@ -22,7 +22,7 @@ In Form settings, turn **off** "Collect email addresses" and "Limit to 1 respons
 
 ## Candidate claims
 
-Twenty items. The first ten already exist as drafts in `content/claims/`. The second ten are suggestions; anyone who adds one needs to confirm its answer against an authority first and create the draft file.
+Twenty-two items. The first twelve already exist as drafts in `content/claims/`. The other ten are suggestions; anyone who adds one needs to confirm its answer against an authority first and create the draft file.
 
 | # | id | Claim text | Expected answer | Status |
 |---|----|-----------|-----------------|--------|
@@ -36,18 +36,20 @@ Twenty items. The first ten already exist as drafts in `content/claims/`. The se
 | 8 | `most-5c-from-california` | Most 5C students are from California. | false (confirm class profiles) | draft file |
 | 9 | `pomona-endowment-harvard` | Pomona's endowment is larger than Harvard's. | false | draft file |
 | 10 | `vote-with-campus-address` | Students can vote in Claremont using their campus address. | true | draft file |
-| 11 | `ca-preregister-16` | In California, 16- and 17-year-olds can pre-register to vote. | true (CA SOS) | suggestion |
-| 12 | `ca-every-voter-mailed-ballot` | California mails a ballot to every active registered voter. | true (CA SOS) | suggestion |
-| 13 | `ca-photo-id-to-vote` | You need a photo ID to vote in person in California. | false, with exceptions for some first-time voters (CA SOS) | suggestion |
-| 14 | `ca-someone-returns-ballot` | In California, you can have someone else return your mail ballot for you. | true (CA SOS) | suggestion |
-| 15 | `ca-track-mail-ballot` | California voters can sign up to track their mail ballot online. | true (CA SOS) | suggestion |
-| 16 | `ca-registration-15-days` | The regular voter registration deadline in California is 15 days before Election Day. | true (CA SOS) | suggestion |
-| 17 | `5c-cross-registration` | Students at one 5C college can take classes at the other four. | true (registrar pages) | suggestion |
-| 18 | `pomona-older-than-mudd` | Pomona College was founded before Harvey Mudd College. | true (college history pages) | suggestion |
-| 19 | `pitzer-founded-1960s` | Pitzer College was founded in the 1960s. | true (Pitzer history page) | suggestion |
-| 20 | `scripps-womens-college` | Scripps is a women's college. | true (Scripps admission page) | suggestion |
+| 11 | `three-branches` | Most Americans can name all three branches of government. | true (confirm the latest Annenberg Constitution Day survey) | draft file |
+| 12 | `tiktok-news-under30` | More than 4 in 10 U.S. adults under 30 regularly get news on TikTok. | true (confirm the Pew social media and news fact sheet) | draft file |
+| 13 | `ca-preregister-16` | In California, 16- and 17-year-olds can pre-register to vote. | true (CA SOS) | suggestion |
+| 14 | `ca-every-voter-mailed-ballot` | California mails a ballot to every active registered voter. | true (CA SOS) | suggestion |
+| 15 | `ca-photo-id-to-vote` | You need a photo ID to vote in person in California. | false, with exceptions for some first-time voters (CA SOS) | suggestion |
+| 16 | `ca-someone-returns-ballot` | In California, you can have someone else return your mail ballot for you. | true (CA SOS) | suggestion |
+| 17 | `ca-track-mail-ballot` | California voters can sign up to track their mail ballot online. | true (CA SOS) | suggestion |
+| 18 | `ca-registration-15-days` | The regular voter registration deadline in California is 15 days before Election Day. | true (CA SOS) | suggestion |
+| 19 | `5c-cross-registration` | Students at one 5C college can take classes at the other four. | true (registrar pages) | suggestion |
+| 20 | `pomona-older-than-mudd` | Pomona College was founded before Harvey Mudd College. | true (college history pages) | suggestion |
+| 21 | `pitzer-founded-1960s` | Pitzer College was founded in the 1960s. | true (Pitzer history page) | suggestion |
+| 22 | `scripps-womens-college` | Scripps is a women's college. | true (Scripps admission page) | suggestion |
 
-Use `"category": "election"` for the California voting items and `"campus"` for the rest. Before sending the Form, check every item against the ineligible list in `AUTHORING.md`.
+Draft files keep the category they already have (`three-branches` is `"society"`, `tiktok-news-under30` is `"media"`). For new suggestions, use `"category": "election"` for the California voting items and `"campus"` for the rest. Before sending the Form, check every item against the ineligible list in `AUTHORING.md`.
 
 ## From Form results to `room` numbers
 
@@ -62,19 +64,21 @@ For each claim, count the responses in its column of the results sheet:
 | `label` | `"5C students"` |
 | `kind` | `"campus"` |
 | `source` | `"5C student survey (team)"` |
-| `sourceUrl` | link to the results sheet (view-only, anyone with the link) |
+| `sourceUrl` | link to the public summary sheet (see below), never the form-linked results spreadsheet |
 | `fieldDates` | the Form's open–close dates, e.g. `"Sep 28–Oct 4, 2026"` |
 | `questionWording` | leave out if the Form question is identical to `text` |
 
 **Rounding.** Round the three shares to whole numbers so they sum to exactly 100. Use the largest remainder: round all three down, then add 1 to the share(s) with the largest decimal part until the total is 100. Example: 47.6 / 38.3 / 14.1 rounds down to 47 / 38 / 14 = 99; the largest remainder is .6, so the result is 48 / 38 / 14.
 
-Then remove the `HUMAN:` text from `room.note` (delete `note` entirely unless there is a real caveat), confirm `answer` against `truthSource`, have a second person reread it, set `status` to `"verified"`, and run `npm run validate`.
+Then remove the `HUMAN:` text from `room.note` (delete `note` entirely unless there is a real caveat), confirm `answer` against `truthSource`, have a second person reread it, set `status` to `"verified"`, and run `npm run validate` (it stops the build if a verified claim still carries `HUMAN:` or `VERIFY` text).
 
-Share the results sheet as view-only. It must contain only the raw responses and the summary tab below, never anything that identifies a respondent.
+Keep the form-linked results spreadsheet (the `Responses` and `Summary` tabs) shared with the team only. Its `Timestamp` column and row order can identify a respondent (anyone who knows when a friend filled in the Form can find their row), and the consent line promises percentages only.
+
+For the public `sourceUrl`, make a separate spreadsheet that holds only the `Summary` rows, pasted as values (claim, n, counts and percentages), and share that one view-only with anyone with the link. Do not just hide the `Responses` tab: Google Sheets shares whole files, and a viewer can copy the file and see every tab.
 
 ## Results sheet template
 
-Tab 1, `Responses`: Google Forms creates this. Columns: `Timestamp`, then one column per question (the claim text). Do not edit it.
+Tab 1, `Responses`: Google Forms creates this. Columns: `Timestamp`, then one column per question (the claim text). Do not edit it. This tab stays private.
 
 Tab 2, `Summary`: one row per claim.
 

@@ -1,6 +1,6 @@
 /**
  * Screenshot every screen at 390×844 and 1280×800, plus three frames of the reveal
- * (0%, 50%, 100%) and a dark-mode set. Saves PNGs to design/screens/.
+ * (0%, 50%, 100%), the reduced-motion reveal (phone) and a dark-mode set. Saves PNGs to design/screens/.
  *
  * Usage: npm run screenshots            (expects the dev server on http://127.0.0.1:5173)
  *        BASE=http://127.0.0.1:4173 npm run screenshots
@@ -25,14 +25,14 @@ type Theme = 'light' | 'dark'
 
 const STORAGE_KEY = 'read-the-room:v1'
 
-async function newContext(browser: Browser, size: SizeKey, theme: Theme, init?: { today?: string; freezeT?: number; storage?: unknown }) {
+async function newContext(browser: Browser, size: SizeKey, theme: Theme, init?: { today?: string; freezeT?: number; storage?: unknown; reduced?: boolean }) {
   const ctx = await browser.newContext({
     viewport: { width: SIZES[size].width, height: SIZES[size].height },
     deviceScaleFactor: SIZES[size].deviceScaleFactor,
     isMobile: SIZES[size].isMobile,
     hasTouch: SIZES[size].hasTouch,
     colorScheme: theme,
-    reducedMotion: 'no-preference',
+    reducedMotion: init?.reduced ? 'reduce' : 'no-preference',
   })
   await ctx.addInitScript(
     ({ today, freezeT, storage, key }) => {
@@ -126,6 +126,20 @@ async function flows(browser: Browser, size: SizeKey, theme: Theme) {
     await page.getByRole('button', { name: 'Lock' }).click()
     await page.waitForTimeout(freezeT >= 999 ? 400 : 120)
     await shot(page, frameName, size, theme)
+    await ctx.close()
+  }
+
+  // Reduced motion: the reveal once its single crossfade is done (phone, light).
+  if (size === 'phone' && theme === 'light') {
+    const ctx = await newContext(browser, size, theme, { reduced: true })
+    const page = await ctx.newPage()
+    await page.goto(`${BASE}/play`)
+    await settle(page)
+    await playToReveal(page, 'False', 62)
+    await page.getByRole('button', { name: 'Lock' }).click()
+    await page.getByRole('button', { name: 'Next' }).waitFor({ state: 'visible', timeout: 5000 })
+    await settle(page)
+    await shot(page, '05-reveal-reduced-motion', size, theme)
     await ctx.close()
   }
 

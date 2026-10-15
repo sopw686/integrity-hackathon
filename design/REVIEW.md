@@ -25,11 +25,12 @@ and the generated default is a defensible starting point, not a decision.
 7. **Claim wording** — every `content/claims/*.json`. Each claim must be reread against the
    poll's exact wording (kept in `room.questionWording` when it differs). Polarity errors are
    the most dangerous bug in this product; the validator cannot catch them.
-8. **Day composition** — `scripts/compose-days.ts:10` finds a valid arrangement; rhythm and
+8. **Day composition** — `scripts/compose-days.ts:15` finds a valid arrangement; rhythm and
    order are yours. Today's file `content/days/2026-10-15.json` was composed by hand. The
-   no-repeat window is my rule, not the brief's: a 7-day window needs at least 35 verified
-   claims and 7 with a wrong-side majority; the pool is smaller, so the shipped days use the
-   largest window that works (see Content status). Add majority-wrong claims first.
+   no-repeat window (`scripts/validate-content.ts:29`) is my rule, not the brief's: a 7-day
+   window needs at least 35 verified claims and 7 with a wrong-side majority; the pool has 34
+   and 6, so 6 days is the most it allows, and the shipped days use 5 (see Content status).
+   Add majority-wrong claims first.
 9. **The Split threshold and Read bands** — `src/lib/scoring.ts:3`, `:12`, `:39`. Note the
    literal-to-spec asymmetry: Split replaces In good company / Sheep inside 45–55, but Fox and
    Stray are untouched, so a Fox at 48 is barely a fox.
@@ -78,22 +79,35 @@ Reasons: the flu-shot item's wave is disputed (Jan vs Oct 2023 ASAPH); "vaccines
 U.S. are safe" lacks an exact n; "a single secret group" failed the settled-truth test; the twelve
 campus items wait for the 5C survey.
 
-Day files run from 2026-10-04 (archive) through 2026-10-29 (today plus 14). The composer could
-only satisfy a 5-day no-repeat window with this pool, because only 6 verified claims have a
-wrong-side majority and every day needs one. The validator therefore errors below 5 days and warns
-below 7; raise both once the pool grows. The fastest way to a 7-day window is ten more
-majority-wrong claims (the KFF 2024 misinformation waves and YouGov's 2026 conspiracy update are
-the obvious sources). Two newer NSF figures exist (2018: Earth's core 86%, continents 79%) but the
-2018 module n was not confirmed, so the 2012 wave ships.
+Day files run from 2026-10-04 (archive) through 2026-10-29 (today plus 14), composed with a
+5-day no-repeat window; the validator errors below 5 days and warns below 7. Five is not the most
+this pool allows. Six majority-wrong claims are enough for one a day at a 6-day spacing: with the
+composer fixed (it used to check only backwards from a claim's latest use, so a kept later day
+blocked its claims on every earlier day), `compose-days --window 6` fills 2026-10-04..10-29 from
+an empty folder with 0 validator errors, and also fills 10-16..10-29 around the days that have
+already run. Seven is out of reach: any 7 straight days need 35 distinct claims and 7
+majority-wrong ones, and the pool has 34 and 6. Raising the error threshold to 6 is your call; the
+archive days 2026-10-09..10-14 already ran with 5-day gaps and must not change (progress is stored
+by date and claim position), so the validator would have to stop checking days before `--from`.
+A 7-day window needs at least one more verified claim and one more majority-wrong claim; more
+headroom makes composing easier (the KFF 2024 misinformation waves and YouGov's 2026 conspiracy
+update are the obvious sources). Two newer NSF figures exist (2018: Earth's core 86%, continents
+79%) but the 2018 module n was not confirmed, so the 2012 wave ships.
 
 ## Checks that pass
 
 - Lighthouse accessibility 100 and best practices 100 on `/` and `/play` (Chromium 141, headless).
 - Hard-rule grep clean: no gradients, no backdrop blur, no shadows except the stamp bleed,
   no Inter/Roboto/Poppins/Montserrat/Space Grotesk, no purple/indigo/teal, no 🚀, no confetti,
-  no "misinformation", "media literacy" or "bias" in the UI.
-- First load 134 KB gzipped (JS + CSS, fonts excluded), under the 150 KB budget.
-- Unit tests: geometry, scoring, storage/streaks, validator (38 tests).
-- `npm run check:flows`: keyboard-only loop to results, storage-disabled play-through, reduced-motion
-  reveal done in ≈0.85s, full reveal done in ≈2.4s, zero axe-core violations on verdict, read,
-  reveal and results.
+  no "misinformation", "media literacy" or "bias" in the app's own copy or in claim text,
+  short titles, notes, question wording or truth lines (the validator warns on those fields).
+  Pollster titles in `room.source` are cited verbatim and exempt: the reveal shows "KFF Health
+  Misinformation Tracking Poll Pilot" as the source of 10 verified claims, two of them today.
+- First load 132 KB gzipped (JS + CSS, fonts excluded), under the 150 KB budget. Draft claims are
+  dropped at build time (`vite.config.ts`), so their numbers and VERIFY notes are not in it.
+- Unit tests: geometry, scoring, storage/streaks, validator (45 tests).
+- `npm run check:flows` (exits 1 on any failed check): keyboard-only loop to results with focus
+  checked at every step, storage-disabled play-through with the "Saving is off" notice, no page
+  errors, zero axe-core violations on verdict, read, reveal and results. Lock to Next, timed in the
+  page: ≈0.51s under reduced motion (designed 0.5s) and ≈2.32s in full (designed 2.29s), each
+  allowed the design plus 0.4s.

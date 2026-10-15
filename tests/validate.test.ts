@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { addDays, suspiciousNames, validateContent, type ContentFile } from '../scripts/validate-content'
+import { PARTY_RE, addDays, suspiciousNames, validateContent, type ContentFile } from '../scripts/validate-content'
 
 const FROM = '2026-10-15'
 const SLOT_CATEGORIES = ['science', 'health', 'society', 'media', 'campus'] as const
 
-type Fixture = { claims: ContentFile[]; days: ContentFile[] }
+/** Fixture data is mutable JSON; tests reach into it freely, so type it loosely. */
+type FixtureFile = ContentFile & { data: Record<string, any> }
+type Fixture = { claims: FixtureFile[]; days: FixtureFile[] }
 
 /** Claim k sits in slot k % 5. Slot 0 is the "fox" claim: answer true, room mostly said false. */
 function makeClaim(k: number) {
@@ -60,6 +62,7 @@ describe('validateContent: passing set', () => {
   it('has no errors for 14 well-formed days', () => {
     const r = run(passingFixture())
     expect(r.errors).toEqual([])
+    expect(r.warnings.filter((w) => /repeats within/.test(w))).toEqual([]) // 7 days apart is clear of both windows
   })
 
   it('warns (not errors) on a repeat 5–6 days apart', () => {
@@ -180,6 +183,35 @@ describe('validateContent: failing cases', () => {
     f.days.push({ file: 'content/days/2026-02-30.json', data: { date: '2026-02-30', claims: day(f, 0).claims } })
     expect(hasError(f, /2026-02-30\.json: date "2026-02-30" is not a real calendar date/)).toBe(true)
   })
+
+  it('a verified claim that still carries a reviewer marker', () => {
+    const f = passingFixture()
+    claim(f, 10).room.note = 'HUMAN: campus set — fill from the 5C survey.'
+    claim(f, 11).truthSource.oneLine = 'VERIFY before shipping: which wave?'
+    claim(f, 12).room.note = 'Respondents could verify by phone.' // ordinary prose is fine
+    const errs = run(f).errors
+    expect(errs.some((e) => /synthetic-claim-10\.json: room\.note still contains a reviewer marker/.test(e))).toBe(true)
+    expect(errs.some((e) => /synthetic-claim-11\.json: truthSource\.oneLine still contains a reviewer marker/.test(e))).toBe(true)
+    expect(errs.some((e) => e.startsWith('content/claims/synthetic-claim-12.json'))).toBe(false)
+  })
+
+  it('a verified template claim, and any "_" day file', () => {
+    const f = passingFixture()
+    f.claims.push({ file: 'content/claims/_template-campus-a copy.json', data: { ...makeClaim(40).data, status: 'verified' } })
+    f.days.push({ file: 'content/days/_try.json', data: { date: '2026-10-20', claims: day(f, 0).claims } })
+    const errs = run(f).errors
+    expect(errs.some((e) => /_template-campus-a copy\.json: a template file .* is never validated or shipped/.test(e))).toBe(true)
+    expect(errs.some((e) => /_try\.json: day files starting with "_"/.test(e))).toBe(true)
+  })
+
+  it('two election claims naming candidates added to the list', () => {
+    const f = passingFixture()
+    for (const k of [1, 2]) claim(f, k).category = 'election'
+    claim(f, 1).text = 'Romney carried Utah in 2012.'
+    claim(f, 2).text = 'Trump lost the 2020 election.'
+    expect(hasError(f, /2026-10-15\.json: more than one election claim mentions a party/)).toBe(true)
+    expect(PARTY_RE.test('Reagan won 49 states.')).toBe(true)
+  })
 })
 
 describe('warnings', () => {
@@ -188,9 +220,45 @@ describe('warnings', () => {
     expect(suspiciousNames('In California, you can register on Election Day.')).toEqual([])
   })
 
+  it('flags accented and apostrophe names, but not abbreviations', () => {
+    expect(suspiciousNames('José Martínez and Jane O’Brien voted.')).toEqual(['José Martínez', 'Jane O’Brien'])
+    expect(suspiciousNames('Ángel Ruiz voted.')).toEqual(['Ángel Ruiz']) // decomposed input
+    expect(suspiciousNames('The U.S. government was behind it.')).toEqual([])
+  })
+
   it('asks for a note on sources older than five years', () => {
     const f = passingFixture()
     claim(f, 9).room.fieldDates = 'Mar 2012'
     expect(run(f).warnings.some((w) => /synthetic-claim-9\.json: room\.note missing/.test(w))).toBe(true)
+  })
+
+  it('counts source age in calendar years before the --from year', () => {
+    const f = passingFixture()
+    claim(f, 9).room.fieldDates = 'Dec 2020' // more than 5 calendar years before 2026
+    claim(f, 13).room.fieldDates = 'Jan 2021' // nearly six years old, but only 5 calendar years before 2026
+    const w = run(f).warnings
+    expect(w.some((m) => /synthetic-claim-9\.json: room\.note missing/.test(m))).toBe(true)
+    expect(w.some((m) => /synthetic-claim-13\.json: room\.note missing/.test(m))).toBe(false)
+  })
+
+  it('a shortTitle outside 2–4 words', () => {
+    const f = passingFixture()
+    claim(f, 14).shortTitle = 'Humans over millions of years'
+    claim(f, 15).shortTitle = 'Moon'
+    claim(f, 16).shortTitle = 'Moon landing'
+    const w = run(f).warnings
+    expect(w.some((m) => /synthetic-claim-14\.json: shortTitle .* is 5 word/.test(m))).toBe(true)
+    expect(w.some((m) => /synthetic-claim-15\.json: shortTitle .* is 1 word/.test(m))).toBe(true)
+    expect(w.some((m) => m.startsWith('content/claims/synthetic-claim-16.json'))).toBe(false)
+  })
+
+  it('words the UI avoids, outside cited pollster titles', () => {
+    const f = passingFixture()
+    claim(f, 17).truthSource.oneLine = 'A classic piece of misinformation.'
+    claim(f, 18).room.source = 'KFF Health Misinformation Tracking Poll Pilot'
+    const r = run(f)
+    expect(r.errors).toEqual([])
+    expect(r.warnings.some((m) => /synthetic-claim-17\.json: truthSource\.oneLine says "misinformation"/.test(m))).toBe(true)
+    expect(r.warnings.some((m) => m.startsWith('content/claims/synthetic-claim-18.json'))).toBe(false)
   })
 })

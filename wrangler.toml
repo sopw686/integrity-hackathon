@@ -1,5 +1,7 @@
-# Cloudflare Pages: build command `npm run build`, output directory `dist`.
-# public/_redirects provides the SPA fallback so /play, /results, /c/:id resolve.
+# Cloudflare Pages: build command `npm run build`, output directory `dist`. Node comes from .node-version.
+# Deep links (/play, /results, /c/:id) resolve through Pages' default single-page-app mode, which
+# applies only while dist/ has no top-level 404.html. Do not add a `/* /index.html 200` _redirects rule:
+# Pages rejects it as an infinite loop.
 name = "read-the-room"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-01-01"

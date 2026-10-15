@@ -23,15 +23,24 @@ npm install
 npm run dev          # http://127.0.0.1:5173
 npm run build        # runs the content validator first (prebuild), then vite build → dist/
 npm run preview      # serve dist/ on :4173
-npm run validate     # content rules (see content/AUTHORING.md); --online also checks every URL
-npm run compose-days # fill day files from the verified pool: --from --to [--window 7] [--force]
-npm run test         # unit tests: geometry, scoring, validator
+npm run validate     # content rules (see content/AUTHORING.md)
+npm run validate -- --online    # also fetches every source and truth URL
+npm run compose-days -- --from YYYY-MM-DD --to YYYY-MM-DD [--window 5] [--force]   # fill day files from the verified pool
+npm run test         # unit tests: geometry, scoring, storage, validator
 npm run screenshots  # Playwright: every screen at 390×844 and 1280×800 + reveal frames → design/screens/
-npm run check:flows  # Playwright: keyboard-only loop, storage disabled, reduced motion, axe scans
+npm run check:flows  # Playwright: keyboard-only loop, storage disabled, reduced motion, axe scans; exits 1 on any failure
 ```
 
-Deploy as a static site: Cloudflare Pages (`wrangler.toml`, `public/_redirects`) or Vercel
-(`vercel.json`). Build command `npm run build`, output `dist`.
+Flags for an npm script go after `--` (`npm run validate -- --online`); without it npm keeps them
+for itself and the script never sees them. `screenshots` and `check:flows` drive a running app:
+start `npm run dev` in another terminal first (or point them at another server with
+`BASE=http://127.0.0.1:4173` after `npm run preview`), and install a Chromium once with
+`npx playwright install chromium` (or set `CHROMIUM_PATH`).
+
+Node 22 (22.12 or later), 24, or 26+ (`engines` in `package.json`); `.node-version` pins 22.22.0
+for nvm, fnm and Cloudflare Pages. Deploy as a static site: Cloudflare Pages (`wrangler.toml`;
+deep links rely on Pages' default single-page-app mode, so keep `dist/` free of a top-level
+`404.html`) or Vercel (`vercel.json`). Build command `npm run build`, output `dist`.
 
 ## Routes
 
@@ -48,7 +57,8 @@ Deploy as a static site: Cloudflare Pages (`wrangler.toml`, `public/_redirects`)
 
 Content is static JSON bundled at build time. No backend, no runtime model.
 
-- `content/claims/*.json`: one claim per file. Only `status: "verified"` ships.
+- `content/claims/*.json`: one claim per file. Only `status: "verified"` ships: the build turns
+  drafts into `null` (`vite.config.ts`), and files starting with `_` are templates that never ship.
 - `content/days/YYYY-MM-DD.json`: five claim ids per day (America/Los_Angeles).
 - `content/AUTHORING.md`: how to add a claim, for a non-engineer.
 - `content/campus-survey.md`: how to run the 5C room survey.
@@ -60,7 +70,9 @@ Verified means the figures were read against the source or its toplines. Draft m
 still has to confirm something before it can ship. Numbers are never invented; a claim whose
 numbers could not be confirmed stays draft with a `VERIFY` note on exactly what to check.
 Today: 34 verified, 15 draft; day files cover 2026-10-04 through 2026-10-29 with a
-5-day no-repeat window. `design/REVIEW.md` lists what is still open and why.
+5-day no-repeat window (temporary; the validator errors under 5 days and warns under 7). This pool
+allows up to a 6-day window; 7 needs at least 35 verified claims, 7 of them with a wrong-side
+majority. `design/REVIEW.md` lists what is still open and why.
 
 ## Design
 

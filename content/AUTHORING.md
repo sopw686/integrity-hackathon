@@ -59,7 +59,7 @@ The shape (from `src/lib/types.ts`):
     "fieldDates": "Nov 9–13, 2023",
     "n": 1000,
     "questionWording": "…",                    // the poll's own wording, if it differs from text
-    "note": "…"                                // optional caveat shown on reveal; required in practice for surveys older than 5 years
+    "note": "…"                                // optional caveat shown on reveal; needed when the latest field year is 2020 or earlier (in 2026), see section 7
   },
   "truthSource": {
     "label": "NASA",                           // the authority that settles it
@@ -76,10 +76,12 @@ Worked example, moon landing: YouGov, fielded Nov 9–13, 2023, n = 1,000 U.S. a
 
 The real file must be plain JSON: no comments, no extra keys. Unknown keys are an error.
 
+Files whose names start with `_` (such as `content/claims/_template-campus-a.json`) are templates. The validator skips them and the app never loads them, so copy one to `<id>.json` before you fill it in. The validator stops the build if a `_` claim file is set to `"verified"` or if any `_` file is in `content/days/`.
+
 ## 6. Set the status
 
-- `"draft"`: still being filled or checked. Drafts may have zeros and empty strings. The game ignores them.
-- `"verified"`: every field is filled from the source, a second person has reread the claim against the poll wording, and both links open. Only verified claims can go on a day.
+- `"draft"`: still being filled or checked. Drafts may have zeros and empty strings. The game ignores them, and the build leaves them out of what players download.
+- `"verified"`: every field is filled from the source, a second person has reread the claim against the poll wording, and both links open. Only verified claims can go on a day. Reviewer notes must be gone first: the validator stops the build if `text`, `shortTitle`, `room.label`, `room.note`, `room.questionWording`, `truthSource.label` or `truthSource.oneLine` of a verified claim still contains `HUMAN:`, `VERIFY`, `TODO` or `TBD` (capital letters; ordinary words like "verify" are fine).
 
 ## 7. Run the validator
 
@@ -92,9 +94,12 @@ npx tsx scripts/validate-content.ts --days 21  # require 21 days of coverage ins
 
 `✗` lines are errors and block the build. `△` lines are warnings: read each one and decide. The validator warns when:
 
-- a survey is more than 5 years old and has no `room.note`;
+- the latest year in `room.fieldDates` is more than 5 calendar years before the year of `--from` (2020 or earlier when validating in 2026) and there is no `room.note`. It compares years, not months: a January 2021 survey gets no warning in October 2026 although it is almost six years old, so judge borderline cases yourself;
 - verified claims have no `questionWording` (a reminder to reread polarity by hand);
-- the claim text has two capitalised words in a row that are not on the allowlist. Confirm it is not naming a private person.
+- the claim text has two capitalised words in a row that are not on the allowlist (accented names such as "José Martínez" and names like "O’Brien" count). Confirm it is not naming a private person;
+- a verified claim's `shortTitle` is not 2–4 words;
+- a verified claim says "misinformation", "media literacy" or "bias" in `text`, `shortTitle`, `room.note`, `room.questionWording`, `truthSource.label` or `truthSource.oneLine`. The game never uses these words in its own voice. A pollster's real survey title in `room.source` ("KFF Health Misinformation Tracking Poll Pilot") is cited as published and is not checked;
+- the same claim is on two days less than 7 days apart (see section 9).
 
 ## 8. Put it on a day
 
@@ -106,6 +111,10 @@ Day files are `content/days/YYYY-MM-DD.json` (Pacific date):
 
 The order in the array is the play order.
 
+A day file must not change once its date has arrived (Pacific time). Saved progress is stored by date and claim position, so swapping, removing or reordering claims on a day someone has already played moves their answers onto claims they never saw. Fix a bad claim in its own file instead, or leave the day as it is. `compose-days --force` refuses to rewrite those dates unless you also pass `--allow-past`.
+
+To fill a range of future days from the verified pool, run `npx tsx scripts/compose-days.ts --from YYYY-MM-DD --to YYYY-MM-DD`. It keeps existing day files, follows the day rules below, and writes nothing if it cannot fill every day.
+
 ## 9. Day rules
 
 Each day must have:
@@ -114,11 +123,11 @@ Each day must have:
 - at least one claim whose answer is `"true"`;
 - at least one claim where the room majority was wrong (the share on the truth side is 50 or less: `pctTrue` when the answer is true, `pctFalse` when it is false);
 - at least two categories;
-- at most one `election` claim that mentions a party or candidate (Democrat, Republican, GOP, Trump, Biden, Harris, Obama, and so on, or the word "party").
+- at most one `election` claim that mentions a party or candidate. The validator checks a fixed word list (`PARTY_RE` in `scripts/validate-content.ts`: Democrat, Republican, GOP, MAGA, Trump, Biden, Harris, Kamala, Obama, Clinton, Hillary, Bush, Romney, McCain, Sanders, Reagan, Carter, Kennedy and others, plus "party", "candidate" and "partisan"). Any list misses someone, so whoever puts a day together still reads its election claims and checks by hand.
 
 Across days:
 
-- the same claim cannot appear twice within 7 days (error), and should not within 14 days (warning);
+- the same claim cannot appear twice within 5 days (error), and should not within 7 days (warning). This window is temporary while the verified pool is small. The target is 7 days (error) and 14 (warning) once the pool passes about 40 verified claims with at least 7 where the room majority was wrong; today's pool allows at most 6 (see `design/REVIEW.md`). The live values are `NO_REPEAT_ERROR_DAYS` and `NO_REPEAT_WARN_DAYS` in `scripts/validate-content.ts`;
 - the next 14 days from today must all have a valid day file.
 
 ## Checklist
@@ -130,6 +139,6 @@ Across days:
 5. `pctTrue`, `pctFalse`, `pctUnsure` copied from the topline and sum to 100 ±1.
 6. Truth source is the settling authority, with a working https link and one plain sentence.
 7. File name equals `id`; `category` and `difficulty` set.
-8. Second person reread the claim against the poll, then `status` set to `"verified"`.
+8. Second person reread the claim against the poll, every `HUMAN:` / `VERIFY` note removed, then `status` set to `"verified"`.
 9. `npm run validate` shows no `✗` for the file; warnings read and handled.
-10. Added to a day that still meets the day rules, with no repeat inside 7 days.
+10. Added to a future day that still meets the day rules, with no repeat inside 5 days (aim for 7).
