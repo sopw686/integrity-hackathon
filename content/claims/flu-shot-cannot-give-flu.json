@@ -1,0 +1,27 @@
+{
+  "id": "flu-shot-cannot-give-flu",
+  "text": "The seasonal flu shot cannot give you the flu.",
+  "shortTitle": "Flu shot and the flu",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 54,
+    "pctFalse": 29,
+    "pctUnsure": 16,
+    "source": "Annenberg Public Policy Center (ASAPH)",
+    "sourceUrl": "https://www.annenbergpublicpolicycenter.org/flu-vaccination-rate-holds-steady-but-misinformation-about-flu-and-covid-persists/",
+    "fieldDates": "Jan 10–16, 2023",
+    "n": 1657,
+    "questionWording": "The seasonal flu shot distributed in the US cannot give you flu. (True / False / Not sure)",
+    "note": "VERIFY before shipping: one researcher placed the 54/29/16 breakdown in the Jan 10–16, 2023 wave (n=1,657; item base 1,641), the judge placed it in the Oct 5–12, 2023 wave (n≈1,559). Settle the wave, dates and n against the ASAPH toplines (W12 vs W13) before verifying."
+  },
+  "truthSource": {
+    "label": "CDC, Misconceptions about seasonal flu and flu vaccines",
+    "url": "https://www.cdc.gov/flu/prevent/misconceptions.htm",
+    "oneLine": "Flu shots contain inactivated virus or no virus at all, so they cannot cause influenza infection."
+  },
+  "category": "health",
+  "difficulty": 2,
+  "status": "draft"
+}

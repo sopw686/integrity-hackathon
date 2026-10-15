@@ -26,7 +26,10 @@ and the generated default is a defensible starting point, not a decision.
    poll's exact wording (kept in `room.questionWording` when it differs). Polarity errors are
    the most dangerous bug in this product; the validator cannot catch them.
 8. **Day composition** — `scripts/compose-days.ts:10` finds a valid arrangement; rhythm and
-   order are yours. Today's file `content/days/2026-10-15.json` was composed by hand.
+   order are yours. Today's file `content/days/2026-10-15.json` was composed by hand. The
+   no-repeat window is my rule, not the brief's: a 7-day window needs at least 35 verified
+   claims and 7 with a wrong-side majority; the pool is smaller, so the shipped days use the
+   largest window that works (see Content status). Add majority-wrong claims first.
 9. **The Split threshold and Read bands** — `src/lib/scoring.ts:3`, `:12`, `:39`. Note the
    literal-to-spec asymmetry: Split replaces In good company / Sheep inside 45–55, but Fox and
    Stray are untouched, so a Fox at 48 is barely a fox.
@@ -46,10 +49,9 @@ and the generated default is a defensible starting point, not a decision.
 
 ## What still looks generic (honest)
 
-- **Home is sparse.** Wordmark, dateline, tagline, one line, a button, a chip. It is restrained
-  on purpose but a real graphics desk would probably give it one more object (yesterday's room
-  as a tiny still, or a one-line "how it works"). I did not add one because the brief says one
-  line of tagline.
+- **Home.** Wordmark, dateline, tagline, one dry line, a button, a chip, and a strip of
+  yesterday's five rooms as small stills (the signature mark on the first screen, and a door
+  into the archive). The strip is my addition, not the brief's; cut it if it reads as clutter.
 - **The emoji.** ✅ 🦊 🐑 ⚪ ⚖️ 🎯 📡 render in full color and are the loudest things on the
   results screen. The brief requires them. Monochrome glyphs (text presentation, `U+FE0E`) or
   small inline SVG marks would sit better with the rest.
@@ -63,23 +65,26 @@ and the generated default is a defensible starting point, not a decision.
 
 ## Content status (what is verified, what is not)
 
-Verified (19, all with figures quoted from the source's toplines or its own release in the
-research pass): the seven YouGov Nov 2023 items (moon landing, 9/11, microchips, voting
-machines, Obama's birthplace, mass shootings faked, vaccines/autism), ten KFF May–June 2023
-items (MMR/autism, ivermectin, sudden deaths, infertility, vaccine deaths vs. virus, birth
-control, sex ed, gang homicides, armed guards, guns at home), and two NSF 2012 items whose
-figures the brief fixed (Sun around Earth, human evolution).
+Two research passes ran: blind pairs of search agents per source, reconciled by a judge, because
+the environment blocks every poll host. "Verified" means both agents quoted the figure from the
+pollster's own page, toplines or a reputable outlet quoting them, and agreed.
 
-Draft, with best-known numbers filled and a `VERIFY` note (the environment blocked every poll
-host and the session's search allowance ran out before these could be re-read): eight further
-NSF 2012 science items, the two Yale/GMU Spring 2026 climate items (need field dates and n), the
-YouGov flat-earth and dinosaurs items, "a single secret group" (eligibility), and the twelve
-campus items (need the 5C survey).
+Verified (34; 11 with a true answer; 6 with a wrong-side majority):
+antibiotics-viruses, armed-school-guards, birth-control-infertility, center-earth-hot, continents-moving, covid-vaccine-infertility, covid-vaccine-sudden-deaths, earth-is-flat, electrons-smaller-atoms, fathers-gene-sex, gun-at-home-safer, gun-homicides-gang, humans-developed-millions-years, humans-dinosaurs-coexisted, humans-evolved, humans-have-evolved, ivermectin-covid, lasers-sound-waves, mass-shootings-faked, mmr-autism, moon-landing-staged, obama-birthplace, radioactivity-man-made, scientists-agree-warming, sex-ed-teens, sun-around-earth, universe-huge-explosion, us-govt-behind-911, vaccine-deaths-exceed-covid, vaccine-microchip, vaccines-autism, voting-machines-2020, warming-happening, warming-human-caused.
 
-Consequence: only one verified claim has a *true* answer, so the day rule "at least one true
-claim per day" cannot be met for 14 days yet. `npm run validate` reports the missing days as
-errors on purpose. Verifying the NSF and Yale items (one table and one report) unblocks
-`scripts/compose-days.ts` for the full archive-plus-14-days window.
+Draft (15), each with its best-known numbers and a `VERIFY` note saying exactly what to check:
+ca-mail-ballot-7-days, ca-same-day-registration, claremont-council-ballot, flu-shot-cannot-give-flu, la-any-vote-center, most-5c-from-california, mudd-acceptance-rate, mudd-writing-course, one-group-rules-world, pomona-endowment-harvard, shuttle-weekends, three-branches, tiktok-news-under30, vaccines-approved-are-safe, vote-with-campus-address.
+Reasons: the flu-shot item's wave is disputed (Jan vs Oct 2023 ASAPH); "vaccines approved in the
+U.S. are safe" lacks an exact n; "a single secret group" failed the settled-truth test; the twelve
+campus items wait for the 5C survey.
+
+Day files run from 2026-10-04 (archive) through 2026-10-29 (today plus 14). The composer could
+only satisfy a 5-day no-repeat window with this pool, because only 6 verified claims have a
+wrong-side majority and every day needs one. The validator therefore errors below 5 days and warns
+below 7; raise both once the pool grows. The fastest way to a 7-day window is ten more
+majority-wrong claims (the KFF 2024 misinformation waves and YouGov's 2026 conspiracy update are
+the obvious sources). Two newer NSF figures exist (2018: Earth's core 86%, continents 79%) but the
+2018 module n was not confirmed, so the 2012 wave ships.
 
 ## Checks that pass
 

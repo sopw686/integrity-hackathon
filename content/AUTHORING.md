@@ -52,8 +52,8 @@ The shape (from `src/lib/types.ts`):
     "kind": "national",                        // "national" or "campus"
     "label": "U.S. adults",                    // who was asked: "U.S. adults" or "5C students"
     "pctTrue": 18,                             // share who said the claim is true (definitely + probably)
-    "pctFalse": 0,                             // fill from the source
-    "pctUnsure": 0,                            // fill from the source; the three must sum to 100 (±1)
+    "pctFalse": 65,                            // from the topline: probably false + definitely false
+    "pctUnsure": 17,                           // from the topline; the three must sum to 100 (±1)
     "source": "YouGov",
     "sourceUrl": "https://today.yougov.com/…", // the pollster's page for this survey; https only
     "fieldDates": "Nov 9–13, 2023",
@@ -72,7 +72,7 @@ The shape (from `src/lib/types.ts`):
 }
 ```
 
-Worked example, moon landing: YouGov, fielded Nov 9–13, 2023, n = 1,000 U.S. adults, 18% said the landing was faked. Take `pctFalse` and `pctUnsure` from the YouGov topline. Do not estimate them. If the topline splits "definitely" and "probably", add them together. If the three shares sum to 99 or 101 because of rounding, leave them as published.
+Worked example, moon landing: YouGov, fielded Nov 9–13, 2023, n = 1,000 U.S. adult citizens. The topline row reads 7% definitely true, 11% probably true, 14% probably false, 51% definitely false, 17% not sure, so `pctTrue: 18`, `pctFalse: 65`, `pctUnsure: 17`. Always take the shares from the topline. Do not estimate them. If the topline splits "definitely" and "probably", add them together. If the three shares sum to 99 or 101 because of rounding, leave them as published.
 
 The real file must be plain JSON: no comments, no extra keys. Unknown keys are an error.
 

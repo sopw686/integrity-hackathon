@@ -1,0 +1,27 @@
+{
+  "id": "humans-developed-millions-years",
+  "text": "Human beings developed over millions of years from less advanced forms of life.",
+  "shortTitle": "Humans over millions of years",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 55,
+    "pctFalse": 40,
+    "pctUnsure": 5,
+    "source": "Gallup",
+    "sourceUrl": "https://news.gallup.com/poll/261680/americans-believe-creationism.aspx",
+    "fieldDates": "Jun 3–16, 2019",
+    "n": 1015,
+    "questionWording": "Which of the following statements comes closest to your views on the origin and development of human beings? Human beings have developed over millions of years from less advanced forms of life, but God guided this process / Human beings have developed over millions of years from less advanced forms of life, but God had no part in this process / God created human beings pretty much in their present form at one time within the last 10,000 years or so",
+    "note": "33% chose evolution guided by God and 22% evolution without God (together 55); 40% chose creation in the present form within the last 10,000 years; the 5% with no opinion is the published remainder."
+  },
+  "truthSource": {
+    "label": "National Academies of Sciences, Evolution resources",
+    "url": "https://www.nationalacademies.org/evolution",
+    "oneLine": "Fossil, genetic and anatomical evidence establishes that humans evolved over millions of years from earlier species."
+  },
+  "category": "science",
+  "difficulty": 2,
+  "status": "verified"
+}

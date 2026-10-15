@@ -7,13 +7,14 @@
     "kind": "national",
     "label": "U.S. adults",
     "source": "YouGov",
-    "sourceUrl": "https://today.yougov.com/",
-    "fieldDates": "Jun 2015",
+    "sourceUrl": "https://today.yougov.com/society/articles/12615-jurassic-world",
+    "fieldDates": "Jun 15–17, 2015",
     "n": 1000,
     "pctTrue": 41,
     "pctFalse": 43,
     "pctUnsure": 16,
-    "note": "VERIFY before shipping: exact article URL, field dates, n and breakdown recalled, not re-read."
+    "note": "14% definitely true, 27% probably true, 18% probably not true, 25% definitely not true, 16% not sure.",
+    "questionWording": "Humans and dinosaurs lived on the planet at the same time (definitely true / probably true / probably not true / definitely not true / not sure)"
   },
   "truthSource": {
     "label": "Smithsonian National Museum of Natural History",
@@ -22,5 +23,5 @@
   },
   "category": "science",
   "difficulty": 2,
-  "status": "draft"
+  "status": "verified"
 }

@@ -1,0 +1,27 @@
+{
+  "id": "vaccines-approved-are-safe",
+  "text": "Vaccines approved for use in the U.S. are safe.",
+  "shortTitle": "Approved vaccines are safe",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 71,
+    "pctFalse": 16,
+    "pctUnsure": 13,
+    "source": "Annenberg Public Policy Center (ASAPH)",
+    "sourceUrl": "https://www.annenbergpublicpolicycenter.org/vaccine-confidence-falls-as-belief-in-health-misinformation-grows",
+    "fieldDates": "Oct 5–12, 2023",
+    "n": 1500,
+    "questionWording": "Vaccines approved for use in the U.S. are safe. (True / False / Not sure)",
+    "note": "VERIFY before shipping: the release says “over 1,500” respondents (the W13 knowledge-scale PDF suggests n=1,559); take the exact n and the not-sure share from the W13 toplines (the 13 is the remainder)."
+  },
+  "truthSource": {
+    "label": "CDC, Vaccine safety monitoring",
+    "url": "https://www.cdc.gov/vaccine-safety/",
+    "oneLine": "Every U.S.-licensed vaccine passes FDA review and is tracked by multiple national safety systems after approval."
+  },
+  "category": "health",
+  "difficulty": 2,
+  "status": "draft"
+}

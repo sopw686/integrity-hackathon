@@ -6,15 +6,15 @@
   "room": {
     "kind": "national",
     "label": "U.S. adults",
-    "source": "Yale/GMU Climate Change in the American Mind",
-    "sourceUrl": "https://climatecommunication.yale.edu/publications/climate-change-in-the-american-mind-beliefs-attitudes-spring-2026/toc/3/",
-    "fieldDates": "",
-    "n": 0,
+    "source": "Yale/GMU Climate Change in the American Mind, Spring 2026",
+    "sourceUrl": "https://climatecommunication.yale.edu/publications/climate-change-in-the-american-mind-beliefs-attitudes-spring-2026/",
+    "fieldDates": "Apr 17–26, 2026",
+    "n": 1068,
     "pctTrue": 59,
     "pctFalse": 27,
     "pctUnsure": 14,
     "questionWording": "Assuming global warming is happening, do you think it is caused mostly by human activities, mostly by natural changes in the environment, other, or none of the above because global warming isn’t happening?",
-    "note": "VERIFY before shipping: fill fieldDates and n from the Spring 2026 report; figures are from the brief and were not re-read from the report in this environment. 27% said mostly natural changes."
+    "note": "27% said mostly natural changes; the remaining 14% said other, neither, or don’t know."
   },
   "truthSource": {
     "label": "IPCC Sixth Assessment Report",
@@ -23,5 +23,5 @@
   },
   "category": "science",
   "difficulty": 2,
-  "status": "draft"
+  "status": "verified"
 }

@@ -1,7 +1,7 @@
 /**
  * Compose day files from the verified claim pool under the day rules, for a date range.
  *
- *   npx tsx scripts/compose-days.ts --from 2026-10-04 --to 2026-10-29 [--window 7] [--seed 12] [--force]
+ *   npx tsx scripts/compose-days.ts --from 2026-10-04 --to 2026-10-29 [--window 7] [--seed 12] [--restarts 400] [--force]
  *
  * Rules enforced (same as validate-content.ts): five distinct claims; at most one election claim
  * naming a party or candidate; at least one true answer; at least one claim where the room majority
@@ -84,46 +84,73 @@ function validDay(set: Claim[]): string | null {
   return null
 }
 
-const report: string[] = []
+const RESTARTS = Number(opt('restarts', '400'))
+const baseLastUsed = new Map(lastUsed)
+
+type Plan = { report: string[]; days: Day[]; failures: number }
+
+function attempt(): Plan {
+  const used = new Map(baseLastUsed)
+  const report: string[] = []
+  const days: Day[] = []
+  let failures = 0
+  for (let d = toDays(FROM); d <= toDays(TO); d++) {
+    const date = fromDays(d)
+    if (existing.has(date) && !FORCE) {
+      for (const id of existing.get(date)!.claims) used.set(id, d)
+      report.push(`${date}: kept existing`)
+      continue
+    }
+    const pool = claims.filter((c) => d - (used.get(c.id) ?? -1e9) >= WINDOW)
+    let best: Claim[] | null = null
+    let why = 'pool too small'
+    for (let a = 0; a < 300 && !best; a++) {
+      const trues = shuffle(pool.filter((c) => c.answer === 'true'))
+      const wrongs = shuffle(pool.filter(majorityWrong))
+      const rest = shuffle(pool)
+      const pick: Claim[] = []
+      const add = (c?: Claim) => {
+        if (c && !pick.includes(c)) pick.push(c)
+      }
+      add(trues[0])
+      add(wrongs.find((c) => !pick.includes(c)))
+      for (const c of rest) {
+        if (pick.length >= 5) break
+        if (partyElection(c) && pick.some(partyElection)) continue
+        add(c)
+      }
+      const err = validDay(pick)
+      if (!err) best = shuffle(pick)
+      else why = err
+    }
+    if (!best) {
+      failures++
+      report.push(`${date}: COULD NOT COMPOSE (${why}; ${pool.length} eligible claims after the ${WINDOW}-day window)`)
+      continue
+    }
+    for (const c of best) used.set(c.id, d)
+    days.push({ date, claims: best.map((c) => c.id) })
+    report.push(`${date}: ${best.map((c) => c.id).join(', ')}`)
+  }
+  return { report, days, failures }
+}
+
+// Whole-range restarts: a tight pool often has a valid arrangement that a single greedy pass misses.
+let plan = attempt()
+for (let r = 1; r < RESTARTS && plan.failures > 0; r++) {
+  const next = attempt()
+  if (next.failures < plan.failures) plan = next
+  if (plan.failures === 0) break
+}
+const report = plan.report
 let written = 0
-for (let d = toDays(FROM); d <= toDays(TO); d++) {
-  const date = fromDays(d)
-  if (existing.has(date) && !FORCE) {
-    for (const id of existing.get(date)!.claims) lastUsed.set(id, d)
-    report.push(`${date}: kept existing`)
-    continue
+if (plan.failures === 0) {
+  for (const day of plan.days) {
+    writeFileSync(join(daysDir, `${day.date}.json`), JSON.stringify(day, null, 2) + '\n')
+    written++
   }
-  const pool = claims.filter((c) => d - (lastUsed.get(c.id) ?? -1e9) >= WINDOW)
-  let best: Claim[] | null = null
-  let why = 'pool too small'
-  for (let attempt = 0; attempt < 4000 && !best; attempt++) {
-    const trues = shuffle(pool.filter((c) => c.answer === 'true'))
-    const wrongs = shuffle(pool.filter(majorityWrong))
-    const rest = shuffle(pool)
-    const pick: Claim[] = []
-    const add = (c?: Claim) => {
-      if (c && !pick.includes(c)) pick.push(c)
-    }
-    add(trues[0])
-    add(wrongs.find((c) => !pick.includes(c)))
-    for (const c of rest) {
-      if (pick.length >= 5) break
-      if (partyElection(c) && pick.some(partyElection)) continue
-      add(c)
-    }
-    const err = validDay(pick)
-    if (!err) best = shuffle(pick)
-    else why = err
-  }
-  if (!best) {
-    report.push(`${date}: COULD NOT COMPOSE (${why}; ${pool.length} eligible claims after the ${WINDOW}-day window)`)
-    continue
-  }
-  for (const c of best) lastUsed.set(c.id, d)
-  const day: Day = { date, claims: best.map((c) => c.id) }
-  writeFileSync(join(daysDir, `${date}.json`), JSON.stringify(day, null, 2) + '\n')
-  written++
-  report.push(`${date}: ${best.map((c) => c.id).join(', ')}`)
+} else {
+  report.push(`\nNo complete arrangement found in ${RESTARTS} restarts; nothing written. Add claims (especially majority-wrong and true ones) or lower --window.`)
 }
 console.log(report.join('\n'))
 console.log(`\n${claims.length} verified claims in pool (${claims.filter((c) => c.answer === 'true').length} true); ${written} day files written.`)

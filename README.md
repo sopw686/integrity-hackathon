@@ -59,7 +59,8 @@ Content is static JSON bundled at build time. No backend, no runtime model.
 Verified means the figures were read against the source or its toplines. Draft means a human
 still has to confirm something before it can ship. Numbers are never invented; a claim whose
 numbers could not be confirmed stays draft with a `VERIFY` note on exactly what to check.
-`design/REVIEW.md` lists what is still open.
+Today: 34 verified, 15 draft; day files cover 2026-10-04 through 2026-10-29 with a
+5-day no-repeat window. `design/REVIEW.md` lists what is still open and why.
 
 ## Design
 

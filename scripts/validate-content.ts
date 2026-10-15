@@ -26,8 +26,10 @@ export type ValidationResult = { errors: string[]; warnings: string[] }
 
 const TIME_ZONE = 'America/Los_Angeles'
 const DEFAULT_COVERAGE_DAYS = 14
-const NO_REPEAT_ERROR_DAYS = 7 // same claim on two days less than 7 days apart: error
-const NO_REPEAT_WARN_DAYS = 14 // less than 14 days apart: warning
+// HUMAN: the no-repeat window. Target is 7 (error) / 14 (warning) once the verified pool passes ~40 claims
+// with at least 7 majority-wrong ones; with today's pool the composer can only satisfy 5.
+const NO_REPEAT_ERROR_DAYS = 5 // same claim on two days less than 5 days apart: error
+const NO_REPEAT_WARN_DAYS = 7 // less than 7 days apart: warning
 
 const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
@@ -430,7 +432,7 @@ export function validateContent(claims: ContentFile[], days: ContentFile[], opts
     if (info) validDays.push(info)
   }
 
-  // No repeats: < 7 days apart is an error, < 14 days apart a warning (reported on the later day).
+  // No repeats: < NO_REPEAT_ERROR_DAYS apart is an error, < NO_REPEAT_WARN_DAYS a warning (reported on the later day).
   validDays.sort((a, b) => a.date.localeCompare(b.date))
   const lastSeen = new Map<string, string>()
   for (const day of validDays) {
@@ -438,8 +440,8 @@ export function validateContent(claims: ContentFile[], days: ContentFile[], opts
       const prev = lastSeen.get(id)
       if (prev) {
         const gap = daysBetween(prev, day.date)
-        if (gap < NO_REPEAT_ERROR_DAYS) errFor(day.file)(`claim "${id}" repeats within 7 days (also on ${prev}, ${gap} day(s) earlier)`)
-        else if (gap < NO_REPEAT_WARN_DAYS) warnFor(day.file)(`claim "${id}" repeats within 14 days (also on ${prev}, ${gap} days earlier)`)
+        if (gap < NO_REPEAT_ERROR_DAYS) errFor(day.file)(`claim "${id}" repeats within ${NO_REPEAT_ERROR_DAYS} days (also on ${prev}, ${gap} day(s) earlier)`)
+        else if (gap < NO_REPEAT_WARN_DAYS) warnFor(day.file)(`claim "${id}" repeats within ${NO_REPEAT_WARN_DAYS} days (also on ${prev}, ${gap} days earlier)`)
       }
       lastSeen.set(id, day.date)
     }

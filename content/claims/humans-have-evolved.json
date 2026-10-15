@@ -1,0 +1,27 @@
+{
+  "id": "humans-have-evolved",
+  "text": "Humans have evolved over time.",
+  "shortTitle": "Humans have evolved",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 81,
+    "pctFalse": 18,
+    "pctUnsure": 1,
+    "source": "Pew Research Center",
+    "sourceUrl": "https://www.pewresearch.org/short-reads/2019/02/11/darwin-day/",
+    "fieldDates": "Apr 23–May 6, 2018",
+    "n": 1284,
+    "questionWording": "Which comes closest to your view? Humans have evolved over time due to processes such as natural selection; God or a higher power had no role / Humans have evolved over time due to processes that were guided or allowed by God or a higher power / Humans have existed in their present form since the beginning of time",
+    "note": "Single-question form asked of a random half of American Trends Panel wave 34 (n=1,284 of 2,537). 33% chose evolution by natural processes, 48% evolution guided or allowed by God, 18% present form since the beginning; the 1% is the remainder."
+  },
+  "truthSource": {
+    "label": "National Academies of Sciences, Evolution resources",
+    "url": "https://www.nationalacademies.org/evolution",
+    "oneLine": "Fossil, genetic and anatomical evidence establishes that humans evolved from earlier species."
+  },
+  "category": "science",
+  "difficulty": 1,
+  "status": "verified"
+}

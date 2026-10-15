@@ -62,9 +62,12 @@ describe('validateContent: passing set', () => {
     expect(r.errors).toEqual([])
   })
 
-  it('warns (not errors) on a repeat 7–13 days apart', () => {
-    const r = run(passingFixture())
-    expect(r.warnings.some((w) => /repeats within 14 days/.test(w))).toBe(true)
+  it('warns (not errors) on a repeat 5–6 days apart', () => {
+    const f = passingFixture()
+    day(f, 12).claims[0] = 'synthetic-claim-0' // also on day 7: a 5-day gap, and no later repeat
+    const r = run(f)
+    expect(r.errors).toEqual([])
+    expect(r.warnings.some((w) => /repeats within 7 days/.test(w))).toBe(true)
   })
 
   it('skips template files and accepts lenient drafts', () => {
@@ -132,10 +135,10 @@ describe('validateContent: failing cases', () => {
     expect(hasError(f, /2026-10-15\.json: all five claims share the category "science"/)).toBe(true)
   })
 
-  it('a claim repeated within 7 days', () => {
+  it('a claim repeated within 5 days', () => {
     const f = passingFixture()
     day(f, 3).claims[1] = 'synthetic-claim-1' // also on day 0, same slot category
-    expect(hasError(f, /2026-10-18\.json: claim "synthetic-claim-1" repeats within 7 days/)).toBe(true)
+    expect(hasError(f, /2026-10-18\.json: claim "synthetic-claim-1" repeats within 5 days/)).toBe(true)
   })
 
   it('a missing day in the coverage window', () => {

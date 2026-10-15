@@ -6,14 +6,14 @@
   "room": {
     "kind": "national",
     "label": "U.S. adults",
-    "source": "NSF Science & Engineering Indicators 2014 (GSS 2012)",
-    "sourceUrl": "https://www.npr.org/sections/thetwo-way/2014/02/14/277058739/1-in-4-americans-think-the-sun-goes-around-the-earth-survey-says",
+    "source": "NSF Science & Engineering Indicators 2014, Table 7-8 (GSS 2012)",
+    "sourceUrl": "https://www.nsf.gov/statistics/seind14/index.cfm/chapter-7/tt07-08.htm",
     "fieldDates": "2012",
-    "n": 2200,
+    "n": 2256,
     "pctTrue": 28,
     "pctFalse": 72,
     "pctUnsure": 0,
-    "note": "VERIFY before shipping: figure recalled from NSF SEI 2014 Table 7-8 (GSS 2012), not re-read from the source in this environment. 2012 survey; older data"
+    "note": "2012 survey; older data. 72% answered correctly (false). NSF reports the share answering correctly; don’t-know is counted on the wrong side."
   },
   "truthSource": {
     "label": "EPA, Radiation sources and doses",
@@ -22,5 +22,5 @@
   },
   "category": "science",
   "difficulty": 2,
-  "status": "draft"
+  "status": "verified"
 }

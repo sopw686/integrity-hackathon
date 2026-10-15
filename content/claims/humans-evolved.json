@@ -6,15 +6,15 @@
   "room": {
     "kind": "national",
     "label": "U.S. adults",
-    "source": "NSF Science & Engineering Indicators 2014 (GSS 2012)",
-    "sourceUrl": "https://www.npr.org/sections/thetwo-way/2014/02/14/277058739/1-in-4-americans-think-the-sun-goes-around-the-earth-survey-says",
+    "source": "NSF Science & Engineering Indicators 2014, Table 7-8 (GSS 2012)",
+    "sourceUrl": "https://www.nsf.gov/statistics/seind14/index.cfm/chapter-7/tt07-08.htm",
     "fieldDates": "2012",
-    "n": 2200,
+    "n": 2256,
     "pctTrue": 48,
     "pctFalse": 52,
     "pctUnsure": 0,
     "questionWording": "Human beings, as we know them today, developed from earlier species of animals.",
-    "note": "2012 survey; older data. NSF reports the share answering correctly; “false” here includes don’t-know."
+    "note": "2012 survey; older data. 48% answered correctly (true). NSF reports the share answering correctly; don’t-know is counted on the wrong side."
   },
   "truthSource": {
     "label": "National Academies of Sciences, Evolution resources",

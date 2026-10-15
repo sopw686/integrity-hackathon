@@ -1,0 +1,27 @@
+{
+  "id": "warming-happening",
+  "text": "Global warming is happening.",
+  "shortTitle": "Warming is happening",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "source": "Yale/GMU Climate Change in the American Mind, Spring 2026",
+    "sourceUrl": "https://climatecommunication.yale.edu/publications/climate-change-in-the-american-mind-beliefs-attitudes-spring-2026/",
+    "fieldDates": "Apr 17–26, 2026",
+    "n": 1068,
+    "pctTrue": 68,
+    "pctFalse": 16,
+    "pctUnsure": 16,
+    "questionWording": "Do you think that global warming is happening?",
+    "note": "16% said it is not happening; 16% said they don’t know."
+  },
+  "truthSource": {
+    "label": "NASA, Global Climate Change: Evidence",
+    "url": "https://science.nasa.gov/climate-change/evidence/",
+    "oneLine": "Independent surface, ocean and satellite records all show the planet has warmed about 1.2 °C since the late 1800s."
+  },
+  "category": "science",
+  "difficulty": 1,
+  "status": "verified"
+}
