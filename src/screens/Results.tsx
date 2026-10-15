@@ -24,8 +24,9 @@ export function Results() {
   const today = useToday()
   const [params] = useSearchParams()
   const dayParam = params.get('day')
-  const date = dayParam && isValidDateKey(dayParam) ? dayParam : today
-  const archive = date !== today
+  const valid = dayParam !== null && isValidDateKey(dayParam) && dayParam <= today
+  const date = valid ? dayParam : today
+  const past = date !== today
   const navigate = useNavigate()
   const day = getDay(date)
   const record = getRecord(date)
@@ -35,11 +36,15 @@ export function Results() {
   const miniDot = useDotSize() === 18 ? 5 : 4
   useTitle(`Results No. ${no} — Read the Room`)
 
-  const complete = Boolean(day && record?.completedAt)
+  // Today's result must have been played live; an archive-flagged record for today (an early peek) is not it.
+  const complete = Boolean(day && record?.completedAt && (past || !record.archive))
   useEffect(() => {
-    if (!complete) navigate(archive ? `/play?day=${date}` : '/play', { replace: true })
-  }, [complete, navigate, archive, date])
+    if (!complete) navigate(past ? `/play?day=${date}` : '/play', { replace: true })
+    else if (dayParam !== null && !valid) navigate('/results', { replace: true })
+  }, [complete, navigate, past, date, dayParam, valid])
   if (!day || !record || !complete) return null
+  // Labels follow how the day was played, not whether it is still today.
+  const archive = Boolean(record.archive)
 
   const claims = dayClaims(day)
   const results = claims.map((c, i) => scoreClaim(c, record.answers[i] ?? 'false', record.guesses[i] ?? 0))
@@ -96,7 +101,7 @@ export function Results() {
         {results.map((r, i) => {
           const c = claims[i]
           return (
-            <Link to={`/c/${c.id}`} className="results-row" key={c.id}>
+            <Link to={`/c/${c.id}?day=${date}`} className="results-row" key={c.id}>
               <span className="results-grid" aria-hidden="true">
                 <MiniRoom split={c.room} label={c.room.label} guess={r.guess} verdict={r.verdict} dot={miniDot} gap={2} />
               </span>

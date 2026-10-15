@@ -31,10 +31,25 @@ function resultsFromRecord(claims: Claim[], date: string): ClaimResult[] {
   for (let i = 0; i < claims.length; i++) {
     const v = rec.answers[i]
     const g = rec.guesses[i]
-    if (v === undefined || g === undefined) break
+    if (v == null || g == null) break
     out.push(scoreClaim(claims[i], v, g))
   }
   return out
+}
+
+/**
+ * Stored progress for a fresh game of `date`. A live day drops an archive-flagged record (an early
+ * peek) so it can be played and counted; a record with every answer but no completedAt (left
+ * during the last reveal) is completed here. Safe to run twice: the second pass finds it done.
+ */
+export function startGame(claims: Claim[], date: string, archive: boolean): ClaimResult[] {
+  if (!archive && getRecord(date)?.archive) resetDay(date)
+  const results = resultsFromRecord(claims, date)
+  if (claims.length && results.length >= claims.length && !getRecord(date)?.completedAt) {
+    completeDay(date, scoreDay(results), archive)
+    track('day_complete', { date, archive })
+  }
+  return results
 }
 
 /**
@@ -44,8 +59,8 @@ function resultsFromRecord(claims: Claim[], date: string): ClaimResult[] {
 export function useGame(date: string, archive: boolean): Game {
   const day = useMemo(() => getDay(date), [date])
   const claims = useMemo(() => (day ? dayClaims(day) : []), [day])
-  const [results, setResults] = useState<ClaimResult[]>(() => resultsFromRecord(claims, date))
-  const [phase, setPhase] = useState<Phase>(() => (resultsFromRecord(claims, date).length >= claims.length && claims.length > 0 ? 'done' : 'verdict'))
+  const [results, setResults] = useState<ClaimResult[]>(() => startGame(claims, date, archive))
+  const [phase, setPhase] = useState<Phase>(() => (claims.length > 0 && (results.length >= claims.length || Boolean(getRecord(date)?.completedAt)) ? 'done' : 'verdict'))
   const [verdict, setVerdictState] = useState<Verdict | undefined>(undefined)
   const [guess, setGuess] = useState(50)
   const [current, setCurrent] = useState<ClaimResult | undefined>(undefined)
@@ -63,12 +78,26 @@ export function useGame(date: string, archive: boolean): Game {
 
   const lock = useCallback(() => {
     if (phase !== 'read' || !claim || !verdict) return
+    // Another tab may have moved on: resync from storage instead of revealing a lock that was never saved.
+    const rec = getRecord(date)
+    const stored = resultsFromRecord(claims, date)
+    if (rec?.completedAt || stored.length !== results.length) {
+      setResults(stored)
+      setVerdictState(undefined)
+      setPhase(rec?.completedAt || stored.length >= claims.length ? 'done' : 'verdict')
+      return
+    }
     const r = scoreClaim(claim, verdict, guess)
     recordLock(date, results.length, verdict, guess, r.badge, archive)
     track('claim_lock', { claim: claim.id, verdict, guess })
+    // The last lock completes the day, so leaving during its reveal still counts.
+    if (results.length + 1 >= claims.length) {
+      completeDay(date, scoreDay([...results, r]), archive)
+      track('day_complete', { date, archive })
+    }
     setCurrent(r)
     setPhase('reveal')
-  }, [phase, claim, verdict, guess, date, results.length, archive])
+  }, [phase, claim, verdict, guess, date, results, claims, archive])
 
   const next = useCallback(() => {
     if (phase !== 'reveal' || !current) return
@@ -76,14 +105,8 @@ export function useGame(date: string, archive: boolean): Game {
     setResults(all)
     setCurrent(undefined)
     setVerdictState(undefined)
-    if (all.length >= claims.length) {
-      completeDay(date, scoreDay(all), archive)
-      track('day_complete', { date, archive })
-      setPhase('done')
-    } else {
-      setPhase('verdict')
-    }
-  }, [phase, current, results, claims.length, date, archive])
+    setPhase(all.length >= claims.length ? 'done' : 'verdict')
+  }, [phase, current, results, claims.length])
 
   const restart = useCallback(() => {
     resetDay(date)
