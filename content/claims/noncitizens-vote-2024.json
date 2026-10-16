@@ -1,0 +1,32 @@
+{
+  "id": "noncitizens-vote-2024",
+  "text": "Large numbers of immigrants here illegally were likely to vote in the 2024 presidential election.",
+  "shortTitle": "Noncitizen voting",
+  "seenIn": "a campaign-season meme",
+  "answer": "false",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 34,
+    "pctFalse": 45,
+    "pctUnsure": 21,
+    "source": "Reuters/Ipsos",
+    "sourceUrl": "https://www.ipsos.com/sites/default/files/ct/news/documents/2024-10/Reuters%20Ipsos%20October%20Election%20Survey%20Full%20Topline%2010%208%202024.pdf",
+    "fieldDates": "Oct 4–7, 2024",
+    "n": 1272,
+    "questionWording": "Large numbers of illegal immigrants are likely to vote in the November presidential election",
+    "note": "Asked a month before the election: 17% strongly agree, 16% somewhat agree (34% net, as published); 21% gave no answer."
+  },
+  "truthSource": {
+    "label": "Brennan Center for Justice: Noncitizen Voting, The Missing Millions",
+    "url": "https://www.brennancenter.org/our-work/research-reports/noncitizen-voting-missing-millions",
+    "oneLine": "Officials in 42 jurisdictions covering 23.5 million votes in 2016 referred about 30 suspected noncitizen votes. Georgia’s 2024 audit found 20 noncitizens among 8.2 million registrants."
+  },
+  "lesson": {
+    "pattern": "Anecdote scaled up",
+    "tip": "Real cases exist and get shared widely, which makes them feel common. Ask for the rate, not the story: audits find them in the dozens among millions."
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "verified"
+}

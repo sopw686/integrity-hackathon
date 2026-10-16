@@ -19,6 +19,10 @@
     "url": "https://portal.ct.gov/-/media/DCJ/SandyHookFinalReportpdf.pdf",
     "oneLine": "The official investigation documented the Sandy Hook shooting and its 26 victims; courts in Connecticut and Texas later found a broadcaster liable for calling it fake."
   },
+  "lesson": {
+    "pattern": "Unfalsifiable plot",
+    "tip": "When every piece of evidence is called “staged,” no evidence can count. That’s the tell. Courts and records documented these events."
+  },
   "category": "society",
   "difficulty": 2,
   "status": "verified"

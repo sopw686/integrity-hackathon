@@ -21,6 +21,10 @@
     "url": "https://www.ipcc.ch/report/ar6/wg1/",
     "oneLine": "The IPCC concludes it is unequivocal that human influence has warmed the atmosphere, ocean and land."
   },
+  "lesson": {
+    "pattern": "Accept the fact, doubt the cause",
+    "tip": "Many who accept warming doubt its cause. Ask what the evidence attributes it to: scientific bodies point to human emissions."
+  },
   "category": "science",
   "difficulty": 2,
   "status": "verified"

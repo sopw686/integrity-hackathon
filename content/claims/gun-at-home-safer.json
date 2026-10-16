@@ -21,6 +21,10 @@
     "url": "https://www.acpjournals.org/doi/10.7326/M13-1301",
     "oneLine": "Access to a firearm at home roughly doubles the odds of being a homicide victim and triples the odds of suicide."
   },
+  "lesson": {
+    "pattern": "Feels protective, data disagree",
+    "tip": "What feels safe and what the data show can differ. Look for studies comparing whole populations, not individual stories."
+  },
   "category": "society",
   "difficulty": 2,
   "status": "verified"

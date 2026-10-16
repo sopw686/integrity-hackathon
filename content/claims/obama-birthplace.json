@@ -2,6 +2,7 @@
   "id": "obama-birthplace",
   "text": "Barack Obama was not born in the United States.",
   "shortTitle": "Obama’s birthplace",
+  "seenIn": "a meme that keeps coming back",
   "answer": "false",
   "room": {
     "kind": "national",
@@ -15,9 +16,13 @@
     "pctUnsure": 19
   },
   "truthSource": {
-    "label": "Hawaii Department of Health, Vital Records",
-    "url": "https://health.hawaii.gov/vitalrecords/obama/",
+    "label": "Hawaii Department of Health, 2011 news release on Obama’s birth certificate",
+    "url": "https://health.hawaii.gov/vitalrecords/files/2013/05/News_Release_Birth_Certificate_042711.pdf",
     "oneLine": "Hawaii’s health department holds the original 1961 Honolulu birth record; the certified long-form certificate was released in April 2011."
+  },
+  "lesson": {
+    "pattern": "Debunked, still repeated",
+    "tip": "Some false claims survive every correction. Repetition makes a claim feel familiar, not true."
   },
   "category": "election",
   "difficulty": 2,

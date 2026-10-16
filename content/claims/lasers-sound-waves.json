@@ -20,6 +20,10 @@
     "url": "https://spaceplace.nasa.gov/laser/en/",
     "oneLine": "A laser is amplified light, not sound."
   },
+  "lesson": {
+    "pattern": "Technical-sounding, wrong",
+    "tip": "A technical-sounding explanation can still be wrong. “Laser” is short for light amplification; check what the name stands for."
+  },
   "category": "science",
   "difficulty": 2,
   "status": "verified"

@@ -21,6 +21,10 @@
     "url": "https://www.cdc.gov/vaccine-safety/about/autism.html",
     "oneLine": "Studies of millions of children find no link between the MMR vaccine and autism; the 1998 paper that claimed one was retracted."
   },
+  "lesson": {
+    "pattern": "Retracted study lives on",
+    "tip": "A single retracted 1998 paper still circulates. When a claim cites “a study,” check whether it was retracted and what larger studies found."
+  },
   "category": "health",
   "difficulty": 1,
   "status": "verified"

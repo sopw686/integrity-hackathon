@@ -21,6 +21,10 @@
     "url": "https://www.nationalacademies.org/evolution",
     "oneLine": "Fossil, genetic and anatomical evidence establishes that humans evolved from earlier species."
   },
+  "lesson": {
+    "pattern": "Identity, not evidence",
+    "tip": "Answers can reflect who people are as much as what they know. Separate what you believe from what the evidence shows."
+  },
   "category": "science",
   "difficulty": 2,
   "status": "verified"

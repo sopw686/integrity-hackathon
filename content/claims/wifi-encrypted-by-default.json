@@ -21,6 +21,10 @@
     "url": "https://consumer.ftc.gov/articles/are-public-wi-fi-networks-safe-what-you-need-know",
     "oneLine": "Whether a Wi-Fi network encrypts traffic depends on how it is set up; what protects you on public Wi-Fi today is mostly the websites' and apps' own encryption."
   },
+  "lesson": {
+    "pattern": "Assumed default",
+    "tip": "Don’t assume a default protects you. Open networks and older routers can send traffic unencrypted; check the actual settings."
+  },
   "category": "media",
   "difficulty": 2,
   "status": "verified"

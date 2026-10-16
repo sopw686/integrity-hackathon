@@ -1,0 +1,31 @@
+{
+  "id": "ca-every-voter-mailed",
+  "text": "California mails a ballot to every active registered voter, whether or not they asked for one.",
+  "shortTitle": "Ballots for everyone",
+  "seenIn": "a viral photo of a stack of ballots",
+  "answer": "true",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 61,
+    "pctFalse": 19,
+    "pctUnsure": 20,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Vote by Mail",
+    "url": "https://www.sos.ca.gov/elections/voter-registration/vote-mail",
+    "oneLine": "County elections officials mail a vote-by-mail ballot to all active registered voters."
+  },
+  "lesson": {
+    "pattern": "Normal process framed as fraud",
+    "tip": "A photo of unrequested ballots looks alarming until you know every voter gets one. Before sharing “evidence,” ask what the normal process looks like."
+  },
+  "category": "election",
+  "difficulty": 1,
+  "status": "verified"
+}

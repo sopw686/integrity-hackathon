@@ -1,0 +1,31 @@
+{
+  "id": "ca-parole-can-vote",
+  "text": "In California, people on parole can vote.",
+  "shortTitle": "Voting on parole",
+  "seenIn": "an old explainer someone reshared",
+  "answer": "true",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 31,
+    "pctFalse": 42,
+    "pctUnsure": 27,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Voting Rights Restored",
+    "url": "https://www.sos.ca.gov/elections/restore-your-vote",
+    "oneLine": "Since Prop 17 (2020), Californians on parole or probation can register and vote. Only people currently serving a state or federal prison term for a felony cannot."
+  },
+  "lesson": {
+    "pattern": "Old rule, new screenshot",
+    "tip": "This rule changed in 2020, but older explainers and screenshots still circulate. Check the date on anything about who can vote, and confirm against the current official page."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

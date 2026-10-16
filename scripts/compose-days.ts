@@ -2,6 +2,8 @@
  * Compose day files from the verified claim pool under the day rules, for a date range.
  *
  *   npx tsx scripts/compose-days.ts --from 2026-10-04 --to 2026-10-29 [--window 7] [--seed 12] [--restarts 400] [--force]
+ *     [--election N]   at least N election claims per day (the Claremont deployment uses 3)
+ *     [--skip a,b,c]   leave these claims out of the pool (e.g. ones too easy for the demo)
  *
  * Rules enforced (same as validate-content.ts): five distinct claims; at most one election claim
  * naming a party or candidate; at least one true answer; at least one claim where the room majority
@@ -27,6 +29,8 @@ const FROM = opt('from', '')
 const TO = opt('to', '')
 const WINDOW = Number(opt('window', '7'))
 const FORCE = args.includes('--force')
+const MIN_ELECTION = Number(opt('election', '0'))
+const SKIP = new Set(opt('skip', '').split(',').filter(Boolean))
 let seed = Number(opt('seed', '12'))
 if (!FROM || !TO) {
   console.error('usage: compose-days --from YYYY-MM-DD --to YYYY-MM-DD [--window N] [--seed N] [--force]')
@@ -56,7 +60,7 @@ const daysDir = join(root, 'content/days')
 const claims: Claim[] = readdirSync(claimsDir)
   .filter((f) => f.endsWith('.json') && !f.startsWith('_'))
   .map((f) => JSON.parse(readFileSync(join(claimsDir, f), 'utf8')) as Claim)
-  .filter((c) => c.status === 'verified')
+  .filter((c) => c.status === 'verified' && !SKIP.has(c.id))
 
 const PARTY = /\b(Democrats?|Democratic|Republicans?|GOP|Trump|Biden|Harris|Obama|Clinton|Bush|Pence|Vance|Walz|DeSantis|Newsom|party|parties)\b/i
 const partyElection = (c: Claim) => c.category === 'election' && PARTY.test(c.text)
@@ -73,7 +77,7 @@ for (const f of readdirSync(daysDir).filter((f) => f.endsWith('.json'))) {
 
 const lastUsed = new Map<string, number>() // claim id → day number
 // seed lastUsed from existing days before FROM (and any kept days)
-for (const [date, d] of existing) for (const id of d.claims) lastUsed.set(id, Math.max(lastUsed.get(id) ?? -1e9, toDays(date)))
+for (const [date, d] of existing) if (!(FORCE && date >= FROM && date <= TO)) for (const id of d.claims) lastUsed.set(id, Math.max(lastUsed.get(id) ?? -1e9, toDays(date)))
 
 function validDay(set: Claim[]): string | null {
   if (set.length !== 5) return 'needs 5'
@@ -81,6 +85,7 @@ function validDay(set: Claim[]): string | null {
   if (!set.some((c) => c.answer === 'true')) return 'no true answer'
   if (!set.some(majorityWrong)) return 'no majority-wrong claim'
   if (new Set(set.map((c) => c.category)).size === 1) return 'all one category'
+  if (set.filter((c) => c.category === 'election').length < MIN_ELECTION) return `fewer than ${MIN_ELECTION} election claims`
   return null
 }
 
@@ -112,11 +117,17 @@ function attempt(): Plan {
       const add = (c?: Claim) => {
         if (c && !pick.includes(c)) pick.push(c)
       }
-      add(trues[0])
-      add(wrongs.find((c) => !pick.includes(c)))
+      for (const c of shuffle(pool.filter((c) => c.category === 'election'))) {
+        if (pick.length >= MIN_ELECTION) break
+        if (partyElection(c) && pick.some(partyElection)) continue
+        add(c)
+      }
+      if (!pick.some((c) => c.answer === 'true')) add(trues.find((c) => !pick.includes(c)))
+      if (!pick.some(majorityWrong)) add(wrongs.find((c) => !pick.includes(c)))
       for (const c of rest) {
         if (pick.length >= 5) break
         if (partyElection(c) && pick.some(partyElection)) continue
+        if (c.category === 'election' && pick.filter((x) => x.category === 'election').length >= Math.max(MIN_ELECTION, 1) + 1) continue
         add(c)
       }
       const err = validDay(pick)

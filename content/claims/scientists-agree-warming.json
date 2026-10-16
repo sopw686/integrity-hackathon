@@ -21,6 +21,10 @@
     "url": "https://science.nasa.gov/climate-change/scientific-consensus/",
     "oneLine": "Multiple independent studies find that 97% or more of publishing climate scientists agree the climate is warming."
   },
+  "lesson": {
+    "pattern": "Manufactured split",
+    "tip": "“Both sides” coverage can make a consensus look divided. Check what scientific bodies say, not how many voices disagree on air."
+  },
   "category": "science",
   "difficulty": 2,
   "status": "verified"

@@ -401,3 +401,77 @@ h1.claim-pinned, h1.claim-text { font-weight: 400; margin: 0; }
 .sure-key i.mark { width: 2px; height: 14px; background: var(--you); }
 
 @media (prefers-reduced-motion: reduce) { .sure-tile { animation: none !important; } }
+
+/* ---- the reveal, in order of weight: truth → evidence → lesson → the room ---- */
+.verdict-banner-truth {
+  margin-left: 4px; padding: 2px 8px; border-radius: 4px; font-size: 15px;
+  background: var(--paper); color: var(--ink); border: 1.5px solid currentColor;
+}
+.verdict-banner.wrong .verdict-banner-truth { background: var(--ink); color: var(--paper); }
+.banner-slot { flex-direction: column; align-items: center; gap: 6px; }
+.call-kind { margin: 0; color: var(--ink); display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center; text-align: center; }
+.call-kind.confident-miss { padding: 2px 8px; border: 1.5px solid var(--ink); border-radius: 3px; background: var(--pop-soft); }
+.call-pts { font-family: var(--font-sans); font-weight: 700; }
+.hud-item.neg { border-style: dashed; }
+
+.evidence-slot, .source-slot { min-height: 0; }
+.stack-tight { display: flex; flex-direction: column; gap: 12px; }
+.evidence { display: flex; flex-direction: column; gap: 6px; border-top: 2px solid var(--ink); padding-top: 10px; }
+.evidence-head { margin: 0; color: var(--ink); font-weight: 600; }
+.evidence-line { margin: 0; font-size: 19px; line-height: 1.35; font-variation-settings: 'opsz' 20; }
+.evidence-source { display: inline-flex; flex-direction: column; gap: 1px; align-self: flex-start; color: var(--ink); text-decoration: none; padding: 4px 0; min-height: 44px; justify-content: center; }
+.evidence-org { font-family: var(--font-sans); font-weight: 600; font-size: 15px; text-decoration: underline; text-underline-offset: 0.18em; }
+.evidence-source:hover .evidence-org { text-decoration-thickness: 2px; }
+.evidence-host { overflow-wrap: anywhere; }
+
+.lesson { padding: 10px 12px; border-left: 4px solid var(--ink); background: var(--pop-soft); border-radius: 0 4px 4px 0; }
+.lesson-head { margin: 0 0 4px; color: var(--ink); }
+.lesson-pattern { margin-left: 6px; font-weight: 600; }
+.lesson-pattern::before { content: '· '; }
+.lesson-tip { margin: 0; font-size: var(--fs-small, 15px); line-height: 1.45; }
+
+.room-context { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--rule); padding-top: 10px; }
+.room-context-head { margin: 0; }
+.room-context-line { margin: 0; color: var(--ink); }
+.room-source { margin: 0; }
+.room-source summary { cursor: pointer; min-height: 32px; display: list-item; padding: 4px 0; }
+.room-source p { margin: 6px 0 0; }
+.room-source a { color: var(--ink); }
+.demo-tag { display: inline-block; padding: 0 6px; border: 1.5px dashed var(--ink); border-radius: 3px; color: var(--ink); margin-right: 4px; }
+.truth-chip { align-self: flex-start; margin: 0; font-weight: 600; }
+.truth-chip.false { background: var(--ink); color: var(--paper); }
+
+/* ---- results: insight + score ---- */
+.rank-line { font-family: var(--font-serif, inherit); font-size: 17px; line-height: 1.35; }
+.insight-notes { margin: 12px auto 0; padding: 0; list-style: none; max-width: 32em; display: flex; flex-direction: column; gap: 6px; }
+.insight-notes li { padding-left: 16px; position: relative; }
+.insight-notes li::before { content: ''; position: absolute; left: 2px; top: 0.6em; width: 7px; height: 7px; border-radius: 50%; background: var(--you); }
+.score-line { display: flex; align-items: baseline; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.score-total { font-family: var(--font-sans); font-size: 34px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
+
+.sure-pair { display: flex; gap: 28px; }
+.sure-pair > div { display: flex; flex-direction: column; gap: 2px; }
+.sure-big { font-family: var(--font-sans); font-size: 40px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+.sure-big.felt { color: var(--you); }
+.sure-explain { font-size: 18px; }
+.sure-kinds { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.sure-kind { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border: 1px solid var(--rule); border-radius: 4px; }
+.sure-kind.none { opacity: 0.6; }
+.sure-kind.confident-miss:not(.none) { border: 2px solid var(--ink); background: var(--pop-soft); }
+.sure-kind-n { font-family: var(--font-sans); font-weight: 700; font-size: 18px; min-width: 1.2ch; }
+
+/* ---- home: the three-part challenge ---- */
+.home-copy { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.home-steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; font-family: var(--font-cond); font-weight: 600; letter-spacing: var(--ls-label); text-transform: uppercase; font-size: 14px; }
+.home-steps li { display: flex; align-items: center; gap: 8px; }
+.home-step-n { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--ink); font-size: 11px; }
+
+/* ---- how to play: confidence and points ---- */
+.howto-sure { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 10px; }
+.howto-sure-tile { text-align: center; padding: 4px 0; border: 1.5px solid var(--ink); border-radius: 3px; font-size: 13px; font-family: var(--font-sans); font-weight: 600; }
+.howto-sure-tile.on { background: var(--pop); color: #141414; }
+.howto-points { width: 100%; border-collapse: collapse; font-family: var(--font-sans); }
+.howto-points th, .howto-points td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--rule); }
+.howto-points td:last-child { font-weight: 700; }
+.seen-in { margin: 0 0 8px; padding-left: 8px; border-left: 3px solid var(--you); color: var(--muted); text-transform: none; letter-spacing: 0.01em; font-size: 14px; }
+.results-body .call-kind { align-self: flex-start; }

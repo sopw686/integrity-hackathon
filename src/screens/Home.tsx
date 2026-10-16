@@ -88,7 +88,14 @@ export function Home() {
           No. {no} · {formatLong(today)}
         </p>
         <div className="home-hero">
-          <h1 className="claim-text home-tagline">{COPY.tagline}</h1>
+          <div className="home-copy">
+            <h1 className="claim-text home-tagline">{COPY.tagline}</h1>
+            <ol className="home-steps">
+              {COPY.steps.map((step, i) => (
+                <li key={step}><span className="home-step-n num" aria-hidden="true">{i + 1}</span>{step}</li>
+              ))}
+            </ol>
+          </div>
           <LivingRoom calm={calm} dot={miniDot === 5 ? 11 : 9} gap={miniDot === 5 ? 5 : 4} />
         </div>
         <p className="small muted home-roomis">{COPY.roomIs}</p>

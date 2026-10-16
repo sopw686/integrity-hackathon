@@ -2,6 +2,7 @@
   "id": "voting-machines-2020",
   "text": "Voting machines were programmed to change votes in the 2020 election.",
   "shortTitle": "Voting machines, 2020",
+  "seenIn": "a forwarded video",
   "answer": "false",
   "room": {
     "kind": "national",
@@ -18,6 +19,10 @@
     "label": "CISA joint statement, Nov 12, 2020",
     "url": "https://www.cisa.gov/news-events/news/joint-statement-elections-infrastructure-government-coordinating-council-election",
     "oneLine": "Federal election-security officials found no evidence that any voting system changed votes; audits, recounts and more than 60 court rulings reached the same result."
+  },
+  "lesson": {
+    "pattern": "Claims vs. paper trail",
+    "tip": "Hand recounts, audits and courts test whether machines changed votes. When a viral claim and the audits disagree, follow the paper."
   },
   "category": "election",
   "difficulty": 2,

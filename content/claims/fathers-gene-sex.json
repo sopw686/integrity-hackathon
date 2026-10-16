@@ -20,6 +20,10 @@
     "url": "https://medlineplus.gov/genetics/understanding/basics/howmanychromosomes/",
     "oneLine": "The father’s sperm carries either an X or a Y chromosome, which determines the baby’s sex."
   },
+  "lesson": {
+    "pattern": "Sounds like folk wisdom",
+    "tip": "Some true claims sound like old myths. Check before dismissing: sperm carry an X or a Y chromosome, which sets the baby’s sex."
+  },
   "category": "science",
   "difficulty": 2,
   "status": "verified"

@@ -1,0 +1,31 @@
+{
+  "id": "youth-turnout-2022",
+  "text": "Most eligible voters aged 18–29 voted in the 2022 midterm elections.",
+  "shortTitle": "Youth turnout, 2022",
+  "seenIn": "your feed, full of “I voted” stickers",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 35,
+    "pctFalse": 45,
+    "pctUnsure": 20,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "CIRCLE, Tufts University: youth turnout in 2022",
+    "url": "https://circle.tufts.edu/latest-research/state-state-youth-voter-turnout-data-and-impact-election-laws-2022",
+    "oneLine": "CIRCLE estimates 23% of eligible Americans aged 18–29 voted in the 2022 midterms, down from 28% in 2018."
+  },
+  "lesson": {
+    "pattern": "Your feed isn’t the electorate",
+    "tip": "If everyone you follow posted a sticker, turnout feels high. People who post are not a random sample. Look for an estimate built from voter files, not your timeline."
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "verified"
+}

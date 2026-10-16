@@ -21,6 +21,10 @@
     "url": "https://science.nasa.gov/climate-change/evidence/",
     "oneLine": "Independent surface, ocean and satellite records all show the planet has warmed about 1.2 °C since the late 1800s."
   },
+  "lesson": {
+    "pattern": "Weather isn’t climate",
+    "tip": "A cold week doesn’t disprove warming. Climate claims are about decades of global measurements; check NASA or NOAA."
+  },
   "category": "science",
   "difficulty": 1,
   "status": "verified"

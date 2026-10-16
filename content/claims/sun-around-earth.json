@@ -21,6 +21,10 @@
     "url": "https://science.nasa.gov/solar-system/",
     "oneLine": "The Earth orbits the Sun once a year."
   },
+  "lesson": {
+    "pattern": "What it looks like",
+    "tip": "Everyday appearance (the Sun “rises”) can mislead. Check against established science, not the view from here."
+  },
   "category": "science",
   "difficulty": 1,
   "status": "verified"

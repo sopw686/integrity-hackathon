@@ -12,6 +12,8 @@ Campus claims need a room of 5C students. We measure it ourselves with one Googl
 - **Wording:** each Form question is the claim text exactly as it will appear in the game. If you change the text after the survey, the room numbers no longer apply.
 - **No other questions.** No class year, no college, no demographics. We do not need them and they make responses easier to identify.
 
+**Priority for the pilot:** every claim with `"kind": "illustrative"` in `content/claims/` (the election set: photo ID, same-day registration, 7-day mail ballots, voting twice, campus address, provisional ballots, mail ballots counted, parole, signature mismatch, a friend returning your ballot, LA vote centers, ballots mailed to everyone, youth turnout, margin of error). Survey these first; their real 5C splits replace the demo crowds. When filling a room from the survey, change `kind` to `"campus"`, `label` to `"5C students"`, and remove the demo note.
+
 ## Consent and anonymity line
 
 Put this at the top of the Form description:
@@ -27,15 +29,15 @@ Twenty-eight items. Items 1–10 and 21–28 already exist as drafts in `content
 | # | id | Claim text | Expected answer | Status |
 |---|----|-----------|-----------------|--------|
 | 1 | `claremont-council-ballot` | Claremont city council elections are on the same ballot as the November midterm. | true (confirm with city clerk) | draft file |
-| 2 | `ca-same-day-registration` | In California, you can register and vote on the same day, including Election Day. | true | draft file |
-| 3 | `la-any-vote-center` | Any registered LA County voter can vote at any vote center in the county. | true | draft file |
-| 4 | `ca-mail-ballot-7-days` | A mail ballot postmarked on Election Day counts in California if it arrives within 7 days. | true | draft file |
+| 2 | `ca-same-day-registration` | In California, you can still register and vote on Election Day itself. | true | verified, demo crowd |
+| 3 | `la-any-vote-center` | In LA County, you can vote in person days before Election Day, at any vote center in the county. | true | verified, demo crowd |
+| 4 | `ca-mail-ballot-7-days` | A California mail ballot postmarked on Election Day still counts if it arrives up to 7 days later. | true | verified, demo crowd |
 | 5 | `mudd-acceptance-rate` | Harvey Mudd's acceptance rate is below 10%. | false (check latest Common Data Set) | draft file |
 | 6 | `shuttle-weekends` | The 5C shuttle runs on weekends. | true (confirm schedule) | draft file |
 | 7 | `mudd-writing-course` | Harvey Mudd requires every student to take a half-course in writing. | true (confirm credit value) | draft file |
 | 8 | `most-5c-from-california` | Most 5C students are from California. | false (confirm class profiles) | draft file |
 | 9 | `pomona-endowment-harvard` | Pomona's endowment is larger than Harvard's. | false | draft file |
-| 10 | `vote-with-campus-address` | Students can vote in Claremont using their campus address. | true | draft file |
+| 10 | `vote-with-campus-address` | College students in California can register to vote using their campus address. | true | verified, demo crowd |
 | 11 | `ca-preregister-16` | In California, 16- and 17-year-olds can pre-register to vote. | true (CA SOS) | suggestion |
 | 12 | `ca-every-voter-mailed-ballot` | California mails a ballot to every active registered voter. | true (CA SOS) | suggestion |
 | 13 | `ca-photo-id-to-vote` | You need a photo ID to vote in person in California. | false, with exceptions for some first-time voters (CA SOS) | suggestion |

@@ -16,9 +16,13 @@
     "questionWording": "The U.S. government is using the COVID-19 vaccine to microchip the population."
   },
   "truthSource": {
-    "label": "FDA, COVID-19 vaccine fact sheets",
-    "url": "https://www.fda.gov/emergency-preparedness-and-response/coronavirus-disease-2019-covid-19/covid-19-vaccines",
-    "oneLine": "Every authorized vaccine’s published ingredient list contains mRNA or protein, lipids, salts, sugars and buffers; none contains a microchip."
+    "label": "FDA, COVID-19 Vaccines Myths vs Facts",
+    "url": "https://www.fda.gov/media/152578/download",
+    "oneLine": "FDA states COVID-19 vaccines do not contain microchips, and each vaccine’s ingredients are published in its fact sheet."
+  },
+  "lesson": {
+    "pattern": "What would it take?",
+    "tip": "Ask what the claim would require: a hidden device in every dose that no lab testing vaccines has found. Ingredient lists are public."
   },
   "category": "health",
   "difficulty": 1,

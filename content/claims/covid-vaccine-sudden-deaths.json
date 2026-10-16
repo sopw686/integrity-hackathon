@@ -21,6 +21,10 @@
     "url": "https://www.cdc.gov/coronavirus/2019-ncov/vaccines/safety/adverse-events.html",
     "oneLine": "Safety monitoring has not found that the vaccines caused thousands of deaths; unverified reports do not establish causation and confirmed vaccine-caused deaths are rare."
   },
+  "lesson": {
+    "pattern": "Coincidence as cause",
+    "tip": "Among millions of people, some die suddenly after any event. Ask whether the rate went up, not whether stories exist."
+  },
   "category": "health",
   "difficulty": 2,
   "status": "verified"

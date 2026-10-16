@@ -20,6 +20,10 @@
     "url": "https://www.nasa.gov/mission/apollo-11/",
     "oneLine": "Apollo 11 landed on July 20, 1969; NASA’s mission record and Lunar Reconnaissance Orbiter photographs of the landing sites document it."
   },
+  "lesson": {
+    "pattern": "Too big to hide",
+    "tip": "A hoax this size would need hundreds of thousands of people to stay silent for decades. Ask how many would have to be in on it."
+  },
   "category": "society",
   "difficulty": 1,
   "status": "verified"

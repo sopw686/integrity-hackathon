@@ -1,0 +1,31 @@
+{
+  "id": "friend-return-ballot",
+  "text": "In California, you can have a friend drop off your mail ballot for you.",
+  "shortTitle": "A friend returns it",
+  "seenIn": "a relative’s Facebook post calling it illegal",
+  "answer": "true",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 44,
+    "pctFalse": 31,
+    "pctUnsure": 25,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Vote by Mail",
+    "url": "https://www.sos.ca.gov/elections/voter-registration/vote-mail",
+    "oneLine": "Anyone may return your ballot for you, as long as they aren’t paid per ballot."
+  },
+  "lesson": {
+    "pattern": "Another state’s crime",
+    "tip": "Some states restrict who can return a ballot, so posts call it illegal everywhere. Election law is set state by state; a rule from one state proves nothing about yours."
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "verified"
+}

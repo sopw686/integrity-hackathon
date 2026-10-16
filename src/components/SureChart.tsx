@@ -1,15 +1,36 @@
-import type { Calibration } from '../lib/scoring'
+import type { Calibration, CallKind } from '../lib/scoring'
 import { COPY } from '../tokens/copy'
 
-/** Felt-sure vs right. One row per confidence level: the ink bar is how often you were right,
+const KINDS: CallKind[] = ['sure-right', 'hedged-right', 'hedged-miss', 'confident-miss']
+
+/** Felt-sure vs right, in plain words, plus the four calibration outcomes.
+ *  With `chart`, one row per confidence level: the ink bar is how often you were right,
  *  the vermilion mark is how sure you said you were. A bar short of its mark is overconfidence. */
 export function SureSummary({ cal, chart }: { cal: Calibration; chart?: boolean }) {
   const gap = Math.abs(cal.gap)
   return (
     <div className="sure-summary">
       <p className="label">{COPY.sureHead}</p>
-      <p className="serif">{COPY.sureFeltVsRight(cal.meanConfidence, cal.pctRight)}</p>
+      <div className="sure-pair" role="group" aria-label={`${COPY.sureRight} ${cal.pctRight}%, ${COPY.sureFelt} ${cal.meanConfidence}%`}>
+        <div>
+          <span className="sure-big num">{cal.pctRight}%</span>
+          <span className="label">{COPY.sureRight}</span>
+        </div>
+        <div>
+          <span className="sure-big num felt">{cal.meanConfidence}%</span>
+          <span className="label">{COPY.sureFelt}</span>
+        </div>
+      </div>
       <span className={`sure-verdict ${cal.verdict}`}>{COPY.sureVerdict[cal.verdict](gap)}</span>
+      <p className="serif sure-explain">{COPY.sureExplain[cal.verdict]}</p>
+      <ul className="sure-kinds" aria-label="Your calls">
+        {KINDS.map((k) => (
+          <li key={k} className={`sure-kind ${k}${cal.kinds[k] ? '' : ' none'}`}>
+            <span className="num sure-kind-n">{cal.kinds[k]}</span>
+            <span className="small">{COPY.callKindShort[k]}</span>
+          </li>
+        ))}
+      </ul>
       <p className="small muted">{COPY.sureMisses(cal.confidentMisses)}</p>
       {chart && (
         <>

@@ -1,0 +1,31 @@
+{
+  "id": "signature-mismatch-no-notice",
+  "text": "If your mail-ballot signature doesn’t match, California throws out your ballot without telling you.",
+  "shortTitle": "Signature mismatch",
+  "seenIn": "a TikTok stitch",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 30,
+    "pctFalse": 38,
+    "pctUnsure": 32,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Vote by Mail",
+    "url": "https://www.sos.ca.gov/elections/voter-registration/vote-mail",
+    "oneLine": "Signatures are checked. If yours is missing or doesn’t match, your county contacts you and you can fix it by returning a signature verification form by its deadline."
+  },
+  "lesson": {
+    "pattern": "True start, false ending",
+    "tip": "Signatures really are checked; the false part is “without telling you.” Half-true claims borrow credibility from the true half. Check each part separately."
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "verified"
+}

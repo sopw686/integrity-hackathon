@@ -21,6 +21,10 @@
     "url": "https://www.nationalacademies.org/evolution",
     "oneLine": "Fossil, genetic and anatomical evidence establishes that humans evolved over millions of years from earlier species."
   },
+  "lesson": {
+    "pattern": "Wording changes answers",
+    "tip": "People answer the same science differently depending on wording. Read the exact claim, then check the scientific consensus."
+  },
   "category": "science",
   "difficulty": 2,
   "status": "verified"
