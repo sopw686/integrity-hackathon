@@ -97,7 +97,7 @@ export function Home() {
             </p>
             <div className="home-meta">
               <span className="chip">{COPY.streak}: {COPY.streakDays(streak)}</span>
-              <Link to="/results" className="btn quiet link-like">{COPY.seeResults}</Link>
+              <Link to={`/results?day=${today}`} className="btn quiet link-like">{COPY.seeResults}</Link>
             </div>
           </>
         )}
@@ -118,7 +118,7 @@ export function Home() {
             {dayClaims(yesterday).map((c, i) => (
               <span className="yesterday-room" key={c.id} aria-hidden="true">
                 {/* Only claims already locked are revealed; the rest stay an empty room, so the split never reaches the page. */}
-                {yesterdayRecord?.answers[i] !== undefined ? (
+                {yesterdayRecord?.answers[i] != null && yesterdayRecord.guesses[i] != null ? (
                   <MiniRoom split={c.room} label={c.room.label} guess={yesterdayRecord.guesses[i]} verdict={yesterdayRecord.answers[i]} dot={miniDot} gap={2} />
                 ) : (
                   <Room split={c.room} label={c.room.label} mode="slider" dot={miniDot} gap={2} />

@@ -34,11 +34,14 @@ export function Play() {
     if (today !== startDay && !getRecord(startDay)?.answers.length) setStartDay(today)
   }, [today, startDay])
 
+  // Mount the game only on the cleaned URL, or its own redirect to /results is overwritten.
+  if (dayParam !== null && !valid) return null
+
   // Keyed by date: game state can never carry over from one day to another.
-  return <PlayDay key={date} date={date} archive={archive} today={today} />
+  return <PlayDay key={date} date={date} archive={archive} />
 }
 
-function PlayDay({ date, archive, today }: { date: string; archive: boolean; today: string }) {
+function PlayDay({ date, archive }: { date: string; archive: boolean }) {
   const game = useGame(date, archive)
   const reduced = useReduced()
   const dot = useDotSize()
@@ -53,9 +56,10 @@ function PlayDay({ date, archive, today }: { date: string; archive: boolean; tod
   const total = claims.length
   useTitle(claim ? `${index + 1} of ${total} — Read the Room` : 'Read the Room')
 
+  // Always name the day: after midnight a bare /results would resolve to the next puzzle.
   useEffect(() => {
-    if (phase === 'done') navigate(date !== today ? `/results?day=${date}` : '/results', { replace: true })
-  }, [phase, navigate, date, today])
+    if (phase === 'done') navigate(`/results?day=${date}`, { replace: true })
+  }, [phase, navigate, date])
 
   // Keyboard flow: read the claim on arrival, move to the slider once the verdict is locked,
   // and keep focus on the claim (not <body>) once Lock unmounts.
@@ -182,7 +186,8 @@ function PlayDay({ date, archive, today }: { date: string; archive: boolean; tod
               <div className="next-slot">
                 {clock.done && (
                   <>
-                    <p id="reveal-summary" className="sr-only">{summary}</p>
+                    {/* hidden, not sr-only: read only as Next's description, not again in browse mode */}
+                    <p id="reveal-summary" hidden>{summary}</p>
                     <button type="button" className="btn" onClick={game.next} autoFocus aria-describedby="reveal-summary">
                       {index + 1 < total ? COPY.next : COPY.seeResults}
                     </button>
