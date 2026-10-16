@@ -17,9 +17,9 @@
     "note": "3% definitely true, 24% probably true; the false share is the published remainder. KFF offered definitely/probably true and probably/definitely false; the small remainder gave no answer."
   },
   "truthSource": {
-    "label": "CDC, COVID-19 vaccines and fertility",
-    "url": "https://www.cdc.gov/coronavirus/2019-ncov/vaccines/planning-for-pregnancy.html",
-    "oneLine": "CDC and prospective cohort studies find no association between COVID-19 vaccination and reduced fertility in either partner."
+    "label": "National Academies, Adverse Effects of COVID-19 Vaccination (2024)",
+    "url": "https://nap.nationalacademies.org/catalog/27746/evidence-review-of-the-adverse-effects-of-covid-19-vaccination-and-intramuscular-vaccine-administration",
+    "oneLine": "The National Academies’ 2024 evidence review concluded that the evidence favors rejecting a causal link between the Pfizer and Moderna mRNA vaccines and female infertility."
   },
   "category": "health",
   "difficulty": 2,

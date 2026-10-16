@@ -14,7 +14,7 @@
     "pctFalse": 52,
     "pctUnsure": 0,
     "questionWording": "Human beings, as we know them today, developed from earlier species of animals.",
-    "note": "2012 survey; older data. 48% answered correctly (true). NSF reports the share answering correctly; don’t-know is counted on the wrong side."
+    "note": "2012 survey; older data. 48% answered correctly (true). NSF reports the share answering correctly; don’t-know is counted on the wrong side. Asked of a random half of the module (2,256 is the whole module); the other half heard “According to the theory of evolution, …” and 72% said true."
   },
   "truthSource": {
     "label": "National Academies of Sciences, Evolution resources",

@@ -13,7 +13,7 @@
     "pctTrue": 39,
     "pctFalse": 61,
     "pctUnsure": 0,
-    "note": "2012 survey; older data. 39% answered correctly (true). NSF reports the share answering correctly; don’t-know is counted on the wrong side. NSF’s answer key scores this item true, though cosmologists describe the Big Bang as a rapid expansion from a hot, dense state, not an explosion."
+    "note": "2012 survey; older data. 39% answered correctly (true). NSF reports the share answering correctly; don’t-know is counted on the wrong side. Asked of a random half of the module (2,256 is the whole module); the other half heard “According to astronomers, …” and 60% said true. Cosmologists describe the Big Bang as a rapid expansion from a hot, dense state, not an explosion."
   },
   "truthSource": {
     "label": "NASA, Big Bang",
