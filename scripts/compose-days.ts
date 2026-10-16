@@ -41,10 +41,17 @@ const ALLOW_PAST = args.includes('--allow-past')
 
 const problems: string[] = []
 for (let i = 0; i < args.length; i++) {
-  const name = args[i].startsWith('--') ? args[i].slice(2).split('=')[0] : ''
+  const a = args[i]
+  const name = a.startsWith('--') ? a.slice(2).split('=')[0] : ''
   if (VALUED.includes(name)) {
-    if (!args[i].includes('=') && args[i + 1] !== undefined && !args[i + 1].startsWith('--')) i++
-  } else if (!SWITCHES.includes(name)) problems.push(`unknown argument ${JSON.stringify(args[i])}`)
+    // Checked here, not after Number(): a missing --seed would otherwise run as seed 0.
+    const inline = a.includes('=') ? a.slice(name.length + 3) : undefined
+    const next = args[i + 1]
+    if (inline !== undefined ? inline === '' : next === undefined || next.startsWith('--')) problems.push(`--${name} needs a value`)
+    else if (inline === undefined) i++
+  } else if (SWITCHES.includes(name)) {
+    if (a !== `--${name}`) problems.push(`--${name} takes no value, got ${JSON.stringify(a)}`)
+  } else problems.push(`unknown argument ${JSON.stringify(a)}`)
 }
 if (!isValidDateKey(FROM)) problems.push(`--from needs a real YYYY-MM-DD date, got ${JSON.stringify(FROM)}`)
 if (!isValidDateKey(TO)) problems.push(`--to needs a real YYYY-MM-DD date, got ${JSON.stringify(TO)}`)

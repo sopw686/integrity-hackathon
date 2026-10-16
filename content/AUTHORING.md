@@ -81,7 +81,7 @@ Files whose names start with `_` (such as `content/claims/_template-campus-a.jso
 ## 6. Set the status
 
 - `"draft"`: still being filled or checked. Drafts may have zeros and empty strings. The game ignores them, and the build leaves them out of what players download.
-- `"verified"`: every field is filled from the source, a second person has reread the claim against the poll wording, and both links open. Only verified claims can go on a day. Reviewer notes must be gone first: the validator stops the build if `text`, `shortTitle`, `room.label`, `room.note`, `room.questionWording`, `truthSource.label` or `truthSource.oneLine` of a verified claim still contains `HUMAN:`, `VERIFY`, `TODO` or `TBD` (capital letters; ordinary words like "verify" are fine).
+- `"verified"`: every field is filled from the source, a second person has reread the claim against the poll wording, and both links open. Only verified claims can go on a day. Reviewer notes must be gone first: the validator stops the build if `text`, `shortTitle`, `room.label`, `room.source`, `room.fieldDates`, `room.note`, `room.questionWording`, `truthSource.label` or `truthSource.oneLine` of a verified claim still contains `HUMAN:`, `VERIFY`, `TODO` or `TBD` (capital letters; ordinary words like "verify" are fine).
 
 ## 7. Run the validator
 

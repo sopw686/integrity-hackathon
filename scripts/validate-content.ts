@@ -46,7 +46,7 @@ const MAX_TEXT_LENGTH = 220
 export const PARTY_RE =
   /\b(Democrats?|Democratic|Republicans?|GOP|MAGA|Trump|Biden|Harris|Kamala|Obama|Clinton|Hillary|Bush|Pence|Vance|Walz|DeSantis|Newsom|Romney|McCain|Sanders|Reagan|Carter|Kennedy|candidates?|party|parties|partisan)\b/i
 /** Reviewer notes that must be gone before a claim is verified. Case-sensitive, so prose like "verify" passes. */
-const REVIEWER_MARKER_RE = /\b(?:HUMAN:|VERIFY|TODO|TBD)(?=\W|$)/
+const REVIEWER_MARKER_RE = /\bHUMAN:|\b(?:VERIFY|TODO|TBD)\b/
 /** Words the UI never uses. Pollster titles in room.source are cited verbatim and not checked. */
 const BANNED_WORDS_RE = /misinformation|media literacy|\bbias\b/i
 
@@ -314,6 +314,8 @@ function validateClaim(
       ['text', data.text],
       ['shortTitle', data.shortTitle],
       ['room.label', room?.label],
+      ['room.source', room?.source],
+      ['room.fieldDates', room?.fieldDates],
       ['room.note', room?.note],
       ['room.questionWording', room?.questionWording],
       ['truthSource.label', truth?.label],
@@ -322,7 +324,7 @@ function validateClaim(
     for (const [k, v] of shown) {
       if (typeof v !== 'string') continue
       if (REVIEWER_MARKER_RE.test(v)) err(`${k} still contains a reviewer marker (HUMAN:/VERIFY/TODO/TBD); remove it before setting status to "verified"`)
-      if (k !== 'room.label' && BANNED_WORDS_RE.test(v))
+      if (k !== 'room.label' && k !== 'room.source' && BANNED_WORDS_RE.test(v))
         warn(`${k} says "${v.match(BANNED_WORDS_RE)![0]}"; the UI avoids "misinformation", "media literacy" and "bias" (pollster titles in room.source are exempt)`)
     }
   }

@@ -189,10 +189,16 @@ describe('validateContent: failing cases', () => {
     claim(f, 10).room.note = 'HUMAN: campus set — fill from the 5C survey.'
     claim(f, 11).truthSource.oneLine = 'VERIFY before shipping: which wave?'
     claim(f, 12).room.note = 'Respondents could verify by phone.' // ordinary prose is fine
+    claim(f, 13).room.note = 'HUMAN:check n' // no space after the colon
+    claim(f, 14).room.fieldDates = 'Jan 10–16, 2023 (VERIFY: or Oct 5–12)' // shown on every reveal
+    claim(f, 15).room.note = 'VERIFYING this took two passes.' // a longer word is not the marker
     const errs = run(f).errors
     expect(errs.some((e) => /synthetic-claim-10\.json: room\.note still contains a reviewer marker/.test(e))).toBe(true)
     expect(errs.some((e) => /synthetic-claim-11\.json: truthSource\.oneLine still contains a reviewer marker/.test(e))).toBe(true)
     expect(errs.some((e) => e.startsWith('content/claims/synthetic-claim-12.json'))).toBe(false)
+    expect(errs.some((e) => /synthetic-claim-13\.json: room\.note still contains a reviewer marker/.test(e))).toBe(true)
+    expect(errs.some((e) => /synthetic-claim-14\.json: room\.fieldDates still contains a reviewer marker/.test(e))).toBe(true)
+    expect(errs.some((e) => e.startsWith('content/claims/synthetic-claim-15.json'))).toBe(false)
   })
 
   it('a verified template claim, and any "_" day file', () => {
@@ -255,7 +261,7 @@ describe('warnings', () => {
   it('words the UI avoids, outside cited pollster titles', () => {
     const f = passingFixture()
     claim(f, 17).truthSource.oneLine = 'A classic piece of misinformation.'
-    claim(f, 18).room.source = 'KFF Health Misinformation Tracking Poll Pilot'
+    claim(f, 18).room.source = 'KFF Health Misinformation Tracking Poll Pilot' // cited verbatim: no marker error, no warning
     const r = run(f)
     expect(r.errors).toEqual([])
     expect(r.warnings.some((m) => /synthetic-claim-17\.json: truthSource\.oneLine says "misinformation"/.test(m))).toBe(true)
