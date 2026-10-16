@@ -26,7 +26,7 @@ npm run preview      # serve dist/ on :4173
 npm run validate     # content rules (see content/AUTHORING.md)
 npm run validate -- --online    # also fetches every source and truth URL
 npm run compose-days -- --from YYYY-MM-DD --to YYYY-MM-DD [--window 5] [--force]   # fill day files from the verified pool
-npm run test         # unit tests: geometry, scoring, storage, validator
+npm run test         # unit tests: geometry, scoring, storage, game state, share outcome, validator
 npm run screenshots  # Playwright: every screen at 390×844 and 1280×800 + reveal frames → design/screens/
 npm run check:flows  # Playwright: keyboard-only loop, storage disabled, reduced motion, axe scans; exits 1 on any failure
 ```
@@ -37,8 +37,8 @@ start `npm run dev` in another terminal first (or point them at another server w
 `BASE=http://127.0.0.1:4173` after `npm run preview`), and install a Chromium once with
 `npx playwright install chromium` (or set `CHROMIUM_PATH`).
 
-Node 22 (22.12 or later), 24, or 26+ (`engines` in `package.json`); `.node-version` pins 22.22.0
-for nvm, fnm and Cloudflare Pages. Deploy as a static site: Cloudflare Pages (`wrangler.toml`;
+Node 22 (22.12 or later), 24, or 26+ (`engines` in `package.json`); `.nvmrc` and `.node-version` pin
+22.22.0 for nvm, fnm and Cloudflare Pages. Deploy as a static site: Cloudflare Pages (`wrangler.toml`;
 deep links rely on Pages' default single-page-app mode, so keep `dist/` free of a top-level
 `404.html`) or Vercel (`vercel.json`). Build command `npm run build`, output `dist`.
 
@@ -47,7 +47,7 @@ deep links rely on Pages' default single-page-app mode, so keep `dist/` free of 
 | Route | Screen |
 | --- | --- |
 | `/` | Home: today's number and date, Play, streak, How to play. After playing: the two dials and Share. |
-| `/play` | Verdict → read the room → reveal, five times. `/play?day=YYYY-MM-DD` plays an archive day (doesn't count). |
+| `/play` | Verdict → read the room → reveal, five times. `/play?day=YYYY-MM-DD` plays a past day from the archive (doesn't count); a future date falls back to today. |
 | `/results` | Dials, five rows with mini rooms and badges, Share, "Send a friend the one that got you". |
 | `/stats` | Lifetime accuracy, mean read, Fox and Sheep counts, streak, calendar of played days. |
 | `/archive` | Past puzzles, playable, labeled "archive — doesn't count". |
