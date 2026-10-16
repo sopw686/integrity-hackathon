@@ -23,6 +23,7 @@ import {
   T_STAMP,
   T_VERDICT_BANNER,
 } from '../tokens/motion'
+import { CONFIDENCE_LEVELS, CONFIDENT } from '../lib/scoring'
 import type { ClaimResult, Verdict } from '../lib/types'
 
 /** Five pips across the top: done (right or wrong), the one in play, and the ones to come. */
@@ -109,6 +110,21 @@ function VerdictTile({ v, onPick }: { v: Verdict; onPick: (v: Verdict) => void }
   )
 }
 
+/** "How sure are you?" Four push-blocks, 1–4 on the keyboard. */
+function SureRow({ onPick }: { onPick: (c: number) => void }) {
+  return (
+    <div className="sure-row">
+      {CONFIDENCE_LEVELS.map((c, i) => (
+        <button type="button" key={c} className="sure-tile" onClick={() => onPick(c)} aria-label={`${c}% — ${COPY.sureLevels[c]}`} style={{ ['--i' as string]: i }}>
+          <span className="sure-pct num">{c}%</span>
+          <span className="sure-word">{COPY.sureLevels[c]}</span>
+          <kbd className="tile-key" aria-hidden="true">{i + 1}</kbd>
+        </button>
+      ))}
+    </div>
+  )
+}
+
 export function Play() {
   const today = useToday()
   const [params] = useSearchParams()
@@ -124,10 +140,11 @@ export function Play() {
   const [moved, setMoved] = useState(false)
   const claimRef = useRef<HTMLHeadingElement>(null)
   const sliderWrap = useRef<HTMLDivElement>(null)
+  const sureRef = useRef<HTMLParagraphElement>(null)
   const roomRef = useRef<HTMLDivElement>(null)
   const bannerRef = useRef<HTMLDivElement>(null)
 
-  const { claim, index, claims, phase, verdict, guess, current, results } = game
+  const { claim, index, claims, phase, verdict, confidence, guess, current, results } = game
   const total = claims.length
   // The countdown opens a fresh day once, on the first claim, when things are allowed to move.
   const [counting, setCounting] = useState(() => !calm && results.length === 0 && phase === 'verdict' && Boolean(claim))
@@ -155,6 +172,7 @@ export function Play() {
       })
       return () => cancelAnimationFrame(id)
     }
+    if (phase === 'sure') sureRef.current?.focus()
     if (phase === 'read') sliderWrap.current?.querySelector<HTMLInputElement>('input')?.focus()
   }, [phase, index, counting])
 
@@ -162,6 +180,11 @@ export function Play() {
     if (phase !== 'verdict' || counting) return
     sfx.verdict(v)
     game.setVerdict(v)
+  }
+  const sure = (c: number) => {
+    if (phase !== 'sure') return
+    sfx.tap()
+    game.setConfidence(c)
   }
   const lock = () => {
     sfx.lock()
@@ -172,15 +195,20 @@ export function Play() {
     game.next()
   }
 
-  // T / F call it from the keyboard.
+  // T / F call it from the keyboard; 1–4 say how sure.
   useEffect(() => {
-    if (phase !== 'verdict' || counting) return
+    if ((phase !== 'verdict' && phase !== 'sure') || counting) return
     const on = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return
       const tag = (e.target as HTMLElement)?.tagName
       if (tag === 'INPUT' || tag === 'TEXTAREA') return
-      if (e.key === 't' || e.key === 'T') pick('true')
-      if (e.key === 'f' || e.key === 'F') pick('false')
+      if (phase === 'verdict') {
+        if (e.key === 't' || e.key === 'T') pick('true')
+        if (e.key === 'f' || e.key === 'F') pick('false')
+      } else {
+        const n = Number(e.key)
+        if (n >= 1 && n <= CONFIDENCE_LEVELS.length) sure(CONFIDENCE_LEVELS[n - 1])
+      }
     }
     window.addEventListener('keydown', on)
     return () => window.removeEventListener('keydown', on)
@@ -269,15 +297,27 @@ export function Play() {
       </div>
       <Hud accuracy={accuracy} read={read} combo={combo} calm={calm} />
 
-      {phase === 'verdict' && (
+      {(phase === 'verdict' || phase === 'sure') && (
         <section className="verdict" key={claim.id}>
           <h1 className="claim-text" ref={claimRef} tabIndex={-1}>
             {counting ? claim.text : <Words text={claim.text} calm={calm} />}
           </h1>
-          <div className="row verdict-row">
-            <VerdictTile v="true" onPick={pick} />
-            <VerdictTile v="false" onPick={pick} />
-          </div>
+          {phase === 'verdict' ? (
+            <div className="row verdict-row">
+              <VerdictTile v="true" onPick={pick} />
+              <VerdictTile v="false" onPick={pick} />
+            </div>
+          ) : (
+            verdict && (
+              <div className="sure">
+                <div className="sure-head">
+                  <span className={`chip you-said ${verdict}`}>{COPY.youSaid(verdict)}</span>
+                  <p className="label sure-question" ref={sureRef} tabIndex={-1}>{COPY.sureQuestion}</p>
+                </div>
+                <SureRow onPick={sure} />
+              </div>
+            )
+          )}
         </section>
       )}
 
@@ -286,6 +326,7 @@ export function Play() {
           <h1 className="claim-pinned">{claim.text}</h1>
           <div className="locked-row">
             <span className={`chip you-said ${verdict}`}>{COPY.youSaid(verdict)}</span>
+            {confidence !== undefined && <span className="chip sure-chip num">{COPY.sureChip(confidence)}</span>}
             {phase === 'read' && <span className="label question">{COPY.sliderQuestion}</span>}
             {pointsOn && current && (
               <m.span
@@ -311,6 +352,9 @@ export function Play() {
                 <span className="verdict-banner-mark" aria-hidden="true">{current.correct ? '✓' : '✗'}</span>
                 {current.correct ? okLine : noLine}
               </m.div>
+            )}
+            {bannerOn && current && !current.correct && (current.confidence ?? 0) >= CONFIDENT && (
+              <p className="label sure-miss">{COPY.sureMissNote(current.confidence!)}</p>
             )}
           </div>
 

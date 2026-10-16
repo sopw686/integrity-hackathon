@@ -29,6 +29,11 @@ async function main() {
       await page.keyboard.press('Tab'); await page.keyboard.press('Tab')
       const label = await page.evaluate(() => document.activeElement?.textContent?.trim())
       await page.keyboard.press('Enter')
+      // "How sure are you?" takes focus; Tab twice reaches 70%
+      const sureFocused = await page.evaluate(() => document.activeElement?.textContent?.trim() === 'How sure are you?')
+      await page.keyboard.press('Tab'); await page.keyboard.press('Tab')
+      const sureLabel = await page.evaluate(() => document.activeElement?.getAttribute('aria-label'))
+      await page.keyboard.press('Enter')
       // slider should now be focused
       const sliderFocused = await page.evaluate(() => document.activeElement?.getAttribute('type') === 'range')
       for (let k = 0; k < 12; k++) await page.keyboard.press('ArrowRight')
@@ -38,7 +43,7 @@ async function main() {
       await page.keyboard.press('Enter')
       await page.waitForTimeout(500)
       const nextFocused = await page.evaluate(() => /Next|See results/.test(document.activeElement?.textContent ?? ''))
-      say(`claim ${i + 1}: verdict=${label} sliderFocused=${sliderFocused} value=${val} lockFocused=${lockFocused} nextAutoFocused=${nextFocused}`)
+      say(`claim ${i + 1}: verdict=${label} sureFocused=${sureFocused} sure=${sureLabel} sliderFocused=${sliderFocused} value=${val} lockFocused=${lockFocused} nextAutoFocused=${nextFocused}`)
       await page.keyboard.press('Enter')
       await page.waitForTimeout(200)
     }
@@ -64,6 +69,7 @@ async function main() {
     await page.getByRole('button', { name: 'Play', exact: true }).click()
     for (let i = 0; i < 5; i++) {
       await page.getByRole('button', { name: 'False', exact: true }).click()
+      await page.getByRole('button', { name: /^90%/ }).click()
       await page.getByRole('button', { name: 'Lock' }).click()
       await page.getByRole('button', { name: i < 4 ? 'Next' : 'See results' }).click()
     }
@@ -81,6 +87,9 @@ async function main() {
     let axe = await new AxeBuilder({ page }).analyze()
     say(`axe verdict screen violations: ${axe.violations.length} ${axe.violations.map((v) => v.id + ':' + v.nodes.length).join(',')}`)
     await page.getByRole('button', { name: 'True', exact: true }).click()
+    axe = await new AxeBuilder({ page }).analyze()
+    say(`axe sure screen violations: ${axe.violations.length} ${axe.violations.map((v) => v.id + ':' + v.nodes.length).join(',')}`)
+    await page.getByRole('button', { name: /^70%/ }).click()
     axe = await new AxeBuilder({ page }).analyze()
     say(`axe read screen violations: ${axe.violations.length} ${axe.violations.map((v) => v.id + ':' + v.nodes.length).join(',')}`)
     const t0 = Date.now()
@@ -100,6 +109,7 @@ async function main() {
     await page.goto(BASE + '/play')
     await page.waitForLoadState('networkidle')
     await page.getByRole('button', { name: 'True', exact: true }).click()
+    await page.getByRole('button', { name: /^70%/ }).click()
     const t0 = Date.now()
     await page.getByRole('button', { name: 'Lock' }).click()
     await page.getByRole('button', { name: 'Next' }).waitFor({ state: 'visible', timeout: 6000 })

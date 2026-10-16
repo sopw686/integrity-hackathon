@@ -48,6 +48,7 @@ export type ClaimResult = {
   readPoints: number
   error: number
   badge: BadgeId
+  confidence?: number      // how sure the player said they were (50–100); absent on days played before this step existed
 }
 
 export type DayRecord = {
@@ -55,6 +56,7 @@ export type DayRecord = {
   guesses: number[]
   scores: { accuracy: number; read: number }
   badges: BadgeId[]
+  confidence?: number[]    // per claim, how sure the player said they were; absent on older records
   completedAt?: string     // ISO; present once all five are locked
   archive?: boolean        // played from the archive; excluded from streak and stats
 }

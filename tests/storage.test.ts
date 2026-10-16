@@ -25,6 +25,14 @@ describe('storage and streaks', () => {
     expect(storage.currentStreak('2026-10-15')).toBe(1)
   })
 
+  it('saves how sure the player was, per claim, and leaves older records without it', () => {
+    storage.recordLock('2026-10-15', 0, 'true', 60, 'fox', false, 90)
+    storage.recordLock('2026-10-15', 1, 'false', 40, 'stray', false, 50)
+    expect(storage.getDay('2026-10-15')?.confidence).toEqual([90, 50])
+    storage.recordLock('2026-10-14', 0, 'true', 60, 'fox', false)
+    expect(storage.getDay('2026-10-14')?.confidence).toBeUndefined()
+  })
+
   it('extends the streak on consecutive days and lapses after a gap', () => {
     storage.recordLock('2026-10-14', 0, 'true', 60, 'fox', false)
     storage.completeDay('2026-10-14', { accuracy: 1, read: 20 }, false)

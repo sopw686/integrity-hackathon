@@ -68,6 +68,24 @@ trade is right; everything below is isolated enough to dial back.
 - **Bug fixed on the way:** arriving at /play from Home never focused the claim (the browser's focus
   fixup dropped it); focus now lands in a layout effect with a next-frame retry.
 
+## The confidence step (added after the panel)
+
+After True/False the player picks how sure they are: 50 / 70 / 90 / 100. It is not scored. The
+reveal shows the chip ("90% sure") and, on a wrong call made at 90%+, the line "You were 90% sure."
+Results add "You felt X% sure. You were right Y% of the time." with an Overconfident / Underconfident /
+About right verdict and a count of confident misses; Stats add one row per level (ink bar = how often
+right, vermilion mark = how sure you said you were). Old days without confidence are skipped.
+
+Decide:
+- **The four levels and their words** — `src/lib/scoring.ts` (`CONFIDENCE_LEVELS`), `src/tokens/copy.ts`
+  (`sureLevels`). A slider would give finer data but adds a second slider to every claim.
+- **The ±10 point tolerance** for "About right" — `src/lib/scoring.ts` (`CALIBRATION_TOLERANCE`). Five
+  calls a day is a tiny sample, so the daily verdict is noisy; the Stats chart is the honest view.
+- **Whether to score it.** Unscored, a player can tap 100% every time and learn nothing. A proper
+  scoring rule (Brier points) would reward honest confidence but changes the score, rank and share text.
+- **Share text** does not carry confidence yet.
+- Screens `03b-play-sure` are new in `scripts/screenshots.ts`; rerun `npm run screenshots` to refresh.
+
 ## Other HUMAN markers
 
 - `src/styles.css:90` — the Lock button's "armed" state is a 4px vermilion bar on its left

@@ -10,7 +10,8 @@ import { formatLong, isValidDateKey, puzzleNumber } from '../lib/day'
 import { useCalm, useDotSize, useTitle, useToday } from '../lib/hooks'
 import { sfx } from '../lib/sfx'
 import { confetti } from '../lib/confetti'
-import { scoreClaim } from '../lib/scoring'
+import { calibration, scoreClaim } from '../lib/scoring'
+import { SureSummary } from '../components/SureChart'
 import { currentStreak, getDay as getRecord } from '../lib/storage'
 import { shareResults, type ShareOutcome } from '../lib/share'
 import { track } from '../lib/track'
@@ -67,7 +68,8 @@ export function Results() {
   if (!day || !record || !complete) return null
 
   const claims = dayClaims(day)
-  const results = claims.map((c, i) => scoreClaim(c, record.answers[i] ?? 'false', record.guesses[i] ?? 0))
+  const results = claims.map((c, i) => scoreClaim(c, record.answers[i] ?? 'false', record.guesses[i] ?? 0, record.confidence?.[i]))
+  const cal = calibration(results.filter((r) => r.confidence !== undefined).map((r) => ({ confidence: r.confidence!, correct: r.correct })))
   const scores = record.scores
   const streak = currentStreak(today)
   const rank = rankFor(scores)
@@ -138,12 +140,21 @@ export function Results() {
               <span className="results-body">
                 <span className="results-title serif">{shortTitle(c)}</span>
                 <Badge id={r.badge} compact />
-                <span className="results-delta small muted num">{COPY.youVsRoom(r.guess, c.room.pctTrue)}</span>
+                <span className="results-delta small muted num">
+                  {r.confidence !== undefined ? `${COPY.sureChip(r.confidence)} · ` : ''}
+                  {COPY.youVsRoom(r.guess, c.room.pctTrue)}
+                </span>
               </span>
             </Link>
           )
         })}
       </section>
+
+      {cal && (
+        <section className="section">
+          <SureSummary cal={cal} />
+        </section>
+      )}
 
       <section className="section stack">
         {!archive && (

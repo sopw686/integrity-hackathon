@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { badgeFor, readPoints, scoreClaim, scoreDay } from '../src/lib/scoring'
+import { badgeFor, calibration, readPoints, scoreClaim, scoreDay } from '../src/lib/scoring'
 import type { Claim } from '../src/lib/types'
 
 const base = (answer: 'true' | 'false', pctTrue: number, pctFalse: number): Claim => ({
@@ -59,5 +59,39 @@ describe('day score', () => {
     const r = [scoreClaim(c, 'false', 29), scoreClaim(c, 'true', 50), scoreClaim(c, 'false', 36)]
     expect(scoreDay(r)).toEqual({ accuracy: 2, read: 20 + 0 + 16 })
     expect(r[1].badge).toBe('stray')
+  })
+})
+
+describe('confidence calibration', () => {
+  it('returns null with nothing to measure', () => {
+    expect(calibration([])).toBeNull()
+  })
+
+  it('flags overconfidence and counts confident misses', () => {
+    const cal = calibration([
+      { confidence: 100, correct: false },
+      { confidence: 90, correct: false },
+      { confidence: 90, correct: true },
+      { confidence: 100, correct: true },
+      { confidence: 70, correct: true },
+    ])!
+    expect(cal.meanConfidence).toBe(90)
+    expect(cal.pctRight).toBe(60)
+    expect(cal.gap).toBe(30)
+    expect(cal.verdict).toBe('over')
+    expect(cal.confidentMisses).toBe(2)
+    expect(cal.buckets.find((b) => b.level === 90)).toEqual({ level: 90, n: 2, right: 1, pctRight: 50 })
+    expect(cal.buckets.find((b) => b.level === 50)).toEqual({ level: 50, n: 0, right: 0, pctRight: null })
+  })
+
+  it('calls it calibrated within the tolerance, underconfident beyond it', () => {
+    expect(calibration([{ confidence: 70, correct: true }, { confidence: 70, correct: true }, { confidence: 70, correct: false }])!.verdict).toBe('calibrated')
+    expect(calibration([{ confidence: 50, correct: true }, { confidence: 50, correct: true }])!.verdict).toBe('under')
+  })
+
+  it('carries confidence through scoreClaim only when given', () => {
+    const c = base('false', 26, 74)
+    expect(scoreClaim(c, 'false', 30, 90).confidence).toBe(90)
+    expect('confidence' in scoreClaim(c, 'false', 30)).toBe(false)
   })
 })

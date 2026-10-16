@@ -67,9 +67,11 @@ async function shot(page: Page, name: string, size: SizeKey, theme: Theme, fullP
   console.log('saved', file.replace(process.cwd() + '/', ''))
 }
 
-/** Play one claim up to the reveal: verdict → slider → lock. */
-async function playToReveal(page: Page, verdict: 'True' | 'False', guess: number) {
+/** Play one claim up to the reveal: verdict → how sure → slider (Lock is the caller's). */
+async function playToReveal(page: Page, verdict: 'True' | 'False', guess: number, sure = 90, shootSure?: () => Promise<void>) {
   await page.getByRole('button', { name: verdict, exact: true }).click()
+  if (shootSure) await shootSure()
+  await page.getByRole('button', { name: new RegExp(`^${sure}%`) }).click()
   const slider = page.getByRole('slider')
   await slider.focus()
   await slider.evaluate((el, v) => {
@@ -121,7 +123,7 @@ async function flows(browser: Browser, size: SizeKey, theme: Theme) {
     await page.goto(`${BASE}/play`)
     await settle(page)
     if (frameName === '05-reveal-0pct') await shot(page, '03-play-verdict', size, theme)
-    await playToReveal(page, 'False', 62)
+    await playToReveal(page, 'False', 62, 90, frameName === '05-reveal-0pct' ? () => shot(page, '03b-play-sure', size, theme) : undefined)
     if (frameName === '05-reveal-0pct') await shot(page, '04-play-read', size, theme)
     await page.getByRole('button', { name: 'Lock' }).click()
     await page.waitForTimeout(freezeT >= 999 ? 400 : 120)
@@ -135,9 +137,9 @@ async function flows(browser: Browser, size: SizeKey, theme: Theme) {
     const page = await ctx.newPage()
     await page.goto(`${BASE}/play`)
     await settle(page)
-    const picks: Array<['True' | 'False', number]> = [['False', 62], ['True', 48], ['False', 20], ['True', 70], ['False', 35]]
+    const picks: Array<['True' | 'False', number, number]> = [['False', 62, 100], ['True', 48, 90], ['False', 20, 70], ['True', 70, 90], ['False', 35, 50]]
     for (let i = 0; i < 5; i++) {
-      await playToReveal(page, picks[i][0], picks[i][1])
+      await playToReveal(page, picks[i][0], picks[i][1], picks[i][2])
       await page.getByRole('button', { name: 'Lock' }).click()
       await page.waitForTimeout(300)
       await page.getByRole('button', { name: i < 4 ? 'Next' : 'See results' }).click()

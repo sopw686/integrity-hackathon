@@ -36,7 +36,7 @@ export const COPY = {
   stampFalse: 'False',
   // HUMAN: the three onboarding lines. Nine words per panel maximum.
   howTo: [
-    { title: 'Call it', line: 'Five claims. Call each one true or false.' },
+    { title: 'Call it', line: 'Five claims. Call each one, then say how sure.' },
     { title: 'Read the room', line: 'Then guess how much of the room says true.' },
     { title: 'See where you stood', line: 'A real poll fills in. That dot is you.' },
   ],
@@ -87,6 +87,18 @@ export const COPY = {
     { min: { accuracy: 3, read: 0 }, title: 'Holding steady', line: 'More right than wrong. Tomorrow, the room.' },
     { min: { accuracy: 0, read: 0 }, title: 'Wallflower', line: 'Tough room today. There is always tomorrow.' },
   ],
+  // HUMAN: the confidence step. Plain words under each number; no number above 100.
+  sureQuestion: 'How sure are you?',
+  sureLevels: { 50: 'Coin flip', 70: 'Leaning', 90: 'Pretty sure', 100: 'Certain' } as Record<number, string>,
+  sureChip: (c: number) => `${c}% sure`,
+  sureMissNote: (c: number) => `You were ${c}% sure.`,
+  sureHead: 'How sure were you?',
+  sureFeltVsRight: (felt: number, right: number) => `You felt ${felt}% sure. You were right ${right}% of the time.`,
+  sureVerdict: { over: (n: number) => `Overconfident by ${n} points`, under: (n: number) => `Underconfident by ${n} points`, calibrated: () => 'About as sure as you should be' },
+  sureMisses: (n: number) => (n === 0 ? 'No confident misses.' : `${n} ${n === 1 ? 'call' : 'calls'} you were 90%+ sure of ${n === 1 ? 'was' : 'were'} wrong.`),
+  sureStatsLine: (level: number) => `Said ${level}%`,
+  sureStatsRight: (right: number, n: number) => `${right} of ${n} right`,
+  sureStatsEmpty: 'Play a day to see how your confidence holds up.',
   // HUMAN: the share text.
   shareText: (no: number, acc: number, read: number, badges: string) =>
     `Read the Room #${no}  🎯 ${acc}/5  📡 ${read}\n${badges}`,

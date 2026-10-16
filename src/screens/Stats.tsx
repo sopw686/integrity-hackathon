@@ -4,6 +4,8 @@ import { addDays, formatDay } from '../lib/day'
 import { useTitle, useToday } from '../lib/hooks'
 import { currentStreak, lifetime, storageAvailable } from '../lib/storage'
 import { COPY } from '../tokens/copy'
+import { lifetimeCalibration } from '../lib/calibration'
+import { SureSummary } from '../components/SureChart'
 
 function monthGrid(year: number, month: number, played: Set<string>, today: string) {
   const first = new Date(Date.UTC(year, month, 1))
@@ -23,6 +25,7 @@ export function Stats() {
   useTitle('Stats — Read the Room')
   const today = useToday()
   const life = lifetime()
+  const cal = lifetimeCalibration()
   const streak = currentStreak(today)
   const played = new Set(life.playedDates)
   const [y, m] = today.split('-').map(Number)
@@ -52,6 +55,9 @@ export function Stats() {
               <div><dt className="label">🐑 Sheep</dt><dd className="num">{life.sheep}</dd></div>
               <div><dt className="label">Best read</dt><dd className="num">{life.bestRead ? `${life.bestRead.read} · ${formatDay(life.bestRead.date)}` : '—'}</dd></div>
             </dl>
+          </section>
+          <section className="section">
+            {cal ? <SureSummary cal={cal} chart /> : <p className="small muted">{COPY.sureStatsEmpty}</p>}
           </section>
           <section className="section">
             <div className="calendars">

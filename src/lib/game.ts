@@ -5,7 +5,7 @@ import { scoreClaim, scoreDay } from './scoring'
 import type { Claim, ClaimResult, Day, Verdict } from './types'
 import { track } from './track'
 
-export type Phase = 'verdict' | 'read' | 'reveal' | 'done'
+export type Phase = 'verdict' | 'sure' | 'read' | 'reveal' | 'done'
 
 export type Game = {
   day: Day | undefined
@@ -14,10 +14,12 @@ export type Game = {
   claim: Claim | undefined
   phase: Phase
   verdict: Verdict | undefined
+  confidence: number | undefined
   guess: number
   results: ClaimResult[]
   current: ClaimResult | undefined
   setVerdict: (v: Verdict) => void
+  setConfidence: (c: number) => void
   setGuess: (g: number) => void
   lock: () => void
   next: () => void
@@ -32,7 +34,7 @@ function resultsFromRecord(claims: Claim[], date: string): ClaimResult[] {
     const v = rec.answers[i]
     const g = rec.guesses[i]
     if (v === undefined || g === undefined) break
-    out.push(scoreClaim(claims[i], v, g))
+    out.push(scoreClaim(claims[i], v, g, rec.confidence?.[i]))
   }
   return out
 }
@@ -47,6 +49,7 @@ export function useGame(date: string, archive: boolean): Game {
   const [results, setResults] = useState<ClaimResult[]>(() => resultsFromRecord(claims, date))
   const [phase, setPhase] = useState<Phase>(() => (resultsFromRecord(claims, date).length >= claims.length && claims.length > 0 ? 'done' : 'verdict'))
   const [verdict, setVerdictState] = useState<Verdict | undefined>(undefined)
+  const [confidence, setConfidenceState] = useState<number | undefined>(undefined)
   const [guess, setGuess] = useState(50)
   const [current, setCurrent] = useState<ClaimResult | undefined>(undefined)
 
@@ -54,21 +57,28 @@ export function useGame(date: string, archive: boolean): Game {
   const claim = claims[index]
 
   const setVerdict = useCallback((v: Verdict) => {
-    // Locks the verdict. It cannot be changed once the slider appears.
+    // Locks the verdict. It cannot be changed once "how sure" appears.
     if (phase !== 'verdict') return
     setVerdictState(v)
+    setConfidenceState(undefined)
     setGuess(50)
+    setPhase('sure')
+  }, [phase])
+
+  const setConfidence = useCallback((c: number) => {
+    if (phase !== 'sure') return
+    setConfidenceState(c)
     setPhase('read')
   }, [phase])
 
   const lock = useCallback(() => {
     if (phase !== 'read' || !claim || !verdict) return
-    const r = scoreClaim(claim, verdict, guess)
-    recordLock(date, results.length, verdict, guess, r.badge, archive)
-    track('claim_lock', { claim: claim.id, verdict, guess })
+    const r = scoreClaim(claim, verdict, guess, confidence)
+    recordLock(date, results.length, verdict, guess, r.badge, archive, confidence)
+    track('claim_lock', { claim: claim.id, verdict, guess, ...(confidence !== undefined ? { confidence } : {}) })
     setCurrent(r)
     setPhase('reveal')
-  }, [phase, claim, verdict, guess, date, results.length, archive])
+  }, [phase, claim, verdict, confidence, guess, date, results.length, archive])
 
   const next = useCallback(() => {
     if (phase !== 'reveal' || !current) return
@@ -76,6 +86,7 @@ export function useGame(date: string, archive: boolean): Game {
     setResults(all)
     setCurrent(undefined)
     setVerdictState(undefined)
+    setConfidenceState(undefined)
     if (all.length >= claims.length) {
       completeDay(date, scoreDay(all), archive)
       track('day_complete', { date, archive })
@@ -90,9 +101,10 @@ export function useGame(date: string, archive: boolean): Game {
     setResults([])
     setCurrent(undefined)
     setVerdictState(undefined)
+    setConfidenceState(undefined)
     setGuess(50)
     setPhase('verdict')
   }, [date])
 
-  return { day, claims, index, claim, phase, verdict, guess, results, current, setVerdict, setGuess, lock, next, restart }
+  return { day, claims, index, claim, phase, verdict, confidence, guess, results, current, setVerdict, setConfidence, setGuess, lock, next, restart }
 }

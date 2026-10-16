@@ -66,7 +66,7 @@ export function getDay(date: string): DayRecord | undefined {
 }
 
 /** Save partial progress (verdict + guess for one claim). */
-export function recordLock(date: string, index: number, verdict: Verdict, guess: number, badge: BadgeId, archive: boolean): DayRecord {
+export function recordLock(date: string, index: number, verdict: Verdict, guess: number, badge: BadgeId, archive: boolean, confidence?: number): DayRecord {
   const state = load()
   const prev = state.days[date] ?? { answers: [], guesses: [], scores: { accuracy: 0, read: 0 }, badges: [], archive }
   const answers = prev.answers.slice()
@@ -76,6 +76,11 @@ export function recordLock(date: string, index: number, verdict: Verdict, guess:
   guesses[index] = guess
   badges[index] = badge
   const rec: DayRecord = { ...prev, answers, guesses, badges, archive: archive || prev.archive }
+  if (confidence !== undefined) {
+    const conf = (prev.confidence ?? []).slice()
+    conf[index] = confidence
+    rec.confidence = conf
+  }
   state.days = { ...state.days, [date]: rec }
   save(state)
   return rec

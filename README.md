@@ -3,7 +3,8 @@
 A two-minute daily game. Five claims a day. For each one you do two things:
 
 1. **Verdict.** Tap **True** or **False**.
-2. **Read the room.** Drag a slider: *what share of the room says this is true?*
+2. **How sure?** Pick 50% (coin flip), 70%, 90% or 100% (certain). Not scored; it's a mirror.
+3. **Read the room.** Drag a slider: *what share of the room says this is true?*
 
 The room is not other players. It is a real polled public: a named national survey
 (YouGov, KFF, NSF, Yale/GMU) or, for campus claims, a survey of 5C students the team runs
@@ -14,7 +15,8 @@ split. The truth is stamped on its side. Your guess is a thin vermilion line. On
 that is you, standing where your verdict put you.
 
 Two scores: 🎯 **Accuracy** (verdicts right, out of 5) and 📡 **Read** (how well you predicted
-the room, 0–100). A streak. A share card made of five tiny rooms with your dot marked.
+the room, 0–100). Results and Stats set how sure you felt against how often you were right
+(the overconfidence check; students tend to overrate how well they spot misinformation). A streak. A share card made of five tiny rooms with your dot marked.
 
 ## Run it
 
@@ -38,9 +40,9 @@ Deploy as a static site: Cloudflare Pages (`wrangler.toml`, `public/_redirects`)
 | Route | Screen |
 | --- | --- |
 | `/` | Home: today's number and date, Play, streak, How to play. After playing: the two dials and Share. |
-| `/play` | Verdict → read the room → reveal, five times. `/play?day=YYYY-MM-DD` plays an archive day (doesn't count). |
+| `/play` | Verdict → how sure → read the room → reveal, five times. `/play?day=YYYY-MM-DD` plays an archive day (doesn't count). |
 | `/results` | Dials, five rows with mini rooms and badges, Share, "Send a friend the one that got you". |
-| `/stats` | Lifetime accuracy, mean read, Fox and Sheep counts, streak, calendar of played days. |
+| `/stats` | Lifetime accuracy, mean read, Fox and Sheep counts, streak, felt-sure vs right chart, calendar of played days. |
 | `/archive` | Past puzzles, playable, labeled "archive — doesn't count". |
 | `/c/:id` | Read-only reveal for a single claim (deep link). |
 
