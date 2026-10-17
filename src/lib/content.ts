@@ -1,8 +1,10 @@
 import type { Claim, Day } from './types'
 
 // All content is static JSON bundled at build time. No database, no runtime fetch.
-const claimModules = import.meta.glob<{ default: Claim }>('../../content/claims/*.json', { eager: true })
-const dayModules = import.meta.glob<{ default: Day }>('../../content/days/*.json', { eager: true })
+// '_' files are templates: the validator skips them, so the app must too. Drafts arrive as null
+// (vite.config.ts drops them at build time).
+const claimModules = import.meta.glob<{ default: Claim | null }>(['../../content/claims/*.json', '!../../content/claims/_*.json'], { eager: true })
+const dayModules = import.meta.glob<{ default: Day }>(['../../content/days/*.json', '!../../content/days/_*.json'], { eager: true })
 
 const claims = new Map<string, Claim>()
 for (const mod of Object.values(claimModules)) {

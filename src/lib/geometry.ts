@@ -34,10 +34,20 @@ export function center(i: number, L: Layout): { x: number; y: number } {
   return { x: L.pad + c * step + L.cell / 2, y: L.pad + r * step + L.cell / 2 }
 }
 
-/** Dots 0..pctTrue-1 say true; the next pctFalse say false; the remainder are unsure. */
-export function dotKind(i: number, s: RoomSplit): DotKind {
+/**
+ * Dot counts for a split. The true block is exact (the guess is scored against it) and the
+ * unsure block matches the legend; a published 99/101 sum is absorbed by the false block,
+ * so the open-dot count can differ from pctFalse by 1.
+ */
+export function roomCounts(s: RoomSplit): { t: number; f: number; u: number } {
   const t = clampCount(s.pctTrue)
-  const f = clampCount(s.pctFalse)
+  const u = Math.min(DOTS - t, clampCount(s.pctUnsure))
+  return { t, f: DOTS - t - u, u }
+}
+
+/** Dots 0..t-1 say true; the next f say false; the last u are unsure (see roomCounts). */
+export function dotKind(i: number, s: RoomSplit): DotKind {
+  const { t, f } = roomCounts(s)
   if (i < t) return 'true'
   if (i < t + f) return 'false'
   return 'unsure'
@@ -92,8 +102,7 @@ export function boundaryLength(n: number, L: Layout): number {
  */
 // HUMAN: whether "you" should instead be a 101st dot drawn just outside the grid. Decide after watching ten reveals.
 export function playerDotIndex(s: RoomSplit, verdict: 'true' | 'false'): number {
-  const t = clampCount(s.pctTrue)
-  const f = clampCount(s.pctFalse)
+  const { t, f } = roomCounts(s)
   if (verdict === 'true') {
     if (t > 0) return t - 1
     return 0 // no one said true; you stand at the very first seat
@@ -118,6 +127,6 @@ export function describeRoom(s: RoomSplit, label: string): string {
   const f = Math.round(s.pctFalse)
   const u = Math.round(s.pctUnsure)
   const parts = [`${t} of 100 ${label} say true`, `${f} say false`]
-  if (u > 0) parts.push(`${u} are unsure`)
+  if (u > 0) parts.push(`${u} ${u === 1 ? 'is' : 'are'} unsure`)
   return parts.join(', ') + '.'
 }

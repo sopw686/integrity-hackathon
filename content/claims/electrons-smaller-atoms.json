@@ -18,7 +18,7 @@
   "truthSource": {
     "label": "NIST, Fundamental physical constants",
     "url": "https://physics.nist.gov/cuu/Constants/",
-    "oneLine": "Electrons are constituents of atoms and far smaller than the atoms they orbit."
+    "oneLine": "Electrons are constituents of atoms and far smaller than the atoms they are part of."
   },
   "lesson": {
     "pattern": "Jargon makes it feel hard",

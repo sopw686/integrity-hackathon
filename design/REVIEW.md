@@ -10,26 +10,29 @@ and the generated default is a defensible starting point, not a decision.
    Serif 4 at claim size and pick by eye. The claim is 28–34px on phones, 40px on desktop.
 2. **The palette** — `src/tokens/colors.css:1`. Paper `#F6F3EC`, ink `#141414`, rule `#D9D3C5`,
    vermilion `#D64A2B`. The brief's muted `#7A746A` measured 4.2:1 on paper, under the 4.5:1
-   floor, so it is `#6B655B` (5.2:1). The "unsure" dots are a 45° hatch in `#C9C2B2`; a dotted
+   floor, so it is `#6B655B` (5.2:1). The brief's hatch `#C9C2B2` measured 1.6:1 on paper, under
+   the 3:1 non-text floor, and it alone draws the "unsure" dots, so they are a 45° hatch in
+   `#8F887A` (3.2:1; dark `#736D63`, 3.6:1). Any retune must stay at 3:1 or above. A dotted
    stroke is the alternative to try. Dark-mode rule/muted/hatch values were chosen by me.
 3. **Every piece of copy** — `src/tokens/copy.ts` (whole file; badge names `:7`, tagline `:17`,
-   onboarding `:37`, results phrases `:48`, share text `:66`). Target is dry; delete anything cute.
+   onboarding `:37`, results phrases `:48`, share text `:67`). Target is dry; delete anything cute.
 4. **Motion timings and easing** — `src/tokens/motion.ts:1`. Row cadence 70ms / 160ms, stamp
    1.18 → 1.0 in 220ms with a fading 1px ink bleed, guess line 240ms, two 300ms pulses, badge
    spring (500/30). Measured on a phone-width headless run: Next appears ≈2.3s after Lock,
    ≈0.5s under reduced motion. Tune on a real phone.
-5. **Player-dot placement** — `src/lib/geometry.ts:93`. Currently the dot inside the grid
+5. **Player-dot placement** — `src/lib/geometry.ts:103`. Currently the dot inside the grid
    (last true dot if you said true, first dot after the true block if you said false). The
    alternative is a 101st dot just outside the grid. Decide after ten reveals.
 6. **The wordmark** — `src/tokens/copy.ts:16`. Set in Newsreader 500 at 22px. No logo was made.
 7. **Claim wording** — every `content/claims/*.json`. Each claim must be reread against the
    poll's exact wording (kept in `room.questionWording` when it differs). Polarity errors are
    the most dangerous bug in this product; the validator cannot catch them.
-8. **Day composition** — `scripts/compose-days.ts:10` finds a valid arrangement; rhythm and
+8. **Day composition** — `scripts/compose-days.ts:15` finds a valid arrangement; rhythm and
    order are yours. Today's file `content/days/2026-10-15.json` was composed by hand. The
-   no-repeat window is my rule, not the brief's: a 7-day window needs at least 35 verified
-   claims and 7 with a wrong-side majority; the pool is smaller, so the shipped days use the
-   largest window that works (see Content status). Add majority-wrong claims first.
+   no-repeat window (`scripts/validate-content.ts:29`) is my rule, not the brief's: a 7-day
+   window needs at least 35 verified claims and 7 with a wrong-side majority; the pool has 34
+   and 6, so 6 days is the most it allows, and the shipped days use 5 (see Content status).
+   Add majority-wrong claims first.
 9. **The Split threshold and Read bands** — `src/lib/scoring.ts:3`, `:12`, `:39`. Note the
    literal-to-spec asymmetry: Split replaces In good company / Sheep inside 45–55, but Fox and
    Stray are untouched, so a Fox at 48 is barely a fox.
@@ -124,9 +127,13 @@ Decide:
 
 - `src/styles.css:90` — the Lock button's "armed" state is a 4px vermilion bar on its left
   edge (paper text on a vermilion fill would be 3.9:1, under the text floor).
-- `src/lib/share.ts:266`, `:293`, `:384`, `:473` — card tuning: 1.25× player dot, dial radius,
+- `src/lib/share.ts:271`, `:298`, `:389`, `:498` — card tuning: 1.25× player dot, dial radius,
   mini-grid size, and whether the shared *text* should carry the site URL (today the URL
   travels in the Web Share `url` field and the copied text is exactly the two lines).
+- `src/components/HowToDialog.tsx:8` — the How to play demo claim ("Goldfish have a
+  three-second memory.") is illustrative. It must stay false (panel 3 stamps FALSE) and must
+  never be the text of a pool claim, or the first-visit dialog gives away that claim's answer.
+  Nothing checks this automatically.
 - `content/claims/one-group-rules-world.json` — both researchers flagged "a single group
   secretly rules the world" as unfalsifiable rather than settled; it is draft until you decide.
 - The twelve campus drafts carry `HUMAN:` in `room.note`; `content/campus-survey.md` explains.
@@ -135,7 +142,9 @@ Decide:
 
 - **Home.** Wordmark, dateline, tagline, one dry line, a button, a chip, and a strip of
   yesterday's five rooms as small stills (the signature mark on the first screen, and a door
-  into the archive). The strip is my addition, not the brief's; cut it if it reads as clutter.
+  into the archive). Only rooms the player has already locked show their split, so someone who
+  skipped yesterday sees five empty grids that link to play it; once yesterday is done the strip
+  links to its results. The strip is my addition, not the brief's; cut it if it reads as clutter.
 - **The emoji.** ✅ 🦊 🐑 ⚪ ⚖️ 🎯 📡 render in full color and are the loudest things on the
   results screen. The brief requires them. Monochrome glyphs (text presentation, `U+FE0E`) or
   small inline SVG marks would sit better with the rest.
@@ -163,22 +172,71 @@ Reasons: the flu-shot item's wave is disputed (Jan vs Oct 2023 ASAPH); "vaccines
 U.S. are safe" lacks an exact n; "a single secret group" failed the settled-truth test; the twelve
 campus items wait for the 5C survey.
 
-Day files run from 2026-10-04 (archive) through 2026-10-29 (today plus 14). The composer could
-only satisfy a 5-day no-repeat window with this pool, because only 6 verified claims have a
-wrong-side majority and every day needs one. The validator therefore errors below 5 days and warns
-below 7; raise both once the pool grows. The fastest way to a 7-day window is ten more
-majority-wrong claims (the KFF 2024 misinformation waves and YouGov's 2026 conspiracy update are
-the obvious sources). Two newer NSF figures exist (2018: Earth's core 86%, continents 79%) but the
-2018 module n was not confirmed, so the 2012 wave ships.
+### Open on verified claims (found in the Oct 2026 audit)
+
+- **The ten NSF/GSS 2012 claims use NSF's percent correct as the room.** antibiotics-viruses,
+  center-earth-hot, continents-moving, electrons-smaller-atoms, fathers-gene-sex, humans-evolved,
+  lasers-sound-waves, radioactivity-man-made, sun-around-earth, universe-huge-explosion. NSF
+  publishes only the share answering correctly, so `pctUnsure` is 0 and don't-know answers sit
+  on the wrong side (each note says so). This breaks the AUTHORING rule that the three shares
+  come from the topline. Badges and the majority-wrong day rule are unaffected (the truth-side
+  share is the percent correct), but on the four false-answer items the Read score is measured
+  against a `pctTrue` that includes the don't-knows. Example: lasers-sound-waves shows "say
+  true 53"; a GSS 2012 row reprinted by Pew reads about 24 true / 45 false / 31 don't know, but a
+  blind research pair could not tie that row to the item with certainty, so nothing was changed.
+  Fix: take the weighted true / false / don't-know frequencies for HOTCORE, CONDRIFT, EARTHSUN,
+  RADIOACT, BOYORGRL, ELECTRON, VIRUSES, LASERS, BIGBANG and EVOLVED from the GSS Data Explorer
+  (year 2012), with each item's own n.
+- **humans-evolved and universe-huge-explosion are half-sample figures.** In 2012 a random half
+  heard the bare wording (48% / 39% true) and the other half a prefaced one (72% / 60%); the notes
+  now say so, but `n` is still the whole module's 2,256 until the half-ballot base is pulled
+  from the GSS.
+- **Links a person must open** (this sandbox reaches no source host): the truth sources changed
+  in the audit (National Academies catalog 13164 for mmr-autism, catalog 27746 for
+  covid-vaccine-infertility, the IDSA COVID-19 guideline for ivermectin-covid, DOI
+  10.1002/pam.22498 for armed-school-guards), and every remaining HHS page: sex-ed-teens (CDC),
+  covid-vaccine-sudden-deaths (CDC), vaccine-deaths-exceed-covid, vaccine-microchip and
+  antibiotics-viruses. HHS rewrote or retired several vaccine pages in 2025–26; check that each
+  still says what its `oneLine` says, or move it to a consensus review as mmr-autism and
+  covid-vaccine-infertility were.
+- **armed-school-guards is on a live policy fight.** Arming school staff is contested between the
+  parties, which AUTHORING section 4 excludes. The truth line is now accurate; whether the claim is
+  eligible at all is your call.
+
+Day files run from 2026-10-04 (archive) through 2026-10-29. The build requires 14 days of
+coverage from today (Pacific), so **from 2026-10-17 `npm run build` fails until more day files
+are composed** (`npm run compose-days -- --from 2026-10-30 --to YYYY-MM-DD`). They were composed with a
+5-day no-repeat window; the validator errors below 5 days and warns below 7. Five is not the most
+this pool allows. Six majority-wrong claims are enough for one a day at a 6-day spacing: with the
+composer fixed (it used to check only backwards from a claim's latest use, so a kept later day
+blocked its claims on every earlier day), `compose-days --window 6` fills 2026-10-04..10-29 from
+an empty folder with 0 validator errors, and also fills 10-16..10-29 around the days that have
+already run. Seven is out of reach: any 7 straight days need 35 distinct claims and 7
+majority-wrong ones, and the pool has 34 and 6. Raising the error threshold to 6 is your call; the
+archive days 2026-10-09..10-14 already ran with 5-day gaps and must not change (progress is stored
+by date and claim position), so the validator would have to stop checking days before `--from`.
+A 7-day window needs at least one more verified claim and one more majority-wrong claim; more
+headroom makes composing easier (the KFF 2024 misinformation waves and YouGov's 2026 conspiracy
+update are the obvious sources). Two newer NSF figures exist (2018: Earth's core 86%, continents
+79%) but the 2018 module n was not confirmed, so the 2012 wave ships.
 
 ## Checks that pass
 
 - Lighthouse accessibility 100 and best practices 100 on `/` and `/play` (Chromium 141, headless).
 - Hard-rule grep: no backdrop blur, no Inter/Roboto/Poppins/Montserrat/Space Grotesk, no
-  purple/indigo/teal, no 🚀, no "misinformation", "media literacy" or "bias" in the UI. Confetti,
+  purple/indigo/teal, no 🚀, no "misinformation", "media literacy" or "bias" in the app's own copy
+  or in claim text, short titles, notes, question wording or truth lines (the validator warns on
+  those fields). Pollster titles in `room.source` are cited verbatim and exempt: the reveal shows
+  "KFF Health Misinformation Tracking Poll Pilot" as the source of 10 verified claims. Confetti,
   hard offset shadows and one hard-stop slider fill are now in, by the game-show layer above.
-- First load ≈146 KB gzipped (JS + CSS, fonts excluded), under the 150 KB budget with little room left.
-- Unit tests: geometry, scoring, storage/streaks, validator (38 tests).
-- `npm run check:flows`: keyboard-only loop to results, storage-disabled play-through, reduced-motion
-  reveal done in ≈0.85s, full reveal done in ≈2.4s, zero axe-core violations on verdict, read,
-  reveal and results.
+- First load ≈169 KB gzipped (JS + CSS, fonts excluded), over the 150 KB budget since the
+  hackathon pass (code-splitting Second Look and the sound/confetti layer is the obvious fix).
+  Draft claims are dropped at build time (`vite.config.ts`), so their numbers and VERIFY notes
+  are not in it.
+- Unit tests: geometry, scoring, storage/streaks, game state (resume and repair), share outcome,
+  validator, calibration, Second Look (85 tests).
+- `npm run check:flows` (exits 1 on any failed check): keyboard-only loop to results with focus
+  checked at every step, storage-disabled play-through with the "Saving is off" notice, no page
+  errors, zero axe-core violations on verdict, read, reveal and results. Lock to Next, timed in the
+  page: ≈0.51s under reduced motion (designed 0.5s) and ≈2.32s in full (designed 2.29s), each
+  allowed the design plus 0.4s.

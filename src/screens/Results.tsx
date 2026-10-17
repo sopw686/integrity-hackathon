@@ -14,7 +14,7 @@ import { calibration, callKind, scoreClaim, withTotals } from '../lib/scoring'
 import { dayInsight, shortTitle } from '../lib/insight'
 import { SureSummary } from '../components/SureChart'
 import { currentStreak, getDay as getRecord } from '../lib/storage'
-import { shareResults, type ShareOutcome } from '../lib/share'
+import { shareOutcomeText, shareResults, type ShareOutcome } from '../lib/share'
 import { track } from '../lib/track'
 import { COPY } from '../tokens/copy'
 import { queuedFrom } from '../lib/secondLook'
@@ -23,14 +23,15 @@ export function Results() {
   const today = useToday()
   const [params] = useSearchParams()
   const dayParam = params.get('day')
-  const date = dayParam && isValidDateKey(dayParam) ? dayParam : today
-  const archive = date !== today
+  const valid = dayParam !== null && isValidDateKey(dayParam) && dayParam <= today
+  const date = valid ? dayParam : today
+  const past = date !== today
   const navigate = useNavigate()
   const day = getDay(date)
   const record = getRecord(date)
   const no = puzzleNumber(date)
   const [outcome, setOutcome] = useState<ShareOutcome | null>(null)
-  const [sent, setSent] = useState(false)
+  const [sent, setSent] = useState<'shared' | 'copied' | null>(null)
   const miniDot = useDotSize() === 18 ? 5 : 4
   const calm = useCalm()
   // Celebrate only on arrival from the last reveal, not on every revisit.
@@ -52,11 +53,15 @@ export function Results() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fresh])
 
-  const complete = Boolean(day && record?.completedAt)
+  // Today's result must have been played live; an archive-flagged record for today (an early peek) is not it.
+  const complete = Boolean(day && record?.completedAt && (past || !record.archive))
   useEffect(() => {
-    if (!complete) navigate(archive ? `/play?day=${date}` : '/play', { replace: true })
-  }, [complete, navigate, archive, date])
+    if (!complete) navigate(past ? `/play?day=${date}` : '/play', { replace: true })
+    else if (dayParam !== null && !valid) navigate('/results', { replace: true })
+  }, [complete, navigate, past, date, dayParam, valid])
   if (!day || !record || !complete) return null
+  // Labels follow how the day was played, not whether it is still today.
+  const archive = Boolean(record.archive)
 
   const claims = dayClaims(day)
   const results = claims.map((c, i) => {
@@ -92,7 +97,7 @@ export function Results() {
     try {
       if (typeof navigator.share === 'function') {
         await navigator.share({ url, title: 'Read the Room' })
-        setSent(true)
+        setSent('shared')
         return
       }
     } catch (e) {
@@ -100,7 +105,7 @@ export function Results() {
     }
     try {
       await navigator.clipboard.writeText(url)
-      setSent(true)
+      setSent('copied')
     } catch {
       window.prompt('Copy this link', url)
     }
@@ -157,7 +162,7 @@ export function Results() {
         {results.map((r, i) => {
           const c = claims[i]
           return (
-            <Link to={`/c/${c.id}`} className={`results-row ${r.correct ? 'right' : 'wrong'}`} key={c.id} style={{ ['--i' as string]: i }}>
+            <Link to={`/c/${c.id}?day=${date}`} className={`results-row ${r.correct ? 'right' : 'wrong'}`} key={c.id} style={{ ['--i' as string]: i }}>
               <span className="results-grid" aria-hidden="true">
                 <MiniRoom split={c.room} label={c.room.label} guess={r.guess} verdict={r.verdict} dot={miniDot} gap={2} />
               </span>
@@ -186,9 +191,9 @@ export function Results() {
         {archive && <p className="label">{COPY.archiveNote}</p>}
         <button type="button" className="btn" onClick={onShare}>{COPY.share}</button>
         <p className="small muted share-outcome" role="status">
-          {outcome === 'copied' || outcome === 'downloaded' ? COPY.copied : outcome === 'shared' ? COPY.shared : outcome === 'failed' ? COPY.shareFailed : ''}
+          {shareOutcomeText(outcome)}
         </p>
-        <button type="button" className="btn secondary" onClick={onSend}>{sent ? COPY.copied : COPY.sendOne}</button>
+        <button type="button" className="btn secondary" onClick={onSend}>{sent === 'shared' ? COPY.shared : sent === 'copied' ? COPY.copied : COPY.sendOne}</button>
       </section>
 
       <nav className="section footer-nav" aria-label="More">

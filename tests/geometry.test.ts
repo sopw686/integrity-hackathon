@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { boundaryPath, boundaryLength, center, describeRoom, dotKind, layout, playerDotIndex, rowProgress } from '../src/lib/geometry'
+import { DOTS, boundaryPath, boundaryLength, center, clampCount, describeRoom, dotKind, layout, playerDotIndex, roomCounts, rowProgress } from '../src/lib/geometry'
 
 const L = layout(14, 6)
 
@@ -18,6 +18,26 @@ describe('geometry', () => {
     expect(dotKind(82, s)).toBe('false')
     expect(dotKind(83, s)).toBe('unsure')
     expect(dotKind(99, s)).toBe('unsure')
+  })
+
+  it('keeps the true and unsure blocks exact when a published split sums to 99 or 101', () => {
+    const splits = [
+      { pctTrue: 43, pctFalse: 57, pctUnsure: 1 },
+      { pctTrue: 20, pctFalse: 65, pctUnsure: 14 },
+      { pctTrue: 25, pctFalse: 53, pctUnsure: 23 },
+      { pctTrue: 54, pctFalse: 29, pctUnsure: 16 },
+      { pctTrue: 49, pctFalse: 50, pctUnsure: 0 },
+    ]
+    for (const s of splits) {
+      const n = { true: 0, false: 0, unsure: 0 }
+      for (let i = 0; i < DOTS; i++) n[dotKind(i, s)]++
+      expect(n.true).toBe(s.pctTrue)
+      expect(n.unsure).toBe(clampCount(s.pctUnsure))
+      expect(n.true + n.false + n.unsure).toBe(DOTS)
+      expect(roomCounts(s)).toEqual({ t: n.true, f: n.false, u: n.unsure })
+      expect(dotKind(playerDotIndex(s, 'false'), s)).toBe('false')
+      expect(dotKind(playerDotIndex(s, 'true'), s)).toBe('true')
+    }
   })
 
   it('draws a stepped boundary that wraps, not a straight vertical line', () => {
@@ -54,6 +74,9 @@ describe('geometry', () => {
   it('describes the room in words', () => {
     expect(describeRoom({ pctTrue: 18, pctFalse: 70, pctUnsure: 12 }, 'U.S. adults')).toBe(
       '18 of 100 U.S. adults say true, 70 say false, 12 are unsure.',
+    )
+    expect(describeRoom({ pctTrue: 24, pctFalse: 75, pctUnsure: 1 }, 'U.S. adults')).toBe(
+      '24 of 100 U.S. adults say true, 75 say false, 1 is unsure.',
     )
   })
 })

@@ -9,7 +9,7 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath, pathToFileURL } from 'node:url'
+import { fileURLToPath } from 'node:url'
 
 export type ContentFile = { file: string; data: unknown }
 export type ValidateOptions = {
@@ -26,10 +26,12 @@ export type ValidationResult = { errors: string[]; warnings: string[] }
 
 const TIME_ZONE = 'America/Los_Angeles'
 const DEFAULT_COVERAGE_DAYS = 14
-// HUMAN: the no-repeat window. Target is 7 (error) / 14 (warning) once the verified pool passes ~40 claims
-// with at least 7 majority-wrong ones; with today's pool the composer can only satisfy 5.
-const NO_REPEAT_ERROR_DAYS = 5 // same claim on two days less than 5 days apart: error
-const NO_REPEAT_WARN_DAYS = 7 // less than 7 days apart: warning
+// HUMAN: the no-repeat window, temporary. Target is 7 (error) / 14 (warning) once the verified pool passes
+// ~40 claims with at least 7 majority-wrong ones. Today's pool (34 verified, 6 majority-wrong) allows at most 6:
+// compose-days fills 2026-10-04..10-29 at --window 6, while 7 needs 35 claims and 7 majority-wrong ones in any
+// 7 straight days. The shipped days were composed at 5, and days whose date has arrived must not change.
+export const NO_REPEAT_ERROR_DAYS = 5 // same claim on two days less than 5 days apart: error
+export const NO_REPEAT_WARN_DAYS = 7 // less than 7 days apart: warning
 
 const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
@@ -43,8 +45,13 @@ const STATUSES = ['verified', 'draft'] as const
 const DIFFICULTIES = [1, 2, 3] as const
 const MAX_TEXT_LENGTH = 220
 
-const PARTY_RE =
-  /\b(Democrats?|Democratic|Republicans?|GOP|Trump|Biden|Harris|Obama|Clinton|Bush|Pence|Vance|Walz|DeSantis|Newsom|party|parties)\b/i
+/** A fixed keyword list, so it misses anyone not on it; whoever composes a day still checks by hand. */
+export const PARTY_RE =
+  /\b(Democrats?|Democratic|Republicans?|GOP|MAGA|Trump|Biden|Harris|Kamala|Obama|Clinton|Hillary|Bush|Pence|Vance|Walz|DeSantis|Newsom|Romney|McCain|Sanders|Reagan|Carter|Kennedy|candidates?|party|parties|partisan)\b/i
+/** Reviewer notes that must be gone before a claim is verified. Case-sensitive, so prose like "verify" passes. */
+const REVIEWER_MARKER_RE = /\bHUMAN:|\b(?:VERIFY|TODO|TBD)\b/
+/** Words the UI never uses. Pollster titles in room.source are cited verbatim and not checked. */
+const BANNED_WORDS_RE = /misinformation|media literacy|\bbias\b/i
 
 /** Two-word capitalised phrases that are fine to name. Matched case-sensitively. */
 const NAME_ALLOWLIST = [
@@ -193,10 +200,13 @@ function checkShape(
 
 /** Words that look like a proper name pair (two consecutive Capitalised words) outside the allowlist. */
 export function suspiciousNames(text: string): string[] {
-  let masked = text
+  let masked = text.normalize('NFC')
   for (const phrase of NAME_ALLOWLIST) masked = masked.split(phrase).join('x')
   const out: string[] = []
-  const re = /\b([A-Z][a-z][A-Za-z0-9'’-]*)\s+(?=([A-Z][a-z][A-Za-z0-9'’-]*))/g // two words of ≥2 letters each, so abbreviations like "U.S." don't trip it
+  // Two words of ≥2 letters each, so abbreviations like "U.S." don't trip it. Unicode letters, so
+  // "José Martínez" counts; an apostrophe after the capital ("O’Brien") is allowed.
+  const word = String.raw`\p{Lu}(?:['’]\p{Lu})?\p{Ll}[\p{L}\p{M}\p{N}'’-]*`
+  const re = new RegExp(String.raw`(?<![\p{L}\p{M}\p{N}'’])(${word})\s+(?=(${word}))`, 'gu')
   let m: RegExpExecArray | null
   while ((m = re.exec(masked)) !== null) out.push(`${m[1]} ${m[2]}`)
   return out
@@ -266,6 +276,10 @@ function validateClaim(
     soft(`room.kind must be "national", "campus" or "illustrative", got ${JSON.stringify(room.kind)}`)
   if ('shortTitle' in data && typeof data.shortTitle === 'string' && data.shortTitle.trim() === '' && !isDraft)
     err('shortTitle is present but empty (remove it or fill it)')
+  if (!isDraft && typeof data.shortTitle === 'string' && data.shortTitle.trim() !== '') {
+    const words = data.shortTitle.trim().split(/\s+/).length
+    if (words < 2 || words > 4) warn(`shortTitle "${data.shortTitle}" is ${words} word(s); keep it to 2–4`)
+  }
 
   const text = str(data.text)
   const pctTrue = num(room?.pctTrue)
@@ -322,6 +336,25 @@ function validateClaim(
       else if (pattern.length > MAX_PATTERN_LENGTH) err(`lesson.pattern is ${pattern.length} characters (max ${MAX_PATTERN_LENGTH})`)
       if (tip === '') err('lesson.tip is empty')
       else if (tip.length > MAX_TIP_LENGTH) err(`lesson.tip is ${tip.length} characters (max ${MAX_TIP_LENGTH})`)
+    }
+
+    // Player-facing strings: no reviewer notes left behind, and none of the words the UI never uses.
+    const shown: Array<[string, unknown]> = [
+      ['text', data.text],
+      ['shortTitle', data.shortTitle],
+      ['room.label', room?.label],
+      ['room.source', room?.source],
+      ['room.fieldDates', room?.fieldDates],
+      ['room.note', room?.note],
+      ['room.questionWording', room?.questionWording],
+      ['truthSource.label', truth?.label],
+      ['truthSource.oneLine', truth?.oneLine],
+    ]
+    for (const [k, v] of shown) {
+      if (typeof v !== 'string') continue
+      if (REVIEWER_MARKER_RE.test(v)) err(`${k} still contains a reviewer marker (HUMAN:/VERIFY/TODO/TBD); remove it before setting status to "verified"`)
+      if (k !== 'room.label' && k !== 'room.source' && BANNED_WORDS_RE.test(v))
+        warn(`${k} says "${v.match(BANNED_WORDS_RE)![0]}"; the UI avoids "misinformation", "media literacy" and "bias" (pollster titles in room.source are exempt)`)
     }
   }
 
@@ -439,7 +472,12 @@ export function validateContent(claims: ContentFile[], days: ContentFile[], opts
   const claimsById = new Map<string, ClaimInfo>()
   let verifiedWithoutWording = 0
   for (const { file, data } of claims) {
-    if (isTemplate(file)) continue
+    if (isTemplate(file)) {
+      // Templates are skipped here and left out of the app bundle, so a filled-in one would vanish.
+      if (isObj(data) && data.status === 'verified')
+        errFor(file)('a template file (name starts with "_") is never validated or shipped; copy it to <id>.json and verify that copy')
+      continue
+    }
     const info = validateClaim(file, data, currentYear, errFor(file), warnFor(file))
     if (!info) continue
     if (claimsById.has(info.id)) errFor(file)(`duplicate id "${info.id}" (also in ${claimsById.get(info.id)!.file})`)
@@ -455,7 +493,10 @@ export function validateContent(claims: ContentFile[], days: ContentFile[], opts
   const validDays: DayInfo[] = []
   const dayFiles = new Set<string>()
   for (const { file, data } of days) {
-    if (isTemplate(file)) continue
+    if (isTemplate(file)) {
+      errFor(file)('day files starting with "_" are never validated or shipped; name it YYYY-MM-DD.json or move it out of content/days')
+      continue
+    }
     dayFiles.add(baseName(file))
     const info = validateDay(file, data, claimsById, errFor(file))
     if (info) validDays.push(info)
@@ -619,8 +660,22 @@ async function main(): Promise<void> {
   process.exit(errors.length > 0 ? 1 : 0)
 }
 
-const invokedDirectly = process.argv[1] !== undefined && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
-if (invokedDirectly) {
+/** True when this file is the entry point. Compares real paths (a symlinked path still counts) and accepts the extensionless form tsx allows. */
+function invokedDirectly(): boolean {
+  if (process.argv[1] === undefined) return false
+  const self = fs.realpathSync(fileURLToPath(import.meta.url))
+  const entry = path.resolve(process.argv[1])
+  for (const candidate of [entry, `${entry}.ts`]) {
+    try {
+      if (fs.realpathSync(candidate) === self) return true
+    } catch {
+      /* no such file; try the next form */
+    }
+  }
+  return false
+}
+
+if (invokedDirectly()) {
   main().catch((e) => {
     console.error(e)
     process.exit(1)

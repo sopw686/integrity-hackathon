@@ -8,8 +8,8 @@
   --font-sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-cond: 'Archivo Narrow', 'Arial Narrow', 'Archivo', 'Helvetica Neue', sans-serif;
 
-  /* HUMAN: sizes. Claim 28–34px mobile / 40px desktop, line-height 1.15. */
-  --fs-claim: clamp(28px, 2.2rem + 0.6vw, 34px);
+  /* HUMAN: sizes. Claim 28–34px mobile (28px at 320px wide, 34px from ~430px) / 40px desktop, line-height 1.15. */
+  --fs-claim: clamp(28px, 0.65rem + 5.5vw, 34px);
   --lh-claim: 1.15;
   --fs-claim-sm: 20px;        /* the pinned, smaller claim on the slider screen */
   --fs-body: 16px;

@@ -8,7 +8,7 @@
     "strict": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["node"]
+    "types": ["node", "vite/client"]
   },
-  "include": ["vite.config.ts", "scripts/**/*.ts", "vitest.config.ts"]
+  "include": ["vite.config.ts", "scripts/**/*.ts", "vitest.config.ts", "tests/**/*.ts"]
 }

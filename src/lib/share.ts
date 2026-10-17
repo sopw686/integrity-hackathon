@@ -28,7 +28,7 @@ const LIGHT: CardColors = {
   ink: '#141414',
   rule: '#D9D3C5',
   muted: '#6B655B',
-  hatch: '#C9C2B2',
+  hatch: '#8F887A',
   you: '#D64A2B',
 }
 
@@ -187,8 +187,13 @@ function tracePath(ctx: Ctx, d: string): Path2D | null {
 }
 
 function hatchDot(ctx: Ctx, x: number, y: number, r: number, colors: CardColors): void {
-  // Matches <Room />: paper fill, 45° hatch lines 3px apart, 1px ring in --hatch.
+  // Matches <Room />: paper fill, 45° hatch lines 3px apart, 1px ring in --hatch. The SVG
+  // pattern is a 3px tile rotated 45° whose 1.2px line sits on the tile edge, so only 0.6px
+  // of it shows: stripes 0.6 wide at pattern x' = (x + y) / √2 in [3k, 3k + 0.6].
   const spacing = 3
+  const w = 0.6
+  const step = spacing * Math.SQRT2 // lines x + y = s that are 3px apart, measured perpendicular
+  const off = (w / 2) * Math.SQRT2 // stripe centre, in x + y
   ctx.beginPath()
   ctx.arc(x, y, r, 0, Math.PI * 2)
   ctx.fillStyle = colors.paper
@@ -199,15 +204,15 @@ function hatchDot(ctx: Ctx, x: number, y: number, r: number, colors: CardColors)
   ctx.arc(x, y, r, 0, Math.PI * 2)
   ctx.clip()
   ctx.strokeStyle = colors.hatch
-  ctx.lineWidth = 1.2
+  ctx.lineWidth = w
   ctx.beginPath()
-  // Lines x + y = k·spacing, aligned to the room's own origin so the hatch reads as one fabric.
-  const lo = Math.ceil((x + y - 2 * r - 2) / spacing)
-  const hi = Math.floor((x + y + 2 * r + 2) / spacing)
+  // Lines x + y = k·step + off, aligned to the room's own origin so the hatch reads as one fabric.
+  const lo = Math.floor((x + y - 2 * r - 2) / step)
+  const hi = Math.ceil((x + y + 2 * r + 2) / step)
   const y0 = y - r - 1
   const y1 = y + r + 1
   for (let k = lo; k <= hi; k++) {
-    const s = k * spacing
+    const s = k * step + off
     ctx.moveTo(s - y0, y0)
     ctx.lineTo(s - y1, y1)
   }
@@ -467,7 +472,27 @@ function download(blob: Blob, filename: string): boolean {
   }
 }
 
-export async function shareResults(input: ShareInput): Promise<ShareOutcome> {
+/** The status line under a Share button. */
+export function shareOutcomeText(outcome: ShareOutcome | null): string {
+  if (outcome === 'copied') return COPY.copied
+  if (outcome === 'downloaded') return COPY.saved
+  if (outcome === 'shared') return COPY.shared
+  if (outcome === 'failed') return COPY.shareFailed
+  return ''
+}
+
+let inFlight: Promise<ShareOutcome> | null = null
+
+/** One share at a time: a second tap while the card renders or the sheet is open gets the same outcome. */
+export function shareResults(input: ShareInput): Promise<ShareOutcome> {
+  if (inFlight) return inFlight
+  inFlight = runShare(input).finally(() => {
+    inFlight = null
+  })
+  return inFlight
+}
+
+async function runShare(input: ShareInput): Promise<ShareOutcome> {
   try {
     // The copied text is exactly the two-line fallback. The site URL travels in the
     // Web Share `url` field, not in the text. HUMAN: whether to append the URL to the text too.
@@ -523,7 +548,8 @@ export async function shareResults(input: ShareInput): Promise<ShareOutcome> {
       }
     }
 
-    // 3. Desktop: copy the text, download the card.
+    // 3. Desktop: copy the text, download the card. 'copied' means the text is on the
+    // clipboard (the card may also have saved); 'downloaded' means only the card saved.
     let copied = false
     try {
       if (nav && nav.clipboard && typeof nav.clipboard.writeText === 'function') {
@@ -534,8 +560,8 @@ export async function shareResults(input: ShareInput): Promise<ShareOutcome> {
       copied = false
     }
     const downloaded = blob ? download(blob, filename) : false
-    if (downloaded) return 'downloaded'
     if (copied) return 'copied'
+    if (downloaded) return 'downloaded'
     return 'failed'
   } catch {
     return 'failed'

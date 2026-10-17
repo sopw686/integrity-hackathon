@@ -17,9 +17,9 @@
     "note": "4% definitely true, 20% probably true, 43% probably false, 32% definitely false. Annenberg’s April 2024 survey found the same 24%."
   },
   "truthSource": {
-    "label": "CDC, Autism and Vaccines",
-    "url": "https://www.cdc.gov/vaccine-safety/about/autism.html",
-    "oneLine": "Studies of millions of children find no link between the MMR vaccine and autism; the 1998 paper that claimed one was retracted."
+    "label": "Institute of Medicine, Adverse Effects of Vaccines (2012)",
+    "url": "https://nap.nationalacademies.org/catalog/13164/adverse-effects-of-vaccines-evidence-and-causality",
+    "oneLine": "The National Academies’ review concluded that the evidence favors rejecting a causal relationship between the MMR vaccine and autism."
   },
   "lesson": {
     "pattern": "Retracted study lives on",

@@ -11,10 +11,10 @@
     "fieldDates": "Apr 17–26, 2026",
     "n": 1068,
     "pctTrue": 59,
-    "pctFalse": 27,
-    "pctUnsure": 14,
+    "pctFalse": 34,
+    "pctUnsure": 6,
     "questionWording": "Assuming global warming is happening, do you think it is caused mostly by human activities, mostly by natural changes in the environment, other, or none of the above because global warming isn’t happening?",
-    "note": "27% said mostly natural changes; the remaining 14% said other, neither, or don’t know."
+    "note": "27% said mostly natural changes and 7% said global warming isn’t happening, both counted as false; 6% gave another answer. Sums to 99 because of rounding."
   },
   "truthSource": {
     "label": "IPCC Sixth Assessment Report",

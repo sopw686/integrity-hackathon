@@ -10,10 +10,10 @@
     "sourceUrl": "https://today.yougov.com/society/articles/20510-most-flat-earthers-consider-themselves-religious",
     "fieldDates": "Feb 2018",
     "n": 8215,
-    "pctTrue": 4,
-    "pctFalse": 89,
-    "pctUnsure": 7,
-    "note": "84% have always believed the world is round and 5% have recently had doubts; 2% have always believed it is flat and 2% thought so but are now skeptical; 7% other or not sure.",
+    "pctTrue": 2,
+    "pctFalse": 84,
+    "pctUnsure": 14,
+    "note": "Only firm answers counted: 84% have always believed the world is round and 2% always flat. The two “more recently skeptical” groups (5% who always thought it round, 2% who always thought it flat) and 7% other or not sure are shown as unsure.",
     "questionWording": "Do you believe that the world is round or flat? (I have always believed the world is round / I always thought the world is round, but more recently I am skeptical / I always thought the world is flat, but more recently I am skeptical / I have always believed the world is flat / Other, not sure)"
   },
   "truthSource": {

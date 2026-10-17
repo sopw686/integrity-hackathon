@@ -14,7 +14,8 @@ h1.claim-pinned, h1.claim-text { font-weight: 400; margin: 0; }
 .yesterday-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
 .yesterday-head .label { margin: 0; }
 .yesterday-rooms { display: flex; justify-content: space-between; gap: 6px; text-decoration: none; max-width: 100%; overflow: hidden; }
-.yesterday-room { display: block; line-height: 0; }
+.yesterday-room { display: block; line-height: 0; flex: 0 1 auto; min-width: 0; } /* shrink below 374px, never grow */
+.yesterday-room svg { max-width: 100%; height: auto; }
 .footer-nav { display: flex; gap: 20px; font-size: var(--fs-small); color: var(--muted); margin-top: auto; }
 .footer-nav a, .footer-nav button { color: var(--muted); }
 .footer-nav a:hover, .footer-nav button:hover { color: var(--ink); }
@@ -130,12 +131,13 @@ h1.claim-pinned, h1.claim-text { font-weight: 400; margin: 0; }
 .calendar-cell.future .calendar-dot { border-color: var(--rule); }
 
 /* ---- archive ---- */
-.archive-list { padding: 0; }
+.archive-list { padding: 0; margin: 0; list-style: none; }
 .archive-row { display: grid; grid-template-columns: 64px 1fr auto; gap: 14px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--rule); }
 .archive-row:first-child { border-top: 0; }
 .archive-no { margin: 0; }
 .archive-date { font-size: 18px; font-variation-settings: 'opsz' 20; }
 .archive-action { margin: 0; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
+.archive-action .sr-only { text-transform: none; } /* the spoken context, not shouted */
 
 /* ---- dialog (how to play) ---- */
 .dialog-overlay { position: fixed; inset: 0; background: rgba(20, 20, 20, 0.45); }
@@ -145,10 +147,12 @@ h1.claim-pinned, h1.claim-text { font-weight: 400; margin: 0; }
   border-top: 1px solid var(--ink);
   padding: 18px 20px calc(20px + env(safe-area-inset-bottom));
   display: flex; flex-direction: column; gap: 16px;
+  max-height: 100vh; max-height: 100dvh; overflow-y: auto; overscroll-behavior: contain;
 }
 @media (min-width: 720px) {
-  .dialog { top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -50%); width: 480px; border: 1px solid var(--ink); padding: 22px 24px; }
+  .dialog { top: 50%; bottom: auto; left: 50%; right: auto; transform: translate(-50%, -50%); width: 480px; border: 1px solid var(--ink); padding: 22px 24px; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); }
 }
+.dialog > *, .howto-panel > * { flex-shrink: 0; } /* short screens scroll the dialog; the panels keep their height */
 .dialog-top { display: flex; justify-content: space-between; align-items: baseline; }
 .dialog-title { margin: 0; color: var(--ink); }
 .howto-panel { display: flex; flex-direction: column; gap: 14px; min-height: 260px; }
@@ -162,7 +166,7 @@ h1.claim-pinned, h1.claim-text { font-weight: 400; margin: 0; }
 .howto-track { flex: 1; height: 1px; background: var(--ink); position: relative; }
 .howto-fill { position: absolute; left: 0; top: -1px; height: 3px; background: var(--ink); }
 .howto-you { color: var(--ink); }
-.howto-line { font-family: var(--font-serif); font-size: 22px; line-height: 1.25; margin: 0; text-wrap: balance; }
+.howto-line { font-family: var(--font-serif); font-size: 22px; line-height: 1.25; margin: 0; text-wrap: balance; outline: none; }
 .dialog-actions { margin-top: auto; }
 
 /* =====================================================================

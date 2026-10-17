@@ -200,26 +200,33 @@ npm install
 npm run dev          # http://127.0.0.1:5173
 npm run build        # runs the content validator first (prebuild), then vite build → dist/
 npm run preview      # serve dist/ on :4173
-npm run validate     # content rules (see content/AUTHORING.md); --online also checks every URL
-npm run compose-days # fill day files: --from --to [--window 5] [--election 3] [--hard 2] [--ramp] [--skip ids] [--force]
-npm run test         # unit tests: geometry, scoring + calibration + insight, storage, validator
+npm run validate     # content rules (see content/AUTHORING.md)
+npm run validate -- --online    # also fetches every source and truth URL
+npm run compose-days -- --from YYYY-MM-DD --to YYYY-MM-DD [--window 5] [--election 3] [--hard 2] [--ramp] [--skip ids] [--force [--allow-past]]   # fill day files from the verified pool
+npm run test         # unit tests: geometry, scoring + calibration + insight, storage, game state, share outcome, validator
 npm run screenshots  # Playwright: every screen at 390×844 and 1280×800 → design/screens/
-npm run check:flows  # Playwright: keyboard-only loop, storage disabled, reduced motion, axe scans
+npm run check:flows  # Playwright: keyboard-only loop, storage disabled, reduced motion, axe scans; exits 1 on any failure
 ```
 
-Deploy as a static site:
-- **Cloudflare Pages:** `wrangler.toml`, `public/_redirects`
-- **Vercel:** `vercel.json`
+Flags for an npm script go after `--` (`npm run validate -- --online`); without it npm keeps them
+for itself and the script never sees them. `screenshots` and `check:flows` drive a running app:
+start `npm run dev` in another terminal first (or point them at another server with
+`BASE=http://127.0.0.1:4173` after `npm run preview`), and install a Chromium once with
+`npx playwright install chromium` (or set `CHROMIUM_PATH`).
 
-For both, the build command is `npm run build` and the output directory is `dist`. There is no
-backend, no accounts and no model at runtime.
+Node 22 (22.12 or later), 24, or 26+ (`engines` in `package.json`); `.nvmrc` and `.node-version` pin
+22.22.0 for nvm, fnm and Cloudflare Pages. Deploy as a static site: Cloudflare Pages (`wrangler.toml`;
+deep links rely on Pages' default single-page-app mode, so keep `dist/` free of a top-level
+`404.html`) or Vercel (`vercel.json`). Build command `npm run build`, output `dist`.
+
+There is no backend, no accounts and no model at runtime.
 
 ## Routes
 
 | Route | Screen |
 | --- | --- |
 | `/` | Home: the question, the three steps, Play, streak, How to play (4 panels, including the confidence points). |
-| `/play` | Judge → how sure → predict the room → reveal (truth, evidence, what to notice, the room), five times. `/play?day=YYYY-MM-DD` plays an archive day. |
+| `/play` | Judge → how sure → predict the room → reveal (truth, evidence, what to notice, the room), five times. `/play?day=YYYY-MM-DD` plays a past day from the archive (doesn't count); a future date falls back to today. |
 | `/results` | Insight headline, score breakdown, felt-sure vs right, the four call types, dials, five rows, Share. |
 | `/stats` | Lifetime accuracy, calibration by confidence level, streak, calendar. |
 | `/archive` | Past puzzles, playable, labeled "archive — doesn't count". |
@@ -228,7 +235,8 @@ backend, no accounts and no model at runtime.
 
 ## Content
 
-- `content/claims/*.json` holds one claim per file. Only `status: "verified"` ships.
+- `content/claims/*.json` holds one claim per file. Only `status: "verified"` ships: the build turns
+  drafts into `null` (`vite.config.ts`), and files starting with `_` are templates that never ship.
 - Each claim carries:
   - `truthSource`: the authority, a link, and one line
   - `lesson`: `{ pattern, tip }`
@@ -244,6 +252,7 @@ backend, no accounts and no model at runtime.
 
 **Content status:** 65 verified claims (30 election, 19 hard), 27 drafts. Drafts carry a `VERIFY` or
 `HUMAN:` note saying what still needs checking. `design/REVIEW.md` lists open decisions.
+Day files use a 5-day no-repeat window (the validator errors under 5 days and warns under 7).
 
 ## Design
 

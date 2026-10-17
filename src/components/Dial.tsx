@@ -40,7 +40,7 @@ export function Dial({
   const d = `M ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y}`
   const full = shown >= max && max > 0
   return (
-    <div className={`dial${full ? ' full' : ''}`} role="group" aria-label={`${label}: ${display}`}>
+    <div className={`dial${full ? ' full' : ''}`} role="img" aria-label={`${label}: ${display}`}>
       <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true" style={{ display: 'block', overflow: 'visible' }}>
         <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`} fill="none" stroke="var(--rule)" strokeWidth={6} strokeLinecap="round" />
         {frac > 0 && <path d={d} fill="none" stroke={full ? 'var(--win)' : 'var(--ink)'} strokeWidth={6} strokeLinecap="round" />}

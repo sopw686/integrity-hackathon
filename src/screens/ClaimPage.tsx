@@ -1,7 +1,8 @@
-import { Link, useParams } from 'react-router'
+import { Link, useParams, useSearchParams } from 'react-router'
 import { Header } from '../components/Header'
 import { RoomFrame } from '../components/RoomFrame'
-import { dayForClaim, getClaim } from '../lib/content'
+import { allDayDates, getClaim, getDay } from '../lib/content'
+import { isValidDateKey } from '../lib/day'
 import { useDotSize, useTitle, useToday } from '../lib/hooks'
 import { getDay as getRecord } from '../lib/storage'
 import { COPY } from '../tokens/copy'
@@ -13,18 +14,29 @@ import { badgeFor } from '../lib/scoring'
 /** Read-only reveal for deep links: the full grid already revealed, source and truth source, a button to play today. */
 export function ClaimPage() {
   const { id = '' } = useParams()
+  const [params] = useSearchParams()
   const claim = getClaim(id)
   const today = useToday()
   const dot = useDotSize()
-  useTitle(claim ? `${claim.text} — Read the Room` : 'Read the Room')
+  useTitle(claim ? `${claim.text} — Read the Room` : 'Not found — Read the Room')
   if (!claim) return <NotFound />
 
-  // If this browser played the claim, show its own guess and dot.
-  const day = dayForClaim(claim.id, today)
+  // If this browser played the claim, show its own guess and dot: from the day the link names,
+  // else from the latest day this browser answered it.
+  const answered = (d: string) => {
+    const i = getDay(d)?.claims.indexOf(claim.id) ?? -1
+    return i >= 0 && getRecord(d)?.answers[i] != null
+  }
+  const dayParam = params.get('day')
+  const date = dayParam && isValidDateKey(dayParam) && dayParam <= today && getDay(dayParam)?.claims.includes(claim.id)
+    ? dayParam
+    : allDayDates().filter((d) => d <= today).reverse().find(answered)
+  const day = date ? getDay(date) : undefined
   const rec = day ? getRecord(day.date) : undefined
   const i = day ? day.claims.indexOf(claim.id) : -1
-  const verdict = rec && i >= 0 ? rec.answers[i] : undefined
-  const guess = rec && i >= 0 ? rec.guesses[i] : undefined
+  // `?? undefined`: an old sparse record can hold null in a slot.
+  const verdict = rec && i >= 0 ? rec.answers[i] ?? undefined : undefined
+  const guess = rec && i >= 0 ? rec.guesses[i] ?? undefined : undefined
 
   return (
     <main className="page claim-page">

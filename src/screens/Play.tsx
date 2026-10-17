@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useNavigate, useSearchParams } from 'react-router'
+import { Link, useNavigate, useSearchParams } from 'react-router'
 import { m } from 'motion/react'
 import { Header } from '../components/Header'
 import { RoomFrame } from '../components/RoomFrame'
@@ -10,10 +10,12 @@ import { Evidence, Lesson, RoomContext } from '../components/RevealNotes'
 import { FactCheck } from '../components/FactCheck'
 import { useGame } from '../lib/game'
 import { isValidDateKey, puzzleNumber } from '../lib/day'
+import { describeRoom } from '../lib/geometry'
 import { useCalm, useCountUp, useCues, useDotSize, useReduced, useRevealClock, useTitle, useToday } from '../lib/hooks'
 import { sfx } from '../lib/sfx'
 import { confetti } from '../lib/confetti'
-import { COPY } from '../tokens/copy'
+import { getDay as getRecord } from '../lib/storage'
+import { BADGES, COPY } from '../tokens/copy'
 import {
   COUNTDOWN_STEP,
   REDUCED_CROSSFADE,
@@ -133,9 +135,32 @@ export function SureRow({ onPick }: { onPick: (c: number) => void }) {
 export function Play() {
   const today = useToday()
   const [params] = useSearchParams()
+  const navigate = useNavigate()
   const dayParam = params.get('day')
-  const date = dayParam && isValidDateKey(dayParam) ? dayParam : today
-  const archive = date !== today
+  // A live game stays on the day it started, so one begun at 11:55pm finishes as that day and counts.
+  const [startDay, setStartDay] = useState(today)
+  const valid = dayParam !== null && isValidDateKey(dayParam) && dayParam <= today
+  const date = valid ? dayParam : startDay
+  const archive = date !== startDay && date !== today
+
+  // A future or malformed ?day= plays today instead.
+  useEffect(() => {
+    if (dayParam !== null && !valid) navigate('/play', { replace: true })
+  }, [dayParam, valid, navigate])
+
+  // A tab left open overnight rolls to the new puzzle unless the day it started on has a lock.
+  useEffect(() => {
+    if (today !== startDay && !getRecord(startDay)?.answers.length) setStartDay(today)
+  }, [today, startDay])
+
+  // Mount the game only on the cleaned URL, or its own redirect to /results is overwritten.
+  if (dayParam !== null && !valid) return null
+
+  // Keyed by date: game state can never carry over from one day to another.
+  return <PlayDay key={date} date={date} archive={archive} />
+}
+
+function PlayDay({ date, archive }: { date: string; archive: boolean }) {
   const game = useGame(date, archive)
   const reduced = useReduced()
   const calm = useCalm()
@@ -144,6 +169,7 @@ export function Play() {
   const clock = useRevealClock(game.phase === 'reveal', reduced)
   const [moved, setMoved] = useState(false)
   const claimRef = useRef<HTMLHeadingElement>(null)
+  const pinnedRef = useRef<HTMLHeadingElement>(null)
   const sliderWrap = useRef<HTMLDivElement>(null)
   const sureRef = useRef<HTMLParagraphElement>(null)
   const roomRef = useRef<HTMLDivElement>(null)
@@ -156,11 +182,13 @@ export function Play() {
   const endCount = useRef(() => setCounting(false)).current
   useTitle(claim ? `${index + 1} of ${total} — Read the Room` : 'Read the Room')
 
+  // Always name the day: after midnight a bare /results would resolve to the next puzzle.
   useEffect(() => {
-    if (phase === 'done') navigate(archive ? `/results?day=${date}` : '/results', { replace: true, state: { fresh: true } })
-  }, [phase, navigate, archive, date])
+    if (phase === 'done') navigate(`/results?day=${date}`, { replace: true, state: { fresh: true } })
+  }, [phase, navigate, date])
 
-  // Keyboard flow: read the claim on arrival, move to the slider once the verdict is locked.
+  // Keyboard flow: read the claim on arrival, move to the slider once the verdict is locked,
+  // and keep focus on the claim (not <body>) once Lock unmounts.
   // Layout effect, so focus lands in the same commit as the screen (before the next keypress).
   useLayoutEffect(() => {
     // Only claim focus when nothing on this screen holds it (the button that brought us here was removed).
@@ -179,6 +207,7 @@ export function Play() {
     }
     if (phase === 'sure') sureRef.current?.focus()
     if (phase === 'read') sliderWrap.current?.querySelector<HTMLInputElement>('input')?.focus()
+    if (phase === 'reveal') pinnedRef.current?.focus()
   }, [phase, index, counting])
 
   const pick = (v: Verdict) => {
@@ -278,13 +307,16 @@ export function Play() {
         <Header right={archive ? COPY.archiveNote : `No. ${puzzleNumber(date)}`} />
         <section className="section stack">
           <p className="claim-text">No puzzle is set for this day.</p>
-          <button type="button" className="btn secondary" onClick={() => navigate('/')}>{COPY.back}</button>
+          <Link to="/" className="btn secondary">{COPY.back}</Link>
         </section>
       </main>
     )
   }
 
-  const overlay = game.day.roomOverlay && game.day.roomOverlay.n >= 30 ? game.day.roomOverlay.pctTrue : undefined
+  // The players-so-far line is part of the reveal; on the slider it would hint the guess.
+  const overlay = phase === 'reveal' && game.day.roomOverlay && game.day.roomOverlay.n >= 30 ? game.day.roomOverlay.pctTrue : undefined
+  // What a sighted player has seen by the time Next appears; Next reads it as its description.
+  const summary = current ? `${BADGES[current.badge].name}. ${BADGES[current.badge].line} ${describeRoom(claim.room, claim.room.label)} The claim is ${claim.answer}.` : ''
 
   // Score so far, counting the claim on screen once its moment has landed.
   const counted = [...results, ...(bannerOn && current ? [current] : [])]
@@ -347,7 +379,7 @@ export function Play() {
 
       {(phase === 'read' || phase === 'reveal') && verdict && (
         <section className="read" key={`${claim.id}-read`}>
-          <h1 className="claim-pinned">{claim.text}</h1>
+          <h1 className="claim-pinned" ref={pinnedRef} tabIndex={-1}>{claim.text}</h1>
           <div className="locked-row">
             <span className={`chip you-said ${verdict}`}>{COPY.youSaid(verdict)}</span>
             {confidence !== undefined && <span className="chip sure-chip num">{COPY.sureChip(confidence)}</span>}
@@ -446,9 +478,13 @@ export function Play() {
               </div>
               <div className="next-slot">
                 {clock.done && (
-                  <button type="button" className="btn next-btn" onClick={next} autoFocus>
-                    {index + 1 < total ? COPY.next : COPY.seeResults}
-                  </button>
+                  <>
+                    {/* hidden, not sr-only: read only as Next's description, not again in browse mode */}
+                    <p id="reveal-summary" hidden>{summary}</p>
+                    <button type="button" className="btn next-btn" onClick={next} autoFocus aria-describedby="reveal-summary">
+                      {index + 1 < total ? COPY.next : COPY.seeResults}
+                    </button>
+                  </>
                 )}
               </div>
             </div>
