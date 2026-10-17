@@ -10,23 +10,13 @@ import { formatLong, isValidDateKey, puzzleNumber } from '../lib/day'
 import { useCalm, useDotSize, useTitle, useToday } from '../lib/hooks'
 import { sfx } from '../lib/sfx'
 import { confetti } from '../lib/confetti'
-import { calibration, scoreClaim } from '../lib/scoring'
+import { calibration, callKind, scoreClaim, withTotals } from '../lib/scoring'
+import { dayInsight, shortTitle } from '../lib/insight'
 import { SureSummary } from '../components/SureChart'
 import { currentStreak, getDay as getRecord } from '../lib/storage'
 import { shareResults, type ShareOutcome } from '../lib/share'
 import { track } from '../lib/track'
 import { COPY } from '../tokens/copy'
-import type { Claim } from '../lib/types'
-
-export function shortTitle(c: Claim): string {
-  if (c.shortTitle) return c.shortTitle
-  const words = c.text.replace(/\.$/, '').split(' ')
-  return words.length <= 6 ? words.join(' ') : words.slice(0, 6).join(' ') + '…'
-}
-
-export function rankFor(scores: { accuracy: number; read: number }) {
-  return COPY.ranks.find((r) => scores.accuracy >= r.min.accuracy && scores.read >= r.min.read) ?? COPY.ranks[COPY.ranks.length - 1]
-}
 
 export function Results() {
   const today = useToday()
@@ -70,9 +60,9 @@ export function Results() {
   const claims = dayClaims(day)
   const results = claims.map((c, i) => scoreClaim(c, record.answers[i] ?? 'false', record.guesses[i] ?? 0, record.confidence?.[i]))
   const cal = calibration(results.filter((r) => r.confidence !== undefined).map((r) => ({ confidence: r.confidence!, correct: r.correct })))
-  const scores = record.scores
+  const scores = withTotals(record.scores, results)
   const streak = currentStreak(today)
-  const rank = rankFor(scores)
+  const insight = dayInsight(claims, results)
 
   // "The one that got you": a wrong verdict with the largest read error; failing that, the largest error.
   const wrong = results.filter((r) => !r.correct)
@@ -120,9 +110,30 @@ export function Results() {
           animate={{ scale: 1, opacity: 1, rotate: -2 }}
           transition={{ type: 'spring', stiffness: 260, damping: 14, delay: 0.15 }}
         >
-          <p className="rank-title">{rank.title}</p>
-          <p className="rank-line small">{rank.line}</p>
+          <p className="rank-title">{insight.title}</p>
+          <p className="rank-line">{insight.line}</p>
         </m.div>
+        {insight.notes.length > 0 && (
+          <ul className="insight-notes">
+            {insight.notes.map((n) => (
+              <li key={n} className="small">{n}</li>
+            ))}
+          </ul>
+        )}
+        <div className="score-line">
+          <span className="label">⭐ {COPY.score}</span>
+          <span className="score-total num">{scores.total}</span>
+          <span className="small muted num">{COPY.scoreParts(scores.accuracy * 10, scores.sure, Math.round(scores.read / 4))}</span>
+        </div>
+      </section>
+
+      {cal && (
+        <section className="section">
+          <SureSummary cal={cal} />
+        </section>
+      )}
+
+      <section className="section">
         <div className="dials">
           <Dial icon="🎯" label={COPY.accuracy} value={scores.accuracy} max={5} display={`${scores.accuracy}/5`} animate={!calm} delay={350} />
           <Dial icon="📡" label={COPY.read} value={scores.read} max={100} display={`${scores.read}`} animate={!calm} delay={500} />
@@ -141,20 +152,16 @@ export function Results() {
                 <span className="results-title serif">{shortTitle(c)}</span>
                 <Badge id={r.badge} compact />
                 <span className="results-delta small muted num">
-                  {r.confidence !== undefined ? `${COPY.sureChip(r.confidence)} · ` : ''}
+                  {r.confidence !== undefined ? `${COPY.sureChip(r.confidence)} (${COPY.surePts(r.surePoints)}) · ` : ''}
                   {COPY.youVsRoom(r.guess, c.room.pctTrue)}
+                  {c.room.kind === 'illustrative' ? ` · ${COPY.demoCrowdShort.toLowerCase()}` : ''}
                 </span>
+                {callKind(r.confidence, r.correct) === 'confident-miss' && <span className="label call-kind confident-miss">{COPY.callKindShort['confident-miss']}</span>}
               </span>
             </Link>
           )
         })}
       </section>
-
-      {cal && (
-        <section className="section">
-          <SureSummary cal={cal} />
-        </section>
-      )}
 
       <section className="section stack">
         {!archive && (

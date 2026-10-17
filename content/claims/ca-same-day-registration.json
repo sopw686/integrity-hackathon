@@ -1,25 +1,31 @@
 {
   "id": "ca-same-day-registration",
-  "text": "In California, you can register and vote on the same day, including Election Day.",
+  "text": "In California, you can still register and vote on Election Day itself.",
+  "shortTitle": "Register on Election Day",
+  "seenIn": "a group chat, after the deadline passed",
   "answer": "true",
   "room": {
-    "kind": "campus",
-    "label": "5C students",
-    "pctTrue": 0,
-    "pctFalse": 0,
-    "pctUnsure": 0,
-    "source": "5C student survey (team)",
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 38,
+    "pctFalse": 34,
+    "pctUnsure": 28,
+    "source": "Demo crowd (illustrative)",
     "sourceUrl": "",
     "fieldDates": "",
     "n": 0,
-    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
   },
   "truthSource": {
     "label": "California Secretary of State: Same Day Voter Registration",
     "url": "https://www.sos.ca.gov/elections/voter-registration/same-day-reg",
-    "oneLine": "California offers conditional voter registration: you can register and cast a provisional ballot through Election Day at a county elections office or vote center."
+    "oneLine": "After the regular deadline (15 days out), you can still register and vote through Election Day at a county elections office or vote center. The ballot counts once the county verifies you."
+  },
+  "lesson": {
+    "pattern": "Missed deadline ≠ missed vote",
+    "tip": "“Registration closed” usually means the regular deadline, not the last chance. Before you tell a friend it’s too late, check the Secretary of State’s same-day registration page."
   },
   "category": "election",
   "difficulty": 2,
-  "status": "draft"
+  "status": "verified"
 }

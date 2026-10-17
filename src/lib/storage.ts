@@ -1,4 +1,4 @@
-import type { BadgeId, DayRecord, PersistedState, Verdict } from './types'
+import type { BadgeId, DayRecord, DayScores, PersistedState, Verdict } from './types'
 import { addDays } from './day'
 
 export const STORAGE_KEY = 'read-the-room:v1'
@@ -86,7 +86,7 @@ export function recordLock(date: string, index: number, verdict: Verdict, guess:
   return rec
 }
 
-export function completeDay(date: string, scores: { accuracy: number; read: number }, archive: boolean): PersistedState {
+export function completeDay(date: string, scores: DayScores, archive: boolean): PersistedState {
   const state = load()
   const prev = state.days[date]
   if (!prev) return state

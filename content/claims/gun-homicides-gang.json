@@ -21,6 +21,10 @@
     "url": "https://nationalgangcenter.ojp.gov/survey-analysis/measuring-the-extent-of-gang-problems",
     "oneLine": "Federal data put gang-related killings at roughly one in eight U.S. homicides, far from a majority."
   },
+  "lesson": {
+    "pattern": "Stereotype as statistic",
+    "tip": "A vivid image can stand in for a number. Ask for the actual share and who counted it."
+  },
   "category": "society",
   "difficulty": 3,
   "status": "verified"

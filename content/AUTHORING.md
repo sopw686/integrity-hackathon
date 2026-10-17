@@ -4,10 +4,11 @@ How a claim gets from a poll into the game. Each claim is one JSON file in `cont
 
 ## 1. Find a poll
 
-A claim needs a room: a real measurement of what a group of people believed. Two kinds count.
+A claim needs a room: a measurement of what a group of people believed. Three kinds exist.
 
 - **A named national survey.** YouGov, Pew, Gallup, AP-NORC, KFF, Ipsos, Monmouth, Annenberg, and similar. You need the published field dates, the sample size (n), and the share who said true / false / not sure. Link the pollster's own page or topline PDF, not a news article about it.
-- **The team's 5C survey.** For campus claims. See `content/campus-survey.md`.
+- **The team's 5C survey.** For campus claims. See `content/campus-survey.md`. Needs n ≥ 100.
+- **A demo crowd** (`kind: "illustrative"`). Only for a claim that matters for the deployment (for example a California election rule) but that no poll has measured yet. The split is set by the team and is never presented as data: the label and source must both say "demo", `n` is 0, `fieldDates` and `sourceUrl` are empty, and `note` says what replaces it. The game tags it *Demo crowd* on the reveal and leaves it out of every crowd insight. Replace it with real 5C survey numbers as soon as they exist.
 
 If you cannot find the field dates and n, the poll does not count.
 
@@ -62,10 +63,15 @@ The shape (from `src/lib/types.ts`):
     "note": "…"                                // optional caveat shown on reveal; required in practice for surveys older than 5 years
   },
   "truthSource": {
-    "label": "NASA",                           // the authority that settles it
+    "label": "NASA",                           // the authority that settles it, as a human-readable page title
     "url": "https://www.nasa.gov/…",           // the specific page; https only
-    "oneLine": "…"                             // one sentence shown on reveal
+    "oneLine": "…"                             // one sentence shown on reveal, under "Why it's true/false"; only what the page supports
   },
+  "lesson": {                                  // required for verified claims: the transferable skill
+    "pattern": "Too big to hide",              // ≤ 40 chars: the misinformation mechanism this claim uses
+    "tip": "…"                                 // ≤ 240 chars: how to notice or check a claim like it; specific, never boilerplate
+  },
+  "seenIn": "a forwarded video",               // optional scenario frame shown above the claim ("Seen in …"); not a sourcing claim
   "category": "science",                       // election | campus | health | science | society | media
   "difficulty": 1,                             // 1 easy, 2 medium, 3 hard
   "status": "draft"                            // "draft" until checked, then "verified"
@@ -114,6 +120,7 @@ Each day must have:
 - at least one claim whose answer is `"true"`;
 - at least one claim where the room majority was wrong (the share on the truth side is 50 or less: `pctTrue` when the answer is true, `pctFalse` when it is false);
 - at least two categories;
+- at least three `election` claims through the 2026 midterms (enforced by `compose-days --election 3`, not the validator);
 - at most one `election` claim that mentions a party or candidate (Democrat, Republican, GOP, Trump, Biden, Harris, Obama, and so on, or the word "party").
 
 Across days:
@@ -128,7 +135,8 @@ Across days:
 3. Claim text matches the poll's polarity; not flipped.
 4. Claim is eligible: no live disputes, horse-race, policy opinions, contested history or private people.
 5. `pctTrue`, `pctFalse`, `pctUnsure` copied from the topline and sum to 100 ±1.
-6. Truth source is the settling authority, with a working https link and one plain sentence.
+6. Truth source is the settling authority, with a working https link and one plain sentence. For election rules: the California Secretary of State or the county registrar.
+6b. A `lesson` names this claim's specific trick and how to check the next one like it.
 7. File name equals `id`; `category` and `difficulty` set.
 8. Second person reread the claim against the poll, then `status` set to `"verified"`.
 9. `npm run validate` shows no `✗` for the file; warnings read and handled.

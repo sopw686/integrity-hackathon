@@ -21,6 +21,10 @@
     "url": "https://www.nationalacademies.org/evolution",
     "oneLine": "Fossil, genetic and anatomical evidence establishes that humans evolved from earlier species."
   },
+  "lesson": {
+    "pattern": "Framing shifts belief",
+    "tip": "Asked one way, most people agree; asked another, far fewer. Notice how framing changes your reaction, then check the evidence."
+  },
   "category": "science",
   "difficulty": 1,
   "status": "verified"

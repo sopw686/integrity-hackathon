@@ -20,6 +20,10 @@
     "url": "https://www.hhs.gov/sites/default/files/oash-alcohol-cancer-risk.pdf",
     "oneLine": "Alcohol is the third-leading preventable cause of cancer in the U.S., linked to at least seven cancers including breast, mouth, throat and colorectal."
   },
+  "lesson": {
+    "pattern": "Familiar habit, hidden risk",
+    "tip": "Common doesn’t mean harmless. For health risks, look for what health agencies conclude, not how normal a habit feels."
+  },
   "category": "health",
   "difficulty": 2,
   "status": "verified"

@@ -20,6 +20,10 @@
     "url": "https://www.epa.gov/radiation/radiation-sources-and-doses",
     "oneLine": "Most of the radiation people receive is natural, from radon, rocks, soil and cosmic rays."
   },
+  "lesson": {
+    "pattern": "“All” is easy to break",
+    "tip": "Words like “all” and “never” fall to one counterexample. Radon and uranium are naturally radioactive."
+  },
   "category": "science",
   "difficulty": 2,
   "status": "verified"

@@ -21,6 +21,10 @@
     "url": "https://www.cdc.gov/healthyyouth/whatworks/what-works-sexual-health-education.htm",
     "oneLine": "Reviews of school-based sexual health education find it does not hasten sexual initiation and is associated with delaying it."
   },
+  "lesson": {
+    "pattern": "Intuitive cause, no data",
+    "tip": "“Talking about it causes it” feels logical but needs data. Look for studies that compare outcomes, not assumptions."
+  },
   "category": "society",
   "difficulty": 3,
   "status": "verified"

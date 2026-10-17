@@ -1,0 +1,31 @@
+{
+  "id": "ca-photo-id",
+  "text": "You need a photo ID to vote in person in California.",
+  "shortTitle": "Photo ID to vote",
+  "seenIn": "a TikTok about how to vote",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 41,
+    "pctFalse": 38,
+    "pctUnsure": 21,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: What to Bring to Your Polling Place",
+    "url": "https://www.sos.ca.gov/elections/voting-resources/voting-california/what-bring",
+    "oneLine": "In most cases California voters don’t show ID at the polls. Some first-time voters who registered without a license or SSN number may be asked for one, and a utility bill counts."
+  },
+  "lesson": {
+    "pattern": "Another state’s rule",
+    "tip": "Voter ID rules differ by state, and a ballot proposal isn’t the rule in effect. A video that’s right about one state gets shared as if it covers yours. Check sos.ca.gov for what applies here, now."
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "verified"
+}

@@ -21,6 +21,10 @@
     "url": "https://www.acog.org/womens-health/faqs/combined-hormonal-birth-control-pill-patch-ring",
     "oneLine": "Fertility returns promptly after stopping the pill or removing an IUD; there is no lasting reduction in the ability to conceive."
   },
+  "lesson": {
+    "pattern": "Anecdote over data",
+    "tip": "A friend’s story travels faster than a study. Fertility questions are settled by large studies summarized by medical bodies."
+  },
   "category": "health",
   "difficulty": 2,
   "status": "verified"

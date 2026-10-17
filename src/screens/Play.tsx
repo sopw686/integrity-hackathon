@@ -6,6 +6,7 @@ import { Header } from '../components/Header'
 import { RoomFrame } from '../components/RoomFrame'
 import { RangeSlider } from '../components/RangeSlider'
 import { Badge } from '../components/Badge'
+import { Evidence, Lesson, RoomContext } from '../components/RevealNotes'
 import { useGame } from '../lib/game'
 import { isValidDateKey, puzzleNumber } from '../lib/day'
 import { useCalm, useCountUp, useCues, useDotSize, useReduced, useRevealClock, useTitle, useToday } from '../lib/hooks'
@@ -23,7 +24,7 @@ import {
   T_STAMP,
   T_VERDICT_BANNER,
 } from '../tokens/motion'
-import { CONFIDENCE_LEVELS, CONFIDENT } from '../lib/scoring'
+import { callKind, CONFIDENCE_LEVELS } from '../lib/scoring'
 import type { ClaimResult, Verdict } from '../lib/types'
 
 /** Five pips across the top: done (right or wrong), the one in play, and the ones to come. */
@@ -40,12 +41,15 @@ function Pips({ total, results, index, live }: { total: number; results: ClaimRe
 }
 
 /** The running score: verdicts right, read points so far, and a combo once you string two together. */
-function Hud({ accuracy, read, combo, calm }: { accuracy: number; read: number; combo: number; calm: boolean }) {
+function Hud({ accuracy, read, sure, combo, calm }: { accuracy: number; read: number; sure: number; combo: number; calm: boolean }) {
   const shown = useCountUp(read, 500, !calm)
   return (
-    <div className="hud" aria-label={`Score so far: ${accuracy} right, read ${read}`} role="group">
+    <div className="hud" aria-label={`Score so far: ${accuracy} right, confidence ${sure}, read ${read}`} role="group">
       <span className="hud-item num" key={`a${accuracy}`}>
         <span aria-hidden="true">🎯</span> {accuracy}
+      </span>
+      <span className={`hud-item num${sure < 0 ? ' neg' : ''}`} key={`s${sure}`} title="Confidence points">
+        <span aria-hidden="true">🎚️</span> {COPY.surePts(sure)}
       </span>
       <span className="hud-item num" key={`r${read}`}>
         <span aria-hidden="true">📡</span> {calm ? read : shown}
@@ -279,6 +283,9 @@ export function Play() {
   const counted = [...results, ...(bannerOn && current ? [current] : [])]
   const accuracy = counted.filter((r) => r.correct).length
   const read = results.reduce((s, r) => s + r.readPoints, 0) + (pointsOn && current ? current.readPoints : 0)
+  const sureSum = counted.reduce((s, r) => s + r.surePoints, 0)
+  const kind = current ? callKind(current.confidence, current.correct) : undefined
+  const question = COPY.sliderQuestionFor(claim.room.label)
   let combo = 0
   for (let i = counted.length - 1; i >= 0 && counted[i].correct; i--) combo++
 
@@ -295,10 +302,11 @@ export function Play() {
           <span className="label num">{COPY.claimOf(index + 1, total)}</span>
         </span>
       </div>
-      <Hud accuracy={accuracy} read={read} combo={combo} calm={calm} />
+      <Hud accuracy={accuracy} read={read} sure={sureSum} combo={combo} calm={calm} />
 
       {(phase === 'verdict' || phase === 'sure') && (
         <section className="verdict" key={claim.id}>
+          {claim.seenIn && <p className="label seen-in">{COPY.seenIn(claim.seenIn)}</p>}
           <h1 className="claim-text" ref={claimRef} tabIndex={-1}>
             {counting ? claim.text : <Words text={claim.text} calm={calm} />}
           </h1>
@@ -327,7 +335,7 @@ export function Play() {
           <div className="locked-row">
             <span className={`chip you-said ${verdict}`}>{COPY.youSaid(verdict)}</span>
             {confidence !== undefined && <span className="chip sure-chip num">{COPY.sureChip(confidence)}</span>}
-            {phase === 'read' && <span className="label question">{COPY.sliderQuestion}</span>}
+            {phase === 'read' && <span className="label question">{question}</span>}
             {pointsOn && current && (
               <m.span
                 className={`points${current.error <= 3 ? ' bullseye' : ''}${current.readPoints === 0 ? ' zero' : ''}`}
@@ -351,10 +359,14 @@ export function Play() {
               >
                 <span className="verdict-banner-mark" aria-hidden="true">{current.correct ? '✓' : '✗'}</span>
                 {current.correct ? okLine : noLine}
+                <span className="verdict-banner-truth">{COPY.truthIs(claim.answer)}</span>
               </m.div>
             )}
-            {bannerOn && current && !current.correct && (current.confidence ?? 0) >= CONFIDENT && (
-              <p className="label sure-miss">{COPY.sureMissNote(current.confidence!)}</p>
+            {bannerOn && current && kind && (
+              <p className={`label call-kind ${kind}`}>
+                {COPY.callKind[kind](current.confidence!)}{' '}
+                <span className="call-pts num">{COPY.surePts(current.surePoints)}</span>
+              </p>
             )}
           </div>
 
@@ -385,7 +397,7 @@ export function Play() {
                   game.setGuess(v)
                 }}
                 onEnter={lock}
-                label={COPY.sliderQuestion}
+                label={question}
               />
               <button type="button" className={`btn lock-btn${moved ? ' armed' : ''}`} onClick={lock}>
                 {COPY.lock}
@@ -395,27 +407,23 @@ export function Play() {
 
           {phase === 'reveal' && current && (
             <div className="reveal-below">
-              <div className="badge-slot" aria-live="polite">
-                {showBadge && <Badge id={current.badge} animate={fresh} />}
-              </div>
-              <div className="source-slot">
-                {showSource && (
+              <div className="evidence-slot" aria-live="polite">
+                {showBadge && (
                   <m.div
-                    className="source-block"
+                    className="stack-tight"
                     initial={fresh ? { opacity: 0, y: 6 } : false}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: SOURCE_FADE }}
                   >
-                    <p className="label source-line">
-                      {COPY.source(claim.room.source, claim.room.fieldDates, claim.room.n)}
-                      {claim.room.note ? ` — ${claim.room.note}` : ''}
-                    </p>
-                    <p className="small truth-line">
-                      <a href={claim.truthSource.url} target="_blank" rel="noopener noreferrer">
-                        {claim.truthSource.label}
-                      </a>
-                      : {claim.truthSource.oneLine}
-                    </p>
+                    <Evidence claim={claim} />
+                    <Lesson claim={claim} />
+                  </m.div>
+                )}
+              </div>
+              <div className="source-slot">
+                {showSource && (
+                  <m.div initial={fresh ? { opacity: 0, y: 6 } : false} animate={{ opacity: 1, y: 0 }} transition={{ duration: SOURCE_FADE }}>
+                    <RoomContext claim={claim} guess={current.guess} badge={<Badge id={current.badge} animate={fresh} />} />
                   </m.div>
                 )}
               </div>

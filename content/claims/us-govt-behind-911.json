@@ -21,6 +21,10 @@
     "url": "https://www.9-11commission.gov/report/",
     "oneLine": "The bipartisan 9/11 Commission found the attacks were planned and carried out by al-Qaeda."
   },
+  "lesson": {
+    "pattern": "Missing evidence as proof",
+    "tip": "Conspiracy claims treat a lack of evidence as proof of a cover-up. Ask what evidence would change the believer’s mind."
+  },
   "category": "society",
   "difficulty": 1,
   "status": "verified"

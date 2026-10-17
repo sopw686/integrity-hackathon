@@ -21,6 +21,10 @@
     "url": "https://www.nasa.gov/earth/",
     "oneLine": "Spacecraft photography, circumnavigation and the physics of gravity all show the Earth is an oblate sphere."
   },
+  "lesson": {
+    "pattern": "A confident speaker",
+    "tip": "Confidence is not evidence. Ask whether the claim survives tests anyone can run, like ships disappearing hull-first over the horizon."
+  },
   "category": "science",
   "difficulty": 1,
   "status": "verified"

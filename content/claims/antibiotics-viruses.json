@@ -20,6 +20,10 @@
     "url": "https://www.cdc.gov/antibiotic-use/",
     "oneLine": "Antibiotics act on bacteria and do nothing against viruses such as colds and flu."
   },
+  "lesson": {
+    "pattern": "Half-remembered science",
+    "tip": "Antibiotics and antivirals get blurred together. When a claim hinges on a technical distinction, check a medical source like the CDC."
+  },
   "category": "science",
   "difficulty": 1,
   "status": "verified"

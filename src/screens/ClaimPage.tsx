@@ -6,6 +6,9 @@ import { useDotSize, useTitle, useToday } from '../lib/hooks'
 import { getDay as getRecord } from '../lib/storage'
 import { COPY } from '../tokens/copy'
 import { NotFound } from './NotFound'
+import { Evidence, Lesson, RoomContext } from '../components/RevealNotes'
+import { Badge } from '../components/Badge'
+import { badgeFor } from '../lib/scoring'
 
 /** Read-only reveal for deep links: the full grid already revealed, source and truth source, a button to play today. */
 export function ClaimPage() {
@@ -35,15 +38,11 @@ export function ClaimPage() {
         <div className="room-center">
           <RoomFrame split={claim.room} label={claim.room.label} mode="reveal" t={Infinity} guess={guess} verdict={verdict} dot={dot} answer={claim.answer} />
         </div>
-        <div className="source-block">
-          <p className="label source-line">
-            {COPY.source(claim.room.source, claim.room.fieldDates, claim.room.n)}
-            {claim.room.note ? ` — ${claim.room.note}` : ''}
-          </p>
-          {claim.room.questionWording && <p className="small muted">Asked as: “{claim.room.questionWording}”</p>}
-          <p className="small truth-line">
-            <a href={claim.truthSource.url} target="_blank" rel="noopener noreferrer">{claim.truthSource.label}</a>: {claim.truthSource.oneLine}
-          </p>
+        <div className="reveal-below">
+          <p className={`chip truth-chip ${claim.answer}`}>{COPY.truthIs(claim.answer)}</p>
+          <Evidence claim={claim} />
+          <Lesson claim={claim} />
+          <RoomContext claim={claim} guess={guess} badge={verdict ? <Badge id={badgeFor(claim, verdict)} compact /> : undefined} />
         </div>
       </section>
       <section className="section stack">

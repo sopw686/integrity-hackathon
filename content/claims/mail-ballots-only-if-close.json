@@ -1,0 +1,31 @@
+{
+  "id": "mail-ballots-only-if-close",
+  "text": "In California, mail ballots are only counted if the race is close.",
+  "shortTitle": "Mail ballots counted?",
+  "seenIn": "a group chat on election night",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 27,
+    "pctFalse": 52,
+    "pctUnsure": 21,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Vote by Mail",
+    "url": "https://www.sos.ca.gov/elections/voter-registration/vote-mail",
+    "oneLine": "All valid vote-by-mail ballots are counted in every California election, regardless of the outcome or how close any race is."
+  },
+  "lesson": {
+    "pattern": "Slow count, misread",
+    "tip": "Mail ballots are counted for days after polls close, so totals shift. Counted late isn’t uncounted. If results move overnight, check the county’s count schedule before calling it suspicious."
+  },
+  "category": "election",
+  "difficulty": 1,
+  "status": "verified"
+}

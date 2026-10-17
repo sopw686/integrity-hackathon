@@ -20,6 +20,10 @@
     "url": "https://nap.nationalacademies.org/catalog/13164/adverse-effects-of-vaccines-evidence-and-causality",
     "oneLine": "The National Academies’ evidence review and cohort studies of hundreds of thousands of children found no causal link between vaccines and autism."
   },
+  "lesson": {
+    "pattern": "Retracted study lives on",
+    "tip": "Dozens of studies covering millions of children found no link. One retracted paper doesn’t outweigh them."
+  },
   "category": "health",
   "difficulty": 1,
   "status": "verified"

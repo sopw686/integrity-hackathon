@@ -17,9 +17,13 @@
     "note": "47% definitely false. KFF also reports 14% who had both heard the claim and believe it; this grid uses the share of all adults who call it definitely or probably true."
   },
   "truthSource": {
-    "label": "CDC COVID Data Tracker",
-    "url": "https://covid.cdc.gov/covid-data-tracker/",
-    "oneLine": "CDC counts more than 1.1 million U.S. COVID-19 deaths, while deaths causally linked to the vaccines number in the single digits to low dozens."
+    "label": "CDC MMWR, COVID-19 surveillance after the public health emergency",
+    "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7219e1.htm",
+    "oneLine": "By May 2023, CDC had recorded more than 1.1 million U.S. COVID-19 deaths."
+  },
+  "lesson": {
+    "pattern": "Raw reports read as deaths",
+    "tip": "Anyone can file an adverse-event report, and they are not verified. A report filed after a vaccine is not proof the vaccine caused it."
   },
   "category": "health",
   "difficulty": 1,

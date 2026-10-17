@@ -20,6 +20,10 @@
     "url": "https://science.nasa.gov/universe/overview/",
     "oneLine": "Cosmic expansion and the microwave background record a hot, dense beginning about 13.8 billion years ago."
   },
+  "lesson": {
+    "pattern": "Plain words, true claim",
+    "tip": "“Big Bang” is a nickname. A claim in everyday words can be true even if an expert would phrase it more precisely."
+  },
   "category": "science",
   "difficulty": 3,
   "status": "verified"

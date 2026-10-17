@@ -68,6 +68,40 @@ trade is right; everything below is isolated enough to dial back.
 - **Bug fixed on the way:** arriving at /play from Home never focused the claim (the browser's focus
   fixup dropped it); focus now lands in a layout effect with a next-frame retry.
 
+## Hackathon pass: calibration, election content, evidence-first reveal (Oct 16)
+
+This pass aimed at the hackathon brief: election misinformation for 5C students, and overconfidence as the mechanism.
+
+- **Confidence is now scored**, which supersedes "Whether to score it" below. `surePoints` is a centred Brier score: 50% gives 0, 70% gives +3/−5, 90% gives +5/−11, and 100% gives +5/−15. The day **score** (0–100) is `10 × right + confidence points + read ÷ 4`. The 🎯 and 📡 dials stay. Decide:
+  - `SURE_K` (the weight, 10)
+  - the ÷4 read weight
+  - whether the share text should carry the score
+- **Results headline** is now a behavioral insight from `src/lib/insight.ts` (for example "Sure, but wrong", "Ahead of yourself", "Knew what you knew"). It replaces the old rank titles. It has up to two notes:
+  - followed or bucked the room's larger side
+  - over- or under-estimated how many people fall for false claims
+  - election-rule misses
+
+  Demo crowds never feed the notes.
+- **The reveal is now ordered by weight:**
+  1. The banner carries the truth ("It's false").
+  2. "Why it's false", with the source.
+  3. "What to notice": the claim's `lesson`.
+  4. "The room": the badge, plus lines that frame popularity as context, never evidence.
+
+  Poll details sit behind a disclosure, which replaces the long uppercase source line.
+- **Election content.** 16 verified election claims, checked against sos.ca.gov and lavote.gov pages on Oct 16, 2026. Two have real national rooms: Reuters/Ipsos on noncitizen voting, and Pew on all-mail states. The California rule claims use **demo crowds** (`room.kind: "illustrative"`), because no poll has measured them. Decide:
+  - the illustrative splits themselves
+  - whether to keep scoring the read on a demo crowd
+- **Days.**
+  - 2026-10-15 is the hand-picked demo round.
+  - 2026-10-16 is hand-picked too.
+  - 10-17 through 11-03 were composed with `--election 3 --window 5`.
+  - These were skipped as too easy for the demo: flat Earth, Sun orbit, microchips, hot core, and two of the evolution wordings.
+- **`seenIn`** is a scenario line above the claim ("Seen in a group chat on election night"). It frames the claim as something a student would actually meet. It is not a sourcing claim. Decide whether it reads as too staged.
+- **Watch:**
+  - A proposed voter-ID amendment (Prop 39) is on the Nov 3, 2026 ballot. If it passes, revisit `ca-photo-id` before any later election.
+  - Postmark timing: the SOS advises mailing early. `ca-mail-ballot-7-days` says so.
+
 ## The confidence step (added after the panel)
 
 After True/False the player picks how sure they are: 50 / 70 / 90 / 100. It is not scored. The

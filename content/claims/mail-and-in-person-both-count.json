@@ -1,0 +1,31 @@
+{
+  "id": "mail-and-in-person-both-count",
+  "text": "If you mail in your ballot and then also vote in person, both votes get counted.",
+  "shortTitle": "Voting twice",
+  "seenIn": "a viral “loophole” post",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 9,
+    "pctFalse": 78,
+    "pctUnsure": 13,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Voting at a Polling Place after Applying to Vote by Mail",
+    "url": "https://www.sos.ca.gov/elections/voting-resources/voting-california/if-you-applied",
+    "oneLine": "Only one ballot per voter counts. You trade in your mail ballot or vote provisionally, and the county checks that you didn’t vote more than once before counting it."
+  },
+  "lesson": {
+    "pattern": "Loophole that skips a step",
+    "tip": "“The system can’t catch it” claims leave out the check that does. Ask what happens between casting a ballot and counting it; official pages describe that step."
+  },
+  "category": "election",
+  "difficulty": 1,
+  "status": "verified"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "margin-of-error-lead",
+  "text": "In a poll with a ±3-point margin of error, a candidate leading by 4 points is clearly ahead.",
+  "shortTitle": "Margin of error",
+  "seenIn": "a poll graphic on TikTok",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 58,
+    "pctFalse": 24,
+    "pctUnsure": 18,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "Pew Research Center: understanding the margin of error",
+    "url": "https://www.pewresearch.org/short-reads/2016/09/08/understanding-the-margin-of-error-in-election-polls/",
+    "oneLine": "The margin of error on the gap between two candidates is about twice the reported margin, so ±3 becomes roughly ±6 on a lead. It also covers only sampling error."
+  },
+  "lesson": {
+    "pattern": "Number without its error",
+    "tip": "A lead smaller than about twice the margin of error isn’t a clear lead. When a poll graphic says someone is “ahead,” compare the gap to double the margin."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

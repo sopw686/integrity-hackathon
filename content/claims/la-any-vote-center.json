@@ -1,25 +1,31 @@
 {
   "id": "la-any-vote-center",
-  "text": "Any registered LA County voter can vote at any vote center in the county.",
+  "text": "In LA County, you can vote in person days before Election Day, at any vote center in the county.",
+  "shortTitle": "LA vote centers",
+  "seenIn": "a classmate who says you have one polling place",
   "answer": "true",
   "room": {
-    "kind": "campus",
-    "label": "5C students",
-    "pctTrue": 0,
-    "pctFalse": 0,
-    "pctUnsure": 0,
-    "source": "5C student survey (team)",
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 52,
+    "pctFalse": 18,
+    "pctUnsure": 30,
+    "source": "Demo crowd (illustrative)",
     "sourceUrl": "",
     "fieldDates": "",
     "n": 0,
-    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
   },
   "truthSource": {
-    "label": "Los Angeles County Registrar-Recorder/County Clerk",
-    "url": "https://www.lavote.gov/",
-    "oneLine": "Under the Voter's Choice Act, LA County voters are not tied to one polling place and can vote at any vote center in the county."
+    "label": "LA County Registrar-Recorder/County Clerk: Voting In-Person",
+    "url": "https://www.lavote.gov/home/voting-elections/voting-options/voting-in-person/about",
+    "oneLine": "For the Nov 3, 2026 election, LA County vote centers open Saturday, Oct 24, and any county voter can use any of them through Election Day."
+  },
+  "lesson": {
+    "pattern": "Assumed it works like back home",
+    "tip": "One assigned polling place on one Tuesday is how many places work, not how LA County works. For where and when, go to the county registrar (lavote.gov), not memory."
   },
   "category": "election",
   "difficulty": 1,
-  "status": "draft"
+  "status": "verified"
 }

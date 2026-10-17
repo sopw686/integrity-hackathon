@@ -1,0 +1,32 @@
+{
+  "id": "all-mail-presidential",
+  "text": "Some U.S. states have held a presidential election entirely by mail.",
+  "shortTitle": "All-mail elections",
+  "seenIn": "a cable segment calling mail voting “untested”",
+  "answer": "true",
+  "room": {
+    "kind": "national",
+    "label": "U.S. adults",
+    "pctTrue": 24,
+    "pctFalse": 34,
+    "pctUnsure": 42,
+    "source": "Pew Research Center, American Trends Panel Wave 57",
+    "sourceUrl": "https://www.pewresearch.org/wp-content/uploads/sites/20/2020/09/PP_2020.09.16_Election-News-Knowledge-Misinformation_TOPLINE.pdf",
+    "fieldDates": "Aug 31–Sep 7, 2020",
+    "n": 9220,
+    "questionWording": "As far as you know, have any U.S. states ever conducted voting in a presidential election entirely by mail?",
+    "note": "41% not sure and 1% no answer, shown together as unsure."
+  },
+  "truthSource": {
+    "label": "NCSL: States With All-Mail Elections",
+    "url": "https://www.ncsl.org/elections-and-campaigns/table-18-states-with-all-mail-elections",
+    "oneLine": "Oregon has held all-mail elections since 2000, Washington since 2012 and Colorado since 2014, presidential elections included."
+  },
+  "lesson": {
+    "pattern": "“Unprecedented” that isn’t",
+    "tip": "Calling something new and untested makes it sound risky. A quick history check (when did this start, where?) often shows decades of track record."
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "verified"
+}

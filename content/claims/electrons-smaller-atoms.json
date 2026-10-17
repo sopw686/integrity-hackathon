@@ -20,6 +20,10 @@
     "url": "https://physics.nist.gov/cuu/Constants/",
     "oneLine": "Electrons are constituents of atoms and far smaller than the atoms they orbit."
   },
+  "lesson": {
+    "pattern": "Jargon makes it feel hard",
+    "tip": "Technical words make easy claims feel risky. Electrons are parts of atoms, and a part is smaller than the whole."
+  },
   "category": "science",
   "difficulty": 2,
   "status": "verified"

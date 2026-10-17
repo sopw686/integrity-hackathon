@@ -30,6 +30,7 @@ function makeClaim(k: number) {
         questionWording: 'Synthetic wording.',
       },
       truthSource: { label: 'Example', url: 'https://example.org/truth', oneLine: 'One line.' },
+      lesson: { pattern: 'Synthetic pattern', tip: 'Check the source.' },
       category: SLOT_CATEGORIES[slot],
       difficulty: 2,
       status: 'verified',
@@ -173,6 +174,29 @@ describe('validateContent: failing cases', () => {
     const f = passingFixture()
     claim(f, 8)._note = 'x'
     expect(hasError(f, /synthetic-claim-8\.json: _note is not a known field/)).toBe(true)
+  })
+
+  it('a verified claim with no lesson', () => {
+    const f = passingFixture()
+    delete claim(f, 10).lesson
+    expect(hasError(f, /synthetic-claim-10\.json: lesson is missing/)).toBe(true)
+  })
+
+  it('a demo-crowd room that looks like a survey', () => {
+    const f = passingFixture()
+    Object.assign(claim(f, 11).room, { kind: 'illustrative', label: 'students (demo crowd)', source: 'Demo crowd (illustrative)', n: 400 })
+    const r = run(f)
+    expect(r.errors.some((e) => /synthetic-claim-11\.json: room\.n must be 0/.test(e))).toBe(true)
+    expect(r.errors.some((e) => /synthetic-claim-11\.json: room\.fieldDates and room\.sourceUrl must be empty/.test(e))).toBe(true)
+    expect(r.errors.some((e) => /synthetic-claim-11\.json: room\.note is required/.test(e))).toBe(true)
+  })
+
+  it('accepts an honestly labeled demo-crowd room', () => {
+    const f = passingFixture()
+    Object.assign(claim(f, 12).room, {
+      kind: 'illustrative', label: 'students (demo crowd)', source: 'Demo crowd (illustrative)', n: 0, fieldDates: '', sourceUrl: '', note: 'No poll yet.',
+    })
+    expect(run(f).errors).toEqual([])
   })
 
   it('a day date that is not a real calendar date', () => {

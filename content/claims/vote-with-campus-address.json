@@ -1,25 +1,31 @@
 {
   "id": "vote-with-campus-address",
-  "text": "Students can vote in Claremont using their campus address.",
+  "text": "College students in California can register to vote using their campus address.",
+  "shortTitle": "Campus address",
+  "seenIn": "advice overheard in a dining hall",
   "answer": "true",
   "room": {
-    "kind": "campus",
-    "label": "5C students",
-    "pctTrue": 0,
-    "pctFalse": 0,
-    "pctUnsure": 0,
-    "source": "5C student survey (team)",
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 57,
+    "pctFalse": 22,
+    "pctUnsure": 21,
+    "source": "Demo crowd (illustrative)",
     "sourceUrl": "",
     "fieldDates": "",
     "n": 0,
-    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
   },
   "truthSource": {
-    "label": "California Secretary of State: voter registration",
-    "url": "https://www.sos.ca.gov/elections/voter-registration",
-    "oneLine": "Students may register at the address where they live while at school, including a campus residence hall; confirm on the SOS student voting guidance."
+    "label": "California Secretary of State: College Students",
+    "url": "https://www.sos.ca.gov/elections/voting-resources/voting-california/students",
+    "oneLine": "Students may register at the address they use while at school or at their home address, but not both in the same election."
+  },
+  "lesson": {
+    "pattern": "Confident hallway advice",
+    "tip": "“You have to vote back home” is common advice, not the rule. When someone sounds sure about an election rule, ask where they read it, then check the Secretary of State’s student page."
   },
   "category": "election",
   "difficulty": 1,
-  "status": "draft"
+  "status": "verified"
 }

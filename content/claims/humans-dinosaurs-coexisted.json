@@ -21,6 +21,10 @@
     "url": "https://naturalhistory.si.edu/education/teaching-resources/paleontology/dinosaurs",
     "oneLine": "Non-avian dinosaurs died out about 66 million years ago; the earliest humans appeared about 300,000 years ago."
   },
+  "lesson": {
+    "pattern": "Fact from fiction",
+    "tip": "Movies put cavemen with dinosaurs. When a “fact” comes from fiction, check a museum timeline: more than 60 million years separate them."
+  },
   "category": "science",
   "difficulty": 2,
   "status": "verified"

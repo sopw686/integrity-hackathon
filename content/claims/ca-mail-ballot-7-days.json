@@ -1,25 +1,31 @@
 {
   "id": "ca-mail-ballot-7-days",
-  "text": "A mail ballot postmarked on Election Day counts in California if it arrives within 7 days.",
+  "text": "A California mail ballot postmarked on Election Day still counts if it arrives up to 7 days later.",
+  "shortTitle": "Mail ballot, 7 days",
+  "seenIn": "an Instagram story on Election Day",
   "answer": "true",
   "room": {
-    "kind": "campus",
-    "label": "5C students",
-    "pctTrue": 0,
-    "pctFalse": 0,
-    "pctUnsure": 0,
-    "source": "5C student survey (team)",
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 46,
+    "pctFalse": 30,
+    "pctUnsure": 24,
+    "source": "Demo crowd (illustrative)",
     "sourceUrl": "",
     "fieldDates": "",
     "n": 0,
-    "note": "HUMAN: campus set — fill from the 5C survey; confirm answer against truthSource."
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
   },
   "truthSource": {
-    "label": "California Elections Code §3020",
-    "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=ELEC&sectionNum=3020",
-    "oneLine": "A vote-by-mail ballot postmarked on or before Election Day counts if the elections official receives it no later than seven days after the election."
+    "label": "California Secretary of State: Vote by Mail",
+    "url": "https://www.sos.ca.gov/elections/voter-registration/vote-mail",
+    "oneLine": "Mailed ballots must be postmarked on or before Election Day and received no later than 7 days after it. Postmarks can lag, so mail early or use a drop box."
+  },
+  "lesson": {
+    "pattern": "National post, state rule",
+    "tip": "Many states require ballots to arrive by Election Day, so national posts often get California wrong in either direction. Deadlines are state law: check your own state’s election office."
   },
   "category": "election",
   "difficulty": 3,
-  "status": "draft"
+  "status": "verified"
 }

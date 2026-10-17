@@ -21,6 +21,10 @@
     "url": "https://pubs.usgs.gov/gip/dynamic/understanding.html",
     "oneLine": "Plate tectonics is measured directly today; continents move a few centimetres a year."
   },
+  "lesson": {
+    "pattern": "Too slow to see",
+    "tip": "Change you can’t see can still be measured: GPS tracks plates moving a few centimeters a year. “I’ve never noticed it” isn’t evidence."
+  },
   "category": "science",
   "difficulty": 1,
   "status": "verified"

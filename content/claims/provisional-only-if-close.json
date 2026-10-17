@@ -1,0 +1,31 @@
+{
+  "id": "provisional-only-if-close",
+  "text": "Provisional ballots are only counted when an election is close.",
+  "shortTitle": "Provisional ballots",
+  "seenIn": "a Reddit thread",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 36,
+    "pctFalse": 33,
+    "pctUnsure": 31,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Provisional Voting",
+    "url": "https://www.sos.ca.gov/elections/voting-resources/provisional-voting",
+    "oneLine": "A provisional ballot is counted once officials confirm you’re registered in that county and haven’t already voted, whatever the margin. You can look up whether yours counted."
+  },
+  "lesson": {
+    "pattern": "Misread name",
+    "tip": "“Provisional” means checked first, not counted only if needed. When a term sounds ominous, look up its official definition before passing on what it “means.”"
+  },
+  "category": "election",
+  "difficulty": 2,
+  "status": "verified"
+}

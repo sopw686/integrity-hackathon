@@ -20,6 +20,10 @@
     "url": "https://pubs.usgs.gov/gip/dynamic/inside.html",
     "oneLine": "The inner core is estimated at over 5,000 °C."
   },
+  "lesson": {
+    "pattern": "Not every claim is a trap",
+    "tip": "Doubting everything equally is not a skill. When a claim matches well-established science, it is fine to be sure."
+  },
   "category": "science",
   "difficulty": 1,
   "status": "verified"

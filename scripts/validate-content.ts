@@ -34,7 +34,10 @@ const NO_REPEAT_WARN_DAYS = 7 // less than 7 days apart: warning
 const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
 const CATEGORIES = ['election', 'campus', 'health', 'science', 'society', 'media'] as const
-const ROOM_KINDS = ['national', 'campus'] as const
+const ROOM_KINDS = ['national', 'campus', 'illustrative'] as const
+const MAX_PATTERN_LENGTH = 40
+const MAX_TIP_LENGTH = 240
+const MIN_CAMPUS_N = 100 // content/campus-survey.md: below 100 the room is too small to read
 const VERDICTS = ['true', 'false'] as const
 const STATUSES = ['verified', 'draft'] as const
 const DIFFICULTIES = [1, 2, 3] as const
@@ -68,9 +71,11 @@ const CLAIM_FIELDS: Record<string, FieldSpec> = {
   id: { type: 'string' },
   text: { type: 'string' },
   shortTitle: { type: 'string', optional: true },
+  seenIn: { type: 'string', optional: true },
   answer: { type: 'string' },
   room: { type: 'object' },
   truthSource: { type: 'object' },
+  lesson: { type: 'object' },
   category: { type: 'string' },
   difficulty: { type: 'number' },
   status: { type: 'string' },
@@ -92,6 +97,10 @@ const TRUTH_FIELDS: Record<string, FieldSpec> = {
   label: { type: 'string' },
   url: { type: 'string' },
   oneLine: { type: 'string' },
+}
+const LESSON_FIELDS: Record<string, FieldSpec> = {
+  pattern: { type: 'string' },
+  tip: { type: 'string' },
 }
 const DAY_FIELDS: Record<string, FieldSpec> = {
   date: { type: 'string' },
@@ -239,6 +248,9 @@ function validateClaim(
   checkShape(data, CLAIM_FIELDS, '', err, (m) => (m.startsWith('id ') || m.startsWith('status ') ? undefined : missing(m)))
   const room = isObj(data.room) ? data.room : null
   const truth = isObj(data.truthSource) ? data.truthSource : null
+  const lesson = isObj(data.lesson) ? data.lesson : null
+  if ('lesson' in data && !lesson) err('lesson should be an object { pattern, tip }')
+  if (lesson) checkShape(lesson, LESSON_FIELDS, 'lesson.', err, missing)
   if ('room' in data && !room) err('room should be an object')
   if ('truthSource' in data && !truth) err('truthSource should be an object')
   if (room) checkShape(room, ROOM_FIELDS, 'room.', err, missing)
@@ -251,7 +263,7 @@ function validateClaim(
   if ('difficulty' in data && !(DIFFICULTIES as readonly unknown[]).includes(data.difficulty))
     soft(`difficulty must be 1, 2 or 3, got ${JSON.stringify(data.difficulty)}`)
   if (room && 'kind' in room && !(ROOM_KINDS as readonly unknown[]).includes(room.kind))
-    soft(`room.kind must be "national" or "campus", got ${JSON.stringify(room.kind)}`)
+    soft(`room.kind must be "national", "campus" or "illustrative", got ${JSON.stringify(room.kind)}`)
   if ('shortTitle' in data && typeof data.shortTitle === 'string' && data.shortTitle.trim() === '' && !isDraft)
     err('shortTitle is present but empty (remove it or fill it)')
 
@@ -275,11 +287,20 @@ function validateClaim(
         if (Math.abs(sum - 100) > 1) err(`room.pctTrue + pctFalse + pctUnsure = ${sum}; must be 100 ± 1`)
       }
       const n = num(room.n)
-      if (Number.isFinite(n) && n <= 0) err(`room.n is ${n}; must be greater than 0`)
-      if (typeof room.fieldDates === 'string' && room.fieldDates.trim() === '') err('room.fieldDates is empty')
       if (typeof room.label === 'string' && room.label.trim() === '') err('room.label is empty')
       if (typeof room.source === 'string' && room.source.trim() === '') err('room.source is empty')
-      if ('sourceUrl' in room && !isHttpsUrl(room.sourceUrl)) err(`room.sourceUrl is not a valid https:// URL: ${JSON.stringify(room.sourceUrl)}`)
+      if (room.kind === 'illustrative') {
+        // A demo crowd is never data: it must say so, and must not carry survey trappings.
+        if (!/demo/i.test(str(room.label)) || !/demo/i.test(str(room.source))) err('room.label and room.source must both say "demo" for an illustrative room')
+        if (Number.isFinite(n) && n !== 0) err('room.n must be 0 for an illustrative room (it was not a survey)')
+        if (str(room.fieldDates).trim() !== '' || str(room.sourceUrl).trim() !== '') err('room.fieldDates and room.sourceUrl must be empty for an illustrative room')
+        if (str(room.note).trim() === '') err('room.note is required for an illustrative room: say why no poll exists and what replaces it')
+      } else {
+        if (Number.isFinite(n) && n <= 0) err(`room.n is ${n}; must be greater than 0`)
+        if (room.kind === 'campus' && Number.isFinite(n) && n > 0 && n < MIN_CAMPUS_N) err(`room.n is ${n}; campus rooms need at least ${MIN_CAMPUS_N} responses`)
+        if (typeof room.fieldDates === 'string' && room.fieldDates.trim() === '') err('room.fieldDates is empty')
+        if ('sourceUrl' in room && !isHttpsUrl(room.sourceUrl)) err(`room.sourceUrl is not a valid https:// URL: ${JSON.stringify(room.sourceUrl)}`)
+      }
 
       // Warning: old source without a caveat note.
       const years = (str(room.fieldDates).match(/\b(1[89]|20)\d{2}\b/g) ?? []).map(Number)
@@ -293,6 +314,14 @@ function validateClaim(
       if ('url' in truth && !isHttpsUrl(truth.url)) err(`truthSource.url is not a valid https:// URL: ${JSON.stringify(truth.url)}`)
       if (typeof truth.oneLine === 'string' && truth.oneLine.trim() === '') err('truthSource.oneLine is empty')
       if (typeof truth.label === 'string' && truth.label.trim() === '') err('truthSource.label is empty')
+    }
+    if (lesson) {
+      const pattern = str(lesson.pattern).trim()
+      const tip = str(lesson.tip).trim()
+      if (pattern === '') err('lesson.pattern is empty')
+      else if (pattern.length > MAX_PATTERN_LENGTH) err(`lesson.pattern is ${pattern.length} characters (max ${MAX_PATTERN_LENGTH})`)
+      if (tip === '') err('lesson.tip is empty')
+      else if (tip.length > MAX_TIP_LENGTH) err(`lesson.tip is ${tip.length} characters (max ${MAX_TIP_LENGTH})`)
     }
   }
 
@@ -490,7 +519,7 @@ export async function checkLinksOnline(claims: ContentFile[]): Promise<string[]>
     if (isTemplate(file) || !isObj(data) || data.status !== 'verified') continue
     const room = isObj(data.room) ? data.room : {}
     const truth = isObj(data.truthSource) ? data.truthSource : {}
-    if (isHttpsUrl(room.sourceUrl)) targets.push({ file, field: 'room.sourceUrl', url: str(room.sourceUrl) })
+    if (room.kind !== 'illustrative' && isHttpsUrl(room.sourceUrl)) targets.push({ file, field: 'room.sourceUrl', url: str(room.sourceUrl) })
     if (isHttpsUrl(truth.url)) targets.push({ file, field: 'truthSource.url', url: str(truth.url) })
   }
   const cache = new Map<string, Promise<string | null>>()

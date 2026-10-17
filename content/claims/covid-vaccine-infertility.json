@@ -17,9 +17,13 @@
     "note": "3% definitely true, 24% probably true; the false share is the published remainder. KFF offered definitely/probably true and probably/definitely false; the small remainder gave no answer."
   },
   "truthSource": {
-    "label": "CDC, COVID-19 vaccines and fertility",
-    "url": "https://www.cdc.gov/coronavirus/2019-ncov/vaccines/planning-for-pregnancy.html",
-    "oneLine": "CDC and prospective cohort studies find no association between COVID-19 vaccination and reduced fertility in either partner."
+    "label": "NIH, COVID-19 vaccination does not reduce chances of conception",
+    "url": "https://www.nih.gov/news-events/news-releases/covid-19-vaccination-does-not-reduce-chances-conception-study-suggests",
+    "oneLine": "An NIH-funded prospective cohort study of 2,000+ couples found no association between COVID-19 vaccination and reduced fertility in either partner."
+  },
+  "lesson": {
+    "pattern": "“Proven” without the proof",
+    "tip": "Watch the word “proven.” If it were, you could name the study. Check the CDC or a medical society, not a repost."
   },
   "category": "health",
   "difficulty": 2,
