@@ -1,0 +1,31 @@
+{
+  "id": "ca-17-primary-vote",
+  "text": "A Californian who is 17 on primary day but will turn 18 by the November general election can vote in that primary.",
+  "shortTitle": "Voting at 17",
+  "seenIn": "a high school senior’s question",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 45,
+    "pctFalse": 30,
+    "pctUnsure": 25,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Voter ID & Registration Requirements",
+    "url": "https://elections.cdn.sos.ca.gov/pdfs/voter-id-and-reg-requirements.pdf",
+    "oneLine": "To register and vote in California you must be 18 or older on Election Day; 16- and 17-year-olds can only pre-register."
+  },
+  "lesson": {
+    "pattern": "Proposed, not passed",
+    "tip": "Prop 18 (2020) would have allowed this, and other states have similar rules, so it sounds familiar. California voters rejected it, 56% to 44%. When a rule sounds familiar, check whether it actually passed in your state."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

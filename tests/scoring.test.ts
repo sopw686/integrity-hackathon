@@ -183,4 +183,13 @@ describe('day insight', () => {
     c.room = { ...c.room, kind: 'illustrative' }
     expect(dayInsight([c], [scoreClaim(c, 'false', 70, 70)]).notes).toEqual([])
   })
+
+  it('says how the fact-check was used, and stays quiet on days that never offered one', () => {
+    const cs = [{ ...base('false', 60, 30), id: 'a', shortTitle: 'photo-id' }, { ...base('true', 40, 50), id: 'b', shortTitle: 'mail-7' }]
+    const miss = [scoreClaim(cs[0], 'true', 40, 100), scoreClaim(cs[1], 'true', 50, 70)]
+    expect(dayInsight(cs, miss).check).toMatch(/fact-check went unused, and “photo-id”/)
+    expect(dayInsight(cs, miss, false).check).toBeUndefined()
+    const used = [scoreClaim(cs[0], 'false', 40, 90), { ...scoreClaim(cs[1], 'true', 50, 100), checked: true }]
+    expect(dayInsight(cs, used).check).toMatch(/spent your fact-check on “mail-7” and got it right/)
+  })
 })

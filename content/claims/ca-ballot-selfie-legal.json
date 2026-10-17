@@ -1,0 +1,31 @@
+{
+  "id": "ca-ballot-selfie-legal",
+  "text": "It’s legal in California to take a photo of your own marked ballot and post it on social media.",
+  "shortTitle": "Ballot selfies",
+  "seenIn": "an Instagram story on Election Day",
+  "answer": "true",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 33,
+    "pctFalse": 40,
+    "pctUnsure": 27,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: CC/ROV Memo #24021, Cameras at Polling Locations",
+    "url": "https://elections.cdn.sos.ca.gov/ccrov/2024/january/24021ra.pdf",
+    "oneLine": "Under Elections Code section 14291, a voter may photograph their own ballot (a “ballot selfie”) and share it on social media, though poll workers can still act if it causes a disruption."
+  },
+  "lesson": {
+    "pattern": "Another state’s rule",
+    "tip": "Ballot-selfie laws differ by state and some ban them, so warnings from elsewhere get reposted here. California allows sharing your own ballot, within limits like not disrupting other voters. Check your own state’s election office."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

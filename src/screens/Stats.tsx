@@ -6,6 +6,7 @@ import { currentStreak, lifetime, storageAvailable } from '../lib/storage'
 import { COPY } from '../tokens/copy'
 import { lifetimeCalibration } from '../lib/calibration'
 import { SureSummary } from '../components/SureChart'
+import { secondLookSummary } from '../lib/secondLook'
 
 function monthGrid(year: number, month: number, played: Set<string>, today: string) {
   const first = new Date(Date.UTC(year, month, 1))
@@ -27,6 +28,7 @@ export function Stats() {
   const life = lifetime()
   const cal = lifetimeCalibration()
   const streak = currentStreak(today)
+  const looks = secondLookSummary()
   const played = new Set(life.playedDates)
   const [y, m] = today.split('-').map(Number)
   const months = [monthGrid(y, m - 1, played, today)]
@@ -59,6 +61,12 @@ export function Stats() {
           <section className="section">
             {cal ? <SureSummary cal={cal} chart /> : <p className="small muted">{COPY.sureStatsEmpty}</p>}
           </section>
+          {looks.fixed + looks.open > 0 && (
+            <section className="section">
+              <p className="label">🔁 {COPY.secondLook.statsHead}</p>
+              <p className="small">{COPY.secondLook.statsLine(looks.fixed, looks.open)}</p>
+            </section>
+          )}
           <section className="section">
             <div className="calendars">
               {months.map((mo) => (

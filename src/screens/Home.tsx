@@ -14,6 +14,7 @@ import { currentStreak, getDay as getRecord, hasSeenHowTo, markHowToSeen, storag
 import { shareResults, type ShareOutcome } from '../lib/share'
 import { COPY } from '../tokens/copy'
 import { track } from '../lib/track'
+import { dueSecondLooks } from '../lib/secondLook'
 
 function NextIn() {
   const [ms, setMs] = useState(() => msUntilNextPuzzle())
@@ -55,6 +56,7 @@ export function Home() {
   const yesterdayKey = addDays(today, -1)
   const yesterday = getDay(yesterdayKey)
   const yesterdayRecord = getRecord(yesterdayKey)
+  const looks = dueSecondLooks(today)
 
   // First visit: open How to play once. Never when storage is off (it would open every time).
   useEffect(() => {
@@ -141,6 +143,13 @@ export function Home() {
           </>
         )}
       </section>
+      {looks.length > 0 && (
+        <section className="section second-look-card">
+          <p className="label second-look-head">🔁 {COPY.secondLook.title}</p>
+          <p className="serif second-look-line">{COPY.secondLook.homeLine(looks.length)}</p>
+          <Link to="/second-look" className="btn secondary">{COPY.secondLook.start}</Link>
+        </section>
+      )}
       {yesterday && (
         <section className="section yesterday">
           <div className="yesterday-head">

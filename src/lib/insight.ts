@@ -2,7 +2,8 @@ import { calibration, CONFIDENT } from './scoring'
 import type { Claim, ClaimResult } from './types'
 import { COPY } from '../tokens/copy'
 
-export type Insight = { key: string; title: string; line: string; notes: string[] }
+/** check: one line about the day's fact-check, shown on its own under the notes. */
+export type Insight = { key: string; title: string; line: string; notes: string[]; check?: string }
 
 /** Results-row title, used by the insight lines too. */
 export function shortTitle(c: Claim): string {
@@ -20,7 +21,7 @@ const MISREAD_THRESHOLD = 12
  * crowd (social proof, misperceived norms) or the election category.
  * Demo-crowd rooms are left out of every crowd note: they are not data about real people.
  */
-export function dayInsight(claims: Claim[], results: ClaimResult[]): Insight {
+export function dayInsight(claims: Claim[], results: ClaimResult[], checkTracked = true): Insight {
   const I = COPY.insight
   const rows = results.map((r, i) => ({ r, c: claims[i] })).filter((x) => x.c)
   const right = rows.filter((x) => x.r.correct).length
@@ -42,6 +43,7 @@ export function dayInsight(claims: Claim[], results: ClaimResult[]): Insight {
   }
 
   const notes: string[] = []
+
   const real = rows.filter((x) => x.c.room.kind !== 'illustrative')
 
   // Social proof: you went with a room whose larger side was wrong, or against it and were right.
@@ -68,5 +70,12 @@ export function dayInsight(claims: Claim[], results: ClaimResult[]): Insight {
     else if (missed === 0 && right < rows.length) notes.push(I.electionStrong(election.length))
   }
 
-  return { ...head, notes: notes.slice(0, 2) }
+  // The fact-check: spent where it counted, or left unused on a call that went wrong while sure.
+  const checkedRow = rows.find((x) => x.r.checked)
+  const missUnchecked = rows.find((x) => !x.r.correct && !x.r.checked && (x.r.confidence ?? 0) >= CONFIDENT)
+  const check = checkedRow
+    ? checkedRow.r.correct ? I.checkedRight(shortTitle(checkedRow.c)) : I.checkedWrong(shortTitle(checkedRow.c))
+    : missUnchecked && checkTracked ? I.checkUnused(shortTitle(missUnchecked.c)) : undefined
+
+  return { ...head, notes: notes.slice(0, 2), ...(check ? { check } : {}) }
 }

@@ -1,0 +1,31 @@
+{
+  "id": "overvote-voids-ballot",
+  "text": "If you mark too many candidates in one race on a California ballot, your entire ballot gets thrown out.",
+  "shortTitle": "Too many marks",
+  "seenIn": "a TikTok about “spoiled ballots”",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 51,
+    "pctFalse": 31,
+    "pctUnsure": 18,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Code of Regulations, Title 2, § 20182 (Secretary of State: Ballot Counting)",
+    "url": "https://www.sos.ca.gov/administration/regulations/current-regulations/elections/ballot-counting",
+    "oneLine": "If a contest is marked with more choices than allowed, the vote isn’t counted for that contest, but it is counted in every other contest with no overvote where the voter’s choice is clear."
+  },
+  "lesson": {
+    "pattern": "One slip, total loss",
+    "tip": "An overvote cancels only that one race; every other race you marked clearly still counts. “One mistake voids everything” claims scare people off voting. If you catch it before casting, ask for a new ballot."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

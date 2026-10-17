@@ -1,0 +1,31 @@
+{
+  "id": "paid-time-off-to-vote",
+  "text": "In California, if your work hours leave you no time to vote in a statewide election, you can take up to 2 hours off to vote without losing pay.",
+  "shortTitle": "Paid time to vote",
+  "seenIn": "a coworker at your campus job",
+  "answer": "true",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 34,
+    "pctFalse": 38,
+    "pctUnsure": 28,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Time Off to Vote notice",
+    "url": "https://elections.cdn.sos.ca.gov/pdfs/tov-english.pdf",
+    "oneLine": "If you don’t have enough time outside working hours to vote in a statewide election, California law lets you take up to two hours off to vote without losing pay. Tell your employer two working days ahead."
+  },
+  "lesson": {
+    "pattern": "Too generous to be real",
+    "tip": "Real worker protections can sound made up. This one has conditions: no time to vote outside work, notice two working days ahead, and time off at the start or end of a shift. Look for the notice employers must post."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

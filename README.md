@@ -69,6 +69,21 @@ Players should leave thinking *"the game measures whether I know when I might be
   - "Election rules got you 2 of 4 times"
 
   Then it shows accuracy next to felt confidence, the calibration gap, and the four call types.
+- **One fact-check a day.** Before calling a claim, the player can spend the day's only fact-check
+  to open the authority that settles it (the Secretary of State, the county registrar). It shows
+  where to look, never the answer. This is lateral reading, the habit that separates professional
+  fact-checkers from students (Wineburg & McGrew 2019; Breakstone et al. 2021; Brodsky et al. 2021).
+  Because there's only one, spending it is a judgment about where you're least sure. Results say
+  whether it was used well, or left unused on a confident miss.
+- **Second Look.** Every call that was wrong at 90%+ comes back on `/second-look` 2 days later, then
+  7 days after a right answer, until it's right twice; a miss starts the spacing over. Confident
+  errors are the ones feedback fixes best (hypercorrection, Butterfield & Metcalfe 2001) but also the
+  ones that return after a delay (Butler et al. 2011), and inoculation effects fade without retesting
+  (Maertens et al. 2021, 2025). `/second-look?demo` plays two sample retests without touching storage.
+- **Hard claims.** 19 claims are difficulty 3: surprising truths (ballot selfies are legal, counties
+  open mail ballots 29 days early) and near-misses of real rules (17-year-olds can't vote in the
+  primary; Prop 18 failed). Every day from Oct 17 has at least two, in easy-to-hard order, and the last
+  claim is tagged "Last one, and it's a hard one."
 - **Stats** track calibration across days. One row per confidence level shows how often you were
   right when you said 70%, 90% and so on.
 
@@ -186,7 +201,7 @@ npm run dev          # http://127.0.0.1:5173
 npm run build        # runs the content validator first (prebuild), then vite build → dist/
 npm run preview      # serve dist/ on :4173
 npm run validate     # content rules (see content/AUTHORING.md); --online also checks every URL
-npm run compose-days # fill day files: --from --to [--window 5] [--election 3] [--skip ids] [--force]
+npm run compose-days # fill day files: --from --to [--window 5] [--election 3] [--hard 2] [--ramp] [--skip ids] [--force]
 npm run test         # unit tests: geometry, scoring + calibration + insight, storage, validator
 npm run screenshots  # Playwright: every screen at 390×844 and 1280×800 → design/screens/
 npm run check:flows  # Playwright: keyboard-only loop, storage disabled, reduced motion, axe scans
@@ -209,6 +224,7 @@ backend, no accounts and no model at runtime.
 | `/stats` | Lifetime accuracy, calibration by confidence level, streak, calendar. |
 | `/archive` | Past puzzles, playable, labeled "archive — doesn't count". |
 | `/c/:id` | Read-only reveal for one claim (deep link). |
+| `/second-look` | Spaced retests of confident misses. `?demo` plays two sample retests. |
 
 ## Content
 
@@ -226,7 +242,7 @@ backend, no accounts and no model at runtime.
 - `content/campus-survey.md` explains how to run the 5C room survey.
 - `scripts/validate-content.ts` fails the build on any content-rule violation.
 
-**Content status:** 53 verified claims (16 election), 27 drafts. Drafts carry a `VERIFY` or
+**Content status:** 65 verified claims (30 election, 19 hard), 27 drafts. Drafts carry a `VERIFY` or
 `HUMAN:` note saying what still needs checking. `design/REVIEW.md` lists open decisions.
 
 ## Design

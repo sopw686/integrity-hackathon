@@ -1,0 +1,31 @@
+{
+  "id": "youth-turnout-2024-up",
+  "text": "Turnout among Americans aged 18–29 was higher in the 2024 presidential election than in 2020.",
+  "shortTitle": "Youth turnout 2024",
+  "seenIn": "a TikTok about the youth vote",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 46,
+    "pctFalse": 28,
+    "pctUnsure": 26,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "CIRCLE (Tufts University): New Data: Nearly Half of Youth Voted in 2024",
+    "url": "https://circle.tufts.edu/latest-research/new-data-nearly-half-youth-voted-2024",
+    "oneLine": "CIRCLE’s voter-file analysis estimates that 47% of 18- to 29-year-olds voted in 2024, close to but below the 50% it estimated for 2020."
+  },
+  "lesson": {
+    "pattern": "Loud isn’t the same as large",
+    "tip": "Youth energy online doesn’t equal turnout. CIRCLE puts 2024 at 47%, below 2020’s 50%, and its early 42% estimate was later revised up. Check which estimate a youth-vote stat uses, and when it was made."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

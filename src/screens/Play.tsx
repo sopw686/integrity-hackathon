@@ -7,6 +7,7 @@ import { RoomFrame } from '../components/RoomFrame'
 import { RangeSlider } from '../components/RangeSlider'
 import { Badge } from '../components/Badge'
 import { Evidence, Lesson, RoomContext } from '../components/RevealNotes'
+import { FactCheck } from '../components/FactCheck'
 import { useGame } from '../lib/game'
 import { isValidDateKey, puzzleNumber } from '../lib/day'
 import { useCalm, useCountUp, useCues, useDotSize, useReduced, useRevealClock, useTitle, useToday } from '../lib/hooks'
@@ -102,7 +103,7 @@ function Words({ text, calm }: { text: string; calm: boolean }) {
   )
 }
 
-function VerdictTile({ v, onPick }: { v: Verdict; onPick: (v: Verdict) => void }) {
+export function VerdictTile({ v, onPick }: { v: Verdict; onPick: (v: Verdict) => void }) {
   return (
     <button type="button" className={`tile tile-${v}`} onClick={() => onPick(v)}>
       <svg className="tile-icon" width={22} height={22} viewBox="0 0 22 22" aria-hidden="true">
@@ -115,7 +116,7 @@ function VerdictTile({ v, onPick }: { v: Verdict; onPick: (v: Verdict) => void }
 }
 
 /** "How sure are you?" Four push-blocks, 1–4 on the keyboard. */
-function SureRow({ onPick }: { onPick: (c: number) => void }) {
+export function SureRow({ onPick }: { onPick: (c: number) => void }) {
   return (
     <div className="sure-row">
       {CONFIDENCE_LEVELS.map((c, i) => (
@@ -185,6 +186,11 @@ export function Play() {
     sfx.verdict(v)
     game.setVerdict(v)
   }
+  const check = () => {
+    if (phase !== 'verdict' || counting) return
+    sfx.tap()
+    game.check()
+  }
   const sure = (c: number) => {
     if (phase !== 'sure') return
     sfx.tap()
@@ -209,6 +215,7 @@ export function Play() {
       if (phase === 'verdict') {
         if (e.key === 't' || e.key === 'T') pick('true')
         if (e.key === 'f' || e.key === 'F') pick('false')
+        if (e.key === 'c' || e.key === 'C') check()
       } else {
         const n = Number(e.key)
         if (n >= 1 && n <= CONFIDENCE_LEVELS.length) sure(CONFIDENCE_LEVELS[n - 1])
@@ -296,7 +303,10 @@ export function Play() {
     <main className="page play">
       <Header right={archive ? COPY.archiveNote : `No. ${puzzleNumber(date)}`} />
       <div className="meta">
-        <span className="label">{claim.category}</span>
+        <span className="label">
+          {claim.category}
+          {claim.difficulty === 3 && <span className="hard-chip">{index === total - 1 ? COPY.finalHard : COPY.hard}</span>}
+        </span>
         <span className="meta-right">
           <Pips total={total} results={results} index={index} live={bannerOn ? current : undefined} />
           <span className="label num">{COPY.claimOf(index + 1, total)}</span>
@@ -311,10 +321,15 @@ export function Play() {
             {counting ? claim.text : <Words text={claim.text} calm={calm} />}
           </h1>
           {phase === 'verdict' ? (
-            <div className="row verdict-row">
-              <VerdictTile v="true" onPick={pick} />
-              <VerdictTile v="false" onPick={pick} />
-            </div>
+            <>
+              <div className="row verdict-row">
+                <VerdictTile v="true" onPick={pick} />
+                <VerdictTile v="false" onPick={pick} />
+              </div>
+              <div className="factcheck-slot">
+                <FactCheck claim={claim} checked={game.checked} checksLeft={game.checksLeft} onCheck={check} canCheck={!counting} />
+              </div>
+            </>
           ) : (
             verdict && (
               <div className="sure">
@@ -323,6 +338,7 @@ export function Play() {
                   <p className="label sure-question" ref={sureRef} tabIndex={-1}>{COPY.sureQuestion}</p>
                 </div>
                 <SureRow onPick={sure} />
+                {game.checked && <FactCheck claim={claim} checked checksLeft={0} onCheck={check} canCheck={false} focusOnOpen={false} />}
               </div>
             )
           )}
@@ -335,6 +351,7 @@ export function Play() {
           <div className="locked-row">
             <span className={`chip you-said ${verdict}`}>{COPY.youSaid(verdict)}</span>
             {confidence !== undefined && <span className="chip sure-chip num">{COPY.sureChip(confidence)}</span>}
+            {game.checked && <span className="chip checked-chip">{COPY.factCheck.chip}</span>}
             {phase === 'read' && <span className="label question">{question}</span>}
             {pointsOn && current && (
               <m.span

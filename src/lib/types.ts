@@ -60,6 +60,7 @@ export type ClaimResult = {
   error: number
   badge: BadgeId
   confidence?: number      // how sure the player said they were (50–100); absent on days played before this step existed
+  checked?: boolean        // the player spent the day's fact-check on this claim before calling it
 }
 
 /** accuracy: calls right (0–5). read: crowd read (0–100). sure: confidence points (−75…+25).
@@ -72,6 +73,7 @@ export type DayRecord = {
   scores: DayScores
   badges: BadgeId[]
   confidence?: number[]    // per claim, how sure the player said they were; absent on older records
+  checked?: number[]       // indexes of claims the player fact-checked before calling (at most CHECKS_PER_DAY)
   completedAt?: string     // ISO; present once all five are locked
   archive?: boolean        // played from the archive; excluded from streak and stats
 }

@@ -475,3 +475,45 @@ h1.claim-pinned, h1.claim-text { font-weight: 400; margin: 0; }
 .howto-points td:last-child { font-weight: 700; }
 .seen-in { margin: 0 0 8px; padding-left: 8px; border-left: 3px solid var(--you); color: var(--muted); text-transform: none; letter-spacing: 0.01em; font-size: 14px; }
 .results-body .call-kind { align-self: flex-start; }
+
+/* ---- fact-check lifeline: one a day, points to the authority ---- */
+.factcheck-slot { margin-top: 18px; min-height: 44px; display: flex; justify-content: center; }
+.factcheck-btn {
+  position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 40px 8px 14px;
+  border: 1.5px dashed var(--ink); border-radius: 999px; background: transparent; color: var(--ink);
+  font-family: var(--font-cond); font-size: var(--fs-label); font-weight: 600; letter-spacing: var(--ls-label); text-transform: uppercase;
+  transition: background-color 120ms ease, transform 90ms ease;
+}
+.factcheck-btn:hover { background: var(--pop-soft); }
+.factcheck-btn:active { transform: translateY(2px); }
+.factcheck-left { color: var(--muted); font-weight: 500; }
+.factcheck-btn .factcheck-key { top: 50%; right: 12px; transform: translateY(-50%); }
+.factcheck-used { margin: 0; text-align: center; }
+.factcheck-card {
+  width: 100%; display: flex; flex-direction: column; gap: 4px; padding: 12px 14px;
+  border: 2px solid var(--ink); border-radius: 8px; background: var(--paper); box-shadow: 0 4px 0 var(--ink);
+  animation: tile-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+.sure .factcheck-card { box-shadow: none; border-width: 1.5px; animation: none; }
+.factcheck-head { margin: 0; color: var(--ink); font-weight: 600; }
+.factcheck-line, .factcheck-then { margin: 0; }
+.factcheck-link { display: inline-flex; flex-direction: column; align-self: flex-start; gap: 1px; color: var(--ink); text-decoration: none; min-height: 44px; justify-content: center; }
+.factcheck-link:hover .evidence-org { text-decoration-thickness: 2px; }
+.checked-chip { border-color: var(--ink); border-style: dashed; }
+.hard-chip {
+  display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 3px;
+  background: var(--ink); color: var(--paper); font-weight: 600;
+}
+@media (hover: none) { .factcheck-btn { padding-right: 14px; } }
+@media (prefers-reduced-motion: reduce) { .factcheck-card { animation: none; } }
+
+/* ---- Second Look: spaced retests of confident misses ---- */
+.second-look-card { display: flex; flex-direction: column; gap: 10px; border-top: 2px solid var(--ink); }
+.second-look-head, .second-look-line { margin: 0; }
+.second-look-line { font-size: 19px; line-height: 1.35; }
+.second-look-note { margin: 10px 0 0; padding: 6px 10px; border-left: 4px solid var(--ink); background: var(--pop-soft); }
+.second-look-reveal { margin-top: 20px; display: flex; flex-direction: column; gap: 16px; }
+.then-now { display: flex; flex-direction: column; gap: 2px; text-align: center; }
+.then-now p { margin: 0; }
+.strong { font-weight: 600; color: var(--ink); }
+.factcheck-note { margin: 10px 0 0; padding: 6px 10px; border-left: 4px dashed var(--ink); }

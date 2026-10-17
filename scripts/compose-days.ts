@@ -4,6 +4,8 @@
  *   npx tsx scripts/compose-days.ts --from 2026-10-04 --to 2026-10-29 [--window 7] [--seed 12] [--restarts 400] [--force]
  *     [--election N]   at least N election claims per day (the Claremont deployment uses 3)
  *     [--skip a,b,c]   leave these claims out of the pool (e.g. ones too easy for the demo)
+ *     [--hard N]       at least N difficulty-3 claims per day
+ *     [--ramp]         play order easy → hard, so each day ends on its hardest claim
  *
  * Rules enforced (same as validate-content.ts): five distinct claims; at most one election claim
  * naming a party or candidate; at least one true answer; at least one claim where the room majority
@@ -15,7 +17,7 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 
-type Claim = { id: string; answer: 'true' | 'false'; category: string; status: string; text: string; room: { pctTrue: number; pctFalse: number } }
+type Claim = { id: string; answer: 'true' | 'false'; category: string; status: string; text: string; difficulty: number; room: { pctTrue: number; pctFalse: number } }
 type Day = { date: string; claims: string[] }
 
 const args = process.argv.slice(2)
@@ -31,6 +33,8 @@ const WINDOW = Number(opt('window', '7'))
 const FORCE = args.includes('--force')
 const MIN_ELECTION = Number(opt('election', '0'))
 const SKIP = new Set(opt('skip', '').split(',').filter(Boolean))
+const MIN_HARD = Number(opt('hard', '0'))
+const RAMP = args.includes('--ramp')
 let seed = Number(opt('seed', '12'))
 if (!FROM || !TO) {
   console.error('usage: compose-days --from YYYY-MM-DD --to YYYY-MM-DD [--window N] [--seed N] [--force]')
@@ -86,6 +90,7 @@ function validDay(set: Claim[]): string | null {
   if (!set.some(majorityWrong)) return 'no majority-wrong claim'
   if (new Set(set.map((c) => c.category)).size === 1) return 'all one category'
   if (set.filter((c) => c.category === 'election').length < MIN_ELECTION) return `fewer than ${MIN_ELECTION} election claims`
+  if (set.filter((c) => c.difficulty === 3).length < MIN_HARD) return `fewer than ${MIN_HARD} hard claims`
   return null
 }
 
@@ -122,6 +127,12 @@ function attempt(): Plan {
         if (partyElection(c) && pick.some(partyElection)) continue
         add(c)
       }
+      for (const c of shuffle(pool.filter((c) => c.difficulty === 3))) {
+        if (pick.filter((x) => x.difficulty === 3).length >= MIN_HARD) break
+        if (partyElection(c) && pick.some(partyElection)) continue
+        if (c.category === 'election' && pick.filter((x) => x.category === 'election').length >= Math.max(MIN_ELECTION, 1) + 1) continue
+        add(c)
+      }
       if (!pick.some((c) => c.answer === 'true')) add(trues.find((c) => !pick.includes(c)))
       if (!pick.some(majorityWrong)) add(wrongs.find((c) => !pick.includes(c)))
       for (const c of rest) {
@@ -131,7 +142,7 @@ function attempt(): Plan {
         add(c)
       }
       const err = validDay(pick)
-      if (!err) best = shuffle(pick)
+      if (!err) best = RAMP ? shuffle(pick).sort((a, b) => a.difficulty - b.difficulty) : shuffle(pick)
       else why = err
     }
     if (!best) {

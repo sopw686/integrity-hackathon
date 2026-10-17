@@ -1,0 +1,31 @@
+{
+  "id": "drop-ballot-any-county",
+  "text": "You can drop off your completed California mail ballot at any polling place in the state, even outside your home county.",
+  "shortTitle": "Drop off anywhere",
+  "seenIn": "dorm-floor advice",
+  "answer": "true",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 27,
+    "pctFalse": 46,
+    "pctUnsure": 27,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Voter Bill of Rights",
+    "url": "https://www.sos.ca.gov/elections/voter-bill-rights",
+    "oneLine": "California’s Voter Bill of Rights includes the right to drop off your completed vote-by-mail ballot at any polling place in California."
+  },
+  "lesson": {
+    "pattern": "Drop box vs. polling place",
+    "tip": "The Secretary of State points you to a drop box in your own county, which is where the “county only” idea comes from. Polling places are different: any one in California takes your ballot. Check which kind of site a rule is about."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

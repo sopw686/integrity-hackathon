@@ -1,0 +1,31 @@
+{
+  "id": "mail-ballots-opened-early",
+  "text": "California election offices can start opening and processing mail ballots up to 29 days before Election Day.",
+  "shortTitle": "Early ballot processing",
+  "seenIn": "a viral thread about “early counting”",
+  "answer": "true",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 30,
+    "pctFalse": 45,
+    "pctUnsure": 25,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Vote Counting Process",
+    "url": "https://www.sos.ca.gov/elections/upcoming-elections/vote-counting-process",
+    "oneLine": "County elections officials may begin opening and processing mail ballot envelopes up to 29 days before Election Day, but those results can’t be accessed or shared until all polls close."
+  },
+  "lesson": {
+    "pattern": "Processing isn’t reporting",
+    "tip": "Opening envelopes and checking signatures early is legal and speeds up the count; releasing any results before polls close is not. When a post cries “they’re counting early,” ask whether anything was actually released."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

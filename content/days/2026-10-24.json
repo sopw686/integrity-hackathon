@@ -1,10 +1,10 @@
 {
   "date": "2026-10-24",
   "claims": [
-    "mail-ballots-only-if-close",
+    "mail-and-in-person-both-count",
+    "covid-vaccine-infertility",
     "ca-parole-can-vote",
     "universe-huge-explosion",
-    "friend-return-ballot",
-    "covid-vaccine-infertility"
+    "election-night-call-official"
   ]
 }

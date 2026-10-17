@@ -1,0 +1,31 @@
+{
+  "id": "election-night-call-official",
+  "text": "Once news outlets call a California race on election night, that result is the official, final count.",
+  "shortTitle": "Election-night calls",
+  "seenIn": "a group chat on election night",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 38,
+    "pctFalse": 41,
+    "pctUnsure": 21,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Vote Counting Process",
+    "url": "https://www.sos.ca.gov/elections/upcoming-elections/vote-counting-process",
+    "oneLine": "Election-night calls and concessions rest on semi-official results, not final ones. Counties have 30 days to finish the official canvass, and the Secretary of State certifies results 38 days after the election."
+  },
+  "lesson": {
+    "pattern": "A call isn’t a count",
+    "tip": "Media calls are projections from partial, semi-official numbers. California counties keep counting for weeks, and totals are expected to move. Results are final only after counties certify and the Secretary of State compiles them."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

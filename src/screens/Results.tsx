@@ -17,6 +17,7 @@ import { currentStreak, getDay as getRecord } from '../lib/storage'
 import { shareResults, type ShareOutcome } from '../lib/share'
 import { track } from '../lib/track'
 import { COPY } from '../tokens/copy'
+import { queuedFrom } from '../lib/secondLook'
 
 export function Results() {
   const today = useToday()
@@ -58,11 +59,17 @@ export function Results() {
   if (!day || !record || !complete) return null
 
   const claims = dayClaims(day)
-  const results = claims.map((c, i) => scoreClaim(c, record.answers[i] ?? 'false', record.guesses[i] ?? 0, record.confidence?.[i]))
+  const results = claims.map((c, i) => {
+    const r = scoreClaim(c, record.answers[i] ?? 'false', record.guesses[i] ?? 0, record.confidence?.[i])
+    return record.checked?.includes(i) ? { ...r, checked: true } : r
+  })
+  const queued = archive ? [] : queuedFrom(date)
+  const queuedTitle = queued.length === 1 ? claims.find((c) => c.id === queued[0].claimId) : undefined
   const cal = calibration(results.filter((r) => r.confidence !== undefined).map((r) => ({ confidence: r.confidence!, correct: r.correct })))
   const scores = withTotals(record.scores, results)
   const streak = currentStreak(today)
-  const insight = dayInsight(claims, results)
+  // Days played before the fact-check existed have no `checked` list; don't scold those for not using it.
+  const insight = dayInsight(claims, results, record.checked !== undefined)
 
   // "The one that got you": a wrong verdict with the largest read error; failing that, the largest error.
   const wrong = results.filter((r) => !r.correct)
@@ -120,6 +127,12 @@ export function Results() {
             ))}
           </ul>
         )}
+        {insight.check && <p className="small factcheck-note">🔎 {insight.check}</p>}
+        {queued.length > 0 && (
+          <p className="small second-look-note">
+            🔁 {queuedTitle ? COPY.secondLook.queued(shortTitle(queuedTitle)) : COPY.secondLook.queuedMany(queued.length)}
+          </p>
+        )}
         <div className="score-line">
           <span className="label">⭐ {COPY.score}</span>
           <span className="score-total num">{scores.total}</span>
@@ -155,6 +168,7 @@ export function Results() {
                   {r.confidence !== undefined ? `${COPY.sureChip(r.confidence)} (${COPY.surePts(r.surePoints)}) · ` : ''}
                   {COPY.youVsRoom(r.guess, c.room.pctTrue)}
                   {c.room.kind === 'illustrative' ? ` · ${COPY.demoCrowdShort.toLowerCase()}` : ''}
+                  {r.checked ? ` · 🔎 ${COPY.factCheck.resultsTag}` : ''}
                 </span>
                 {callKind(r.confidence, r.correct) === 'confident-miss' && <span className="label call-kind confident-miss">{COPY.callKindShort['confident-miss']}</span>}
               </span>

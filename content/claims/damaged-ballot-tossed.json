@@ -1,0 +1,31 @@
+{
+  "id": "damaged-ballot-tossed",
+  "text": "In California, a ballot that’s torn or too damaged for the scanner to read gets thrown out.",
+  "shortTitle": "Damaged ballots",
+  "seenIn": "a reply under an election video",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 48,
+    "pctFalse": 30,
+    "pctUnsure": 22,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Vote Counting Process",
+    "url": "https://www.sos.ca.gov/elections/upcoming-elections/vote-counting-process",
+    "oneLine": "Ballots that are damaged or can’t be machine-read are remade by elections officials and processed with other ballots after Election Day."
+  },
+  "lesson": {
+    "pattern": "The machine isn’t the last word",
+    "tip": "A scanner rejecting a ballot is not the same as a vote being rejected. Officials remake damaged or unreadable ballots so the choices can be counted. When a post says ballots were “kicked out by the machine,” ask what happened next."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

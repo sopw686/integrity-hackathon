@@ -6,6 +6,7 @@ import { Stats } from './screens/Stats'
 import { Archive } from './screens/Archive'
 import { ClaimPage } from './screens/ClaimPage'
 import { NotFound } from './screens/NotFound'
+import { SecondLook } from './screens/SecondLook'
 
 export function App() {
   return (
@@ -16,6 +17,7 @@ export function App() {
       <Route path="/stats" element={<Stats />} />
       <Route path="/archive" element={<Archive />} />
       <Route path="/c/:id" element={<ClaimPage />} />
+      <Route path="/second-look" element={<SecondLook />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

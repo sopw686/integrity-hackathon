@@ -75,6 +75,14 @@ export function HowToDialog({ open, onOpenChange }: { open: boolean; onOpenChang
                   </tbody>
                 </table>
               )}
+              {step === 4 && (
+                <div className="howto-card factcheck-card">
+                  <p className="label factcheck-head">🔎 {COPY.factCheck.head}</p>
+                  <p className="small factcheck-line">{COPY.factCheck.line}</p>
+                  <span className="evidence-org">California Secretary of State</span>
+                  <span className="small muted">sos.ca.gov ↗</span>
+                </div>
+              )}
             </div>
             <p className="howto-line serif">{COPY.howTo[step].line}</p>
           </div>

@@ -1,0 +1,31 @@
+{
+  "id": "candidate-shirt-polling-place",
+  "text": "You’re allowed to wear a T-shirt with a candidate’s name on it while voting inside a California polling place.",
+  "shortTitle": "Campaign shirt at polls",
+  "seenIn": "a friend’s Election Day outfit post",
+  "answer": "false",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 52,
+    "pctFalse": 30,
+    "pctUnsure": 18,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: CC/ROV Memo #24196, Electioneering",
+    "url": "https://elections.cdn.sos.ca.gov/ccrov/2024/september/24196rd.pdf",
+    "oneLine": "Electioneering is banned within 100 feet of a polling place entrance, and it includes buttons, hats, shirts, or stickers with information about a candidate or measure on the ballot."
+  },
+  "lesson": {
+    "pattern": "Free speech, different rules here",
+    "tip": "The 100-foot electioneering ban covers shirts, buttons, and hats that name a candidate or measure on the ballot. General slogans aren’t covered. Ask: does it point to something on this ballot? If so, cover it up before you go in."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

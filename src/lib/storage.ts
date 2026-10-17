@@ -66,7 +66,7 @@ export function getDay(date: string): DayRecord | undefined {
 }
 
 /** Save partial progress (verdict + guess for one claim). */
-export function recordLock(date: string, index: number, verdict: Verdict, guess: number, badge: BadgeId, archive: boolean, confidence?: number): DayRecord {
+export function recordLock(date: string, index: number, verdict: Verdict, guess: number, badge: BadgeId, archive: boolean, confidence?: number, checked?: boolean): DayRecord {
   const state = load()
   const prev = state.days[date] ?? { answers: [], guesses: [], scores: { accuracy: 0, read: 0 }, badges: [], archive }
   const answers = prev.answers.slice()
@@ -81,6 +81,8 @@ export function recordLock(date: string, index: number, verdict: Verdict, guess:
     conf[index] = confidence
     rec.confidence = conf
   }
+  // Always present on records made since the fact-check existed, so results can tell "unused" from "not offered".
+  rec.checked = checked && !(prev.checked ?? []).includes(index) ? [...(prev.checked ?? []), index] : (prev.checked ?? [])
   state.days = { ...state.days, [date]: rec }
   save(state)
   return rec

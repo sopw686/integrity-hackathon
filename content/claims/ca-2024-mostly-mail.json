@@ -1,0 +1,31 @@
+{
+  "id": "ca-2024-mostly-mail",
+  "text": "Roughly 4 out of 5 ballots in California’s 2024 general election were cast by mail.",
+  "shortTitle": "Mostly mail ballots",
+  "seenIn": "a political science section",
+  "answer": "true",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 29,
+    "pctFalse": 47,
+    "pctUnsure": 24,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Historical Vote-by-Mail Ballot Use",
+    "url": "https://www.sos.ca.gov/elections/historical-absentee",
+    "oneLine": "In the November 2024 general election, 13,034,378 of 16,140,044 ballots cast (80.76%) were vote-by-mail ballots."
+  },
+  "lesson": {
+    "pattern": "Your line isn’t the state",
+    "tip": "Lines at polling places make in-person voting look like the norm, but most Californians vote by mail. Your own experience is a sample of one. For how people voted, check the Secretary of State’s vote-by-mail table."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}

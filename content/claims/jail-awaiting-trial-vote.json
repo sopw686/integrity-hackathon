@@ -1,0 +1,31 @@
+{
+  "id": "jail-awaiting-trial-vote",
+  "text": "People held in a California county jail while awaiting trial can still register and vote.",
+  "shortTitle": "Voting from jail",
+  "seenIn": "a group chat",
+  "answer": "true",
+  "room": {
+    "kind": "illustrative",
+    "label": "students (demo crowd)",
+    "pctTrue": 28,
+    "pctFalse": 49,
+    "pctUnsure": 23,
+    "source": "Demo crowd (illustrative)",
+    "sourceUrl": "",
+    "fieldDates": "",
+    "n": 0,
+    "note": "No published poll has measured this belief yet. The 5C pilot survey replaces this split with real student answers."
+  },
+  "truthSource": {
+    "label": "California Secretary of State: Voting Rights Restored",
+    "url": "https://www.sos.ca.gov/elections/voting-rights-restored",
+    "oneLine": "The Secretary of State lists people in a local detention facility who are awaiting trial among those who can register and vote. Only people serving a state or federal prison term for a felony cannot."
+  },
+  "lesson": {
+    "pattern": "Jail isn’t prison",
+    "tip": "California only bars people currently serving a state or federal prison term for a felony. Being held before trial, or serving a misdemeanor sentence, doesn’t take away the vote. When a post says “locked up,” ask which kind."
+  },
+  "category": "election",
+  "difficulty": 3,
+  "status": "verified"
+}
